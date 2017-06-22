@@ -14,6 +14,5 @@ import org.springframework.core.env.Environment;
  */
 @Configuration
 @ImportResource(locations = {"classpath:applications.xml"})
-@Import({RedisConfig.class})
 public class XmlConfigs{
 }

@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.session.SessionProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.EnvironmentAware;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -20,7 +19,9 @@ import redis.clients.jedis.JedisPoolConfig;
 /**
  * Created by jimmy on 2017/6/22.
  */
+
 @EnableRedisHttpSession
+@PropertySource("classpath:config.properties")
 public class RedisConfig implements EnvironmentAware{
     @Autowired
     private Environment environment ;
