@@ -17,10 +17,10 @@
         http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
     <!--参数配置-->
-<!--    <context:property-placeholder location="classpath:config.properties" local-override="false"
-                                  system-properties-mode="ENVIRONMENT"/>-->
+    <context:property-placeholder location="classpath:config.properties" local-override="false"
+                                  system-properties-mode="ENVIRONMENT"/>
     <!-- 数据库连接 -->
-    <context:property-placeholder location="classpath:config.properties" ignore-unresolvable="true" />
+    <!--<context:property-placeholder location="classpath:config.properties" ignore-unresolvable="true" />-->
 
     <context:component-scan base-package="com.wsj.controller" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>
@@ -74,8 +74,8 @@
 
     <!-- 数据源 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-        <property name="driverClassName" value="${driver}" />
-        <property name="url" value="${url}" />
+        <property name="driverClassName" value="${mysql.driver}" />
+        <property name="url" value="${mysql.url}" />
         <property name="username" value="${dbUserName}" />
         <property name="password" value="${password}" />
         <property name="initialSize" value="${druid.initialSize}" />
