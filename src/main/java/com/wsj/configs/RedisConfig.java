@@ -66,6 +66,7 @@ public class RedisConfig implements EnvironmentAware{
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
         redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());
+        redisTemplate.setConnectionFactory(initJedisFactory());
         return redisTemplate;
     }
 
