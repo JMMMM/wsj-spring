@@ -20,12 +20,15 @@ import redis.clients.jedis.JedisPoolConfig;
 /**
  * Created by jimmy on 2017/6/22.
  */
-@Configuration
 @EnableRedisHttpSession
-public class RedisConfig {
+public class RedisConfig implements EnvironmentAware{
     @Autowired
     private Environment environment ;
 
+    @Override
+    public void setEnvironment(Environment environment) {
+
+    }
     @Bean
     public JedisConnectionFactory initJedisFactory(){
         JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
@@ -71,4 +74,6 @@ public class RedisConfig {
         stringRedisTemplate.setConnectionFactory(initJedisFactory());
         return stringRedisTemplate;
     }
+
+
 }

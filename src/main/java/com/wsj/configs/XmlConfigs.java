@@ -4,6 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
@@ -13,5 +14,6 @@ import org.springframework.core.env.Environment;
  */
 @Configuration
 @ImportResource(locations = {"classpath:applications.xml"})
+@Import({RedisConfig.class})
 public class XmlConfigs{
 }
