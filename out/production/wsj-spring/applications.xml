@@ -3,19 +3,24 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/aop
-        http://www.springframework.org/schema/aop/spring-aop-4.2.
+        http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
         http://www.springframework.org/schema/data/jpa
         http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
     <!--参数配置-->
-    <context:property-placeholder location="classpath:config.properties" local-override="false"
-                                  system-properties-mode="ENVIRONMENT"/>
+<!--    <context:property-placeholder location="classpath:config.properties" local-override="false"
+                                  system-properties-mode="ENVIRONMENT"/>-->
+    <!-- 数据库连接 -->
+    <context:property-placeholder location="classpath:config.properties" ignore-unresolvable="true" />
 
     <context:component-scan base-package="com.wsj.controller" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>
@@ -44,7 +49,7 @@
                 <property name="generateDdl" value="false" />
                 <property name="database" value="MYSQL" />
                 <property name="databasePlatform" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
-                <!-- <property name="showSql" value="true" /> -->
+                <property name="showSql" value="true" />
             </bean>
         </property>
         <property name="jpaDialect">
@@ -62,5 +67,33 @@
             </map>
         </property>
     </bean>
+    <!-- 事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <!-- 数据源 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${driver}" />
+        <property name="url" value="${url}" />
+        <property name="username" value="${dbUserName}" />
+        <property name="password" value="${password}" />
+        <property name="initialSize" value="${druid.initialSize}" />
+        <property name="maxActive" value="${druid.maxActive}" />
+        <property name="minIdle" value="${druid.minIdle}" />
+        <property name="maxWait" value="${druid.maxWait}" />
+        <property name="timeBetweenEvictionRunsMillis" value="${druid.timeBetweenEvictionRunsMillis}" />
+        <property name="minEvictableIdleTimeMillis" value="${druid.minEvictableIdleTimeMillis}" />
+        <property name="testWhileIdle" value="${druid.testWhileIdle}" />
+        <property name="testOnBorrow" value="${druid.testOnBorrow}" />
+        <property name="testOnReturn" value="${druid.testOnReturn}" />
+        <property name="poolPreparedStatements" value="${druid.poolPreparedStatements}" />
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="${druid.maxPoolPreparedStatementPerConnectionSize}" />
+        <property name="filters" value="${druid.filters}" />
+    </bean>
+
+    <!-- 使用annotation定义事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+
 
 </beans>

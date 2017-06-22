@@ -23,9 +23,18 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'war'
 apply from: './tasks/init.gradle'
-version = 1.0
 group = 'com.wsj'
 
+sourceCompatibility = 1.8
+
+ext {
+    springBootVersion = '1.5.4.RELEASE'
+    hibernateVersion = '5.1.0.Final'
+    tomcatVersion='7.0.59'
+}
+war{
+    baseName="wsj-spring"
+}
 repositories {
     // NOTE: You should declare only repositories that you need here
     mavenLocal()
@@ -36,18 +45,29 @@ repositories {
 }
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter:${springBootVersion}')
-    compile('org.springframework.boot:spring-boot-starter-web:${springBootVersion}')
-    compile("com.google.guava:guava:22.0")
-    compile('org.hibernate:hibernate-core:${hibernateVersion}')
-    compile('org.hibernate:hibernate-c3p0:${hibernateVersion}')
-    compile('org.hibernate:hibernate-entitymanager:${hibernateVersion}')
-    compile('org.hibernate:hibernate-ehcache:${hibernateVersion}')
-    compile('mysql:mysql-connector-java:5.1.38')
-    compile('com.mchange:mchange-commons-java:0.2.11')
-    compile('org.springframework.data:spring-data-jpa:1.11.4.RELEASE')
-    compile('com.alibaba:druid:1.0.31')
+    //spring
+    compile('org.springframework.boot:spring-boot-starter')
+    compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-aop')
-    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+//    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+//    providedRuntime 'org.apache.tomcat.embed:tomcat-embed-jasper'
     testCompile("org.springframework.boot:spring-boot-starter-test")
+
+    //hibernate
+    compile("org.hibernate:hibernate-core:$hibernateVersion")
+    compile("org.hibernate:hibernate-c3p0:$hibernateVersion")
+    compile("org.hibernate:hibernate-entitymanager:$hibernateVersion")
+    compile("org.hibernate:hibernate-ehcache:$hibernateVersion")
+
+    //mysql
+    compile('com.alibaba:druid:1.0.31')
+    compile('mysql:mysql-connector-java:5.1.38')
+
+    //other
+    compile("com.google.guava:guava:22.0")
+//    compile('com.mchange:mchange-commons-java:0.2.11')
+//    compile('org.springframework.data:spring-data-jpa:1.11.4.RELEASE')
+
+//    providedRuntime("org.apache.tomcat:tomcat-juli:$tomcatVersion")
 }
