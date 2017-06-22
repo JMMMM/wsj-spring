@@ -1,10 +1,12 @@
 package com.wsj.configs;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.session.SessionProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -20,14 +22,9 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 @Configuration
 @EnableRedisHttpSession
-public class RedisConfig implements EnvironmentAware {
-
+public class RedisConfig {
+    @Autowired
     private Environment environment ;
-
-    @Override
-    public void setEnvironment(Environment environment) {
-        this.environment = environment;
-    }
 
     @Bean
     public JedisConnectionFactory initJedisFactory(){
