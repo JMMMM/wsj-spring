@@ -1,6 +1,7 @@
 package com.wsj.configs;
 
 import org.springframework.boot.autoconfigure.session.SessionProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

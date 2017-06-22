@@ -39,31 +39,31 @@
 
     <!-- 实体管理器 -->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-        <property name="packagesToScan" value="com.wsj.entity" />
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="com.wsj.entity"/>
         <property name="persistenceProvider">
-            <bean class="org.hibernate.jpa.HibernatePersistenceProvider" />
+            <bean class="org.hibernate.jpa.HibernatePersistenceProvider"/>
         </property>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                <property name="generateDdl" value="false" />
-                <property name="database" value="MYSQL" />
-                <property name="databasePlatform" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
-                <property name="showSql" value="true" />
+                <property name="generateDdl" value="false"/>
+                <property name="database" value="MYSQL"/>
+                <property name="databasePlatform" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+                <property name="showSql" value="true"/>
             </bean>
         </property>
         <property name="jpaDialect">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
         </property>
         <property name="jpaPropertyMap">
             <map>
-                <entry key="hibernate.query.substitutions" value="true 1, false 0" />
-                <entry key="hibernate.default_batch_fetch_size" value="16" />
-                <entry key="hibernate.max_fetch_depth" value="2" />
-                <entry key="hibernate.generate_statistics" value="true" />
-                <entry key="hibernate.bytecode.use_reflection_optimizer" value="true" />
-                <entry key="hibernate.cache.use_second_level_cache" value="false" />
-                <entry key="hibernate.cache.use_query_cache" value="false" />
+                <entry key="hibernate.query.substitutions" value="true 1, false 0"/>
+                <entry key="hibernate.default_batch_fetch_size" value="16"/>
+                <entry key="hibernate.max_fetch_depth" value="2"/>
+                <entry key="hibernate.generate_statistics" value="true"/>
+                <entry key="hibernate.bytecode.use_reflection_optimizer" value="true"/>
+                <entry key="hibernate.cache.use_second_level_cache" value="false"/>
+                <entry key="hibernate.cache.use_query_cache" value="false"/>
             </map>
         </property>
     </bean>
@@ -74,26 +74,27 @@
 
     <!-- 数据源 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-        <property name="driverClassName" value="${mysql.driver}" />
-        <property name="url" value="${mysql.url}" />
-        <property name="username" value="${dbUserName}" />
-        <property name="password" value="${password}" />
-        <property name="initialSize" value="${druid.initialSize}" />
-        <property name="maxActive" value="${druid.maxActive}" />
-        <property name="minIdle" value="${druid.minIdle}" />
-        <property name="maxWait" value="${druid.maxWait}" />
-        <property name="timeBetweenEvictionRunsMillis" value="${druid.timeBetweenEvictionRunsMillis}" />
-        <property name="minEvictableIdleTimeMillis" value="${druid.minEvictableIdleTimeMillis}" />
-        <property name="testWhileIdle" value="${druid.testWhileIdle}" />
-        <property name="testOnBorrow" value="${druid.testOnBorrow}" />
-        <property name="testOnReturn" value="${druid.testOnReturn}" />
-        <property name="poolPreparedStatements" value="${druid.poolPreparedStatements}" />
-        <property name="maxPoolPreparedStatementPerConnectionSize" value="${druid.maxPoolPreparedStatementPerConnectionSize}" />
-        <property name="filters" value="${druid.filters}" />
+        <property name="driverClassName" value="${mysql.driver}"/>
+        <property name="url" value="${mysql.url}"/>
+        <property name="username" value="${dbUserName}"/>
+        <property name="password" value="${password}"/>
+        <property name="initialSize" value="${druid.initialSize}"/>
+        <property name="maxActive" value="${druid.maxActive}"/>
+        <property name="minIdle" value="${druid.minIdle}"/>
+        <property name="maxWait" value="${druid.maxWait}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${druid.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${druid.minEvictableIdleTimeMillis}"/>
+        <property name="testWhileIdle" value="${druid.testWhileIdle}"/>
+        <property name="testOnBorrow" value="${druid.testOnBorrow}"/>
+        <property name="testOnReturn" value="${druid.testOnReturn}"/>
+        <property name="poolPreparedStatements" value="${druid.poolPreparedStatements}"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize"
+                  value="${druid.maxPoolPreparedStatementPerConnectionSize}"/>
+        <property name="filters" value="${druid.filters}"/>
     </bean>
 
     <!-- 使用annotation定义事务 -->
-    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
 
 </beans>
