@@ -21,7 +21,7 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 
 @EnableRedisHttpSession
-@PropertySource("classpath:config.properties")
+@PropertySource({"classpath:config.properties","classpath:redisConfig.properties"})
 public class RedisConfig implements EnvironmentAware{
     @Autowired
     private Environment environment ;
