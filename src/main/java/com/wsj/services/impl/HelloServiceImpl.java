@@ -1,5 +1,6 @@
 package com.wsj.services.impl;
 
+import com.wsj.entity.Companys;
 import com.wsj.repository.HelloRepository;
 import com.wsj.services.HelloService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ public class HelloServiceImpl implements HelloService {
 
     @Override
     public String hello() {
-        return helloRepository.findCompanyName(2145);
+//        return helloRepository.findCompanyName(2145);
+        return helloRepository.findOne(2145).getName();
     }
 }
