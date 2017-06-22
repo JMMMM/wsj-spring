@@ -27,7 +27,7 @@ public class RedisConfig implements EnvironmentAware{
 
     @Override
     public void setEnvironment(Environment environment) {
-
+        this.environment = environment;
     }
     @Bean
     public JedisConnectionFactory initJedisFactory(){
