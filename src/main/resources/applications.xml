@@ -91,22 +91,9 @@
         <property name="maxPoolPreparedStatementPerConnectionSize" value="${druid.maxPoolPreparedStatementPerConnectionSize}" />
         <property name="filters" value="${druid.filters}" />
     </bean>
-    <!-- 事务 -->
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="*" />
-            <tx:method name="get*" read-only="true" />
-            <tx:method name="find*" read-only="true" />
-            <tx:method name="select*" read-only="true" />
-            <tx:method name="delete*" propagation="REQUIRED" />
-            <tx:method name="update*" propagation="REQUIRED" />
-            <tx:method name="add*" propagation="REQUIRED" />
-            <tx:method name="insert*" propagation="REQUIRED" />
-        </tx:attributes>
-    </tx:advice>
-    <!-- 事务入口 -->
-    <aop:config>
-        <aop:pointcut id="allServiceMethod" expression="execution(* com.wsj.services.impl.*.*(..))" />
-        <aop:advisor pointcut-ref="allServiceMethod" advice-ref="txAdvice" />
-    </aop:config>
+
+    <!-- 使用annotation定义事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+
+
 </beans>

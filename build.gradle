@@ -22,8 +22,8 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply from: './tasks/init.gradle'
 
-version = springBootVersion
-group = 'org.springframework.boot'
+version = 1.0
+group = 'com.wsj'
 
 repositories {
     // NOTE: You should declare only repositories that you need here
