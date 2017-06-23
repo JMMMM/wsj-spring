@@ -12,16 +12,16 @@ public class Staff {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "name")
+    private String name;
     @Column(name = "login_name")
     private String loginName;
     @Column(name = "created_at")
     private Long createdAt;
     @Column(name = "updated_at")
     private Long updatedAt;
-    @Column(name = "last_login_at")
-    private Long lastLoginAt;
+    @Column(name = "last_login_time")
+    private Long lastLoginTime;
 
     public Integer getId() {
         return id;
@@ -31,12 +31,13 @@ public class Staff {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getLoginName() {
@@ -63,11 +64,11 @@ public class Staff {
         this.updatedAt = updatedAt;
     }
 
-    public Long getLastLoginAt() {
-        return lastLoginAt;
+    public Long getLastLoginTime() {
+        return lastLoginTime;
     }
 
-    public void setLastLoginAt(Long lastLoginAt) {
-        this.lastLoginAt = lastLoginAt;
+    public void setLastLoginTime(Long lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
     }
 }

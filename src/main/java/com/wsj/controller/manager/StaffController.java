@@ -24,7 +24,7 @@ public class StaffController {
      * @return
      */
     @RequestMapping("/login")
-    public ResultBean login(String userName, String password,boolean autoLogin) {
+    public ResultBean<Staff> login(String userName, String password,boolean autoLogin) {
         ResultBean<Staff> result = staffService.userLogin(userName, password);
         return result;
     }

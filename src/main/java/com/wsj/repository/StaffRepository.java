@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface StaffRepository extends JpaRepository<Staff, Integer> {
 
-    @Query("select s from Staff s where user_name = ?1 and password = ?2")
+    @Query("select s from Staff s where name = ?1 and password = ?2")
     public Staff findStaffByPassword(String userName,String password);
 }

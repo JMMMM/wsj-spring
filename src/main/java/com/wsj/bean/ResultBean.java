@@ -3,12 +3,12 @@ package com.wsj.bean;
 /**
  * Created by Jimmy on 2017/6/23.
  */
-public class ResultBean<T> {
+public class ResultBean<T> implements java.io.Serializable {
     private boolean isSuccess;
     private String message;
     private T obj;
 
-    public ResultBean() {
+    public <T>ResultBean() {
         super();
     }
 
