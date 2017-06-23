@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by Jimmy on 2017/6/23.
  */
 @Entity
-@Table(name = "staff")
+@Table(name = "staffs")
 public class Staff {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,8 +20,8 @@ public class Staff {
     private Long createdAt;
     @Column(name = "updated_at")
     private Long updatedAt;
-    @Column(name = "last_updated_at")
-    private Long lastUpdatedAt;
+    @Column(name = "last_login_at")
+    private Long lastLoginAt;
 
     public Integer getId() {
         return id;
@@ -63,11 +63,11 @@ public class Staff {
         this.updatedAt = updatedAt;
     }
 
-    public Long getLastUpdatedAt() {
-        return lastUpdatedAt;
+    public Long getLastLoginAt() {
+        return lastLoginAt;
     }
 
-    public void setLastUpdatedAt(Long lastUpdatedAt) {
-        this.lastUpdatedAt = lastUpdatedAt;
+    public void setLastLoginAt(Long lastLoginAt) {
+        this.lastLoginAt = lastLoginAt;
     }
 }
