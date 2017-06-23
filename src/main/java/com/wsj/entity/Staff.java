@@ -1,6 +1,7 @@
 package com.wsj.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by Jimmy on 2017/6/23.
@@ -17,11 +18,11 @@ public class Staff {
     @Column(name = "login_name")
     private String loginName;
     @Column(name = "created_at")
-    private Long createdAt;
+    private Date createdAt;
     @Column(name = "updated_at")
-    private Long updatedAt;
+    private Date updatedAt;
     @Column(name = "last_login_time")
-    private Long lastLoginTime;
+    private Date lastLoginTime;
 
     public Integer getId() {
         return id;
@@ -48,27 +49,27 @@ public class Staff {
         this.loginName = loginName;
     }
 
-    public Long getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Long createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Long getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Long updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    public Long getLastLoginTime() {
+    public Date getLastLoginTime() {
         return lastLoginTime;
     }
 
-    public void setLastLoginTime(Long lastLoginTime) {
+    public void setLastLoginTime(Date lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
     }
 }
