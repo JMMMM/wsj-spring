@@ -17,8 +17,8 @@ public class StaffServiceImpl implements StaffService {
     private StaffRepository staffRepository;
 
     @Override
-    public ResultBean userLogin(String userName, String password) {
-        Staff staff = staffRepository.findStaffByPassword(userName, MD5Helper.encode(password));
+    public ResultBean userLogin(String loginName, String password) {
+        Staff staff = staffRepository.findStaffByPassword(loginName, MD5Helper.encode(password));
         return ResultBean.success("登录成功!");
     }
 }

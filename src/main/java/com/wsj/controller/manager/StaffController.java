@@ -19,15 +19,14 @@ public class StaffController {
 
     /**
      *
-     * @param userName 用户名
+     * @param loginName 用户名
      * @param password 密码
      * @param autoLogin 下次自动登录 true自动登录 false不自动登录
      * @return
      */
-    @ResponseBody
     @RequestMapping("/login")
-    public ResultBean<Staff> login(String userName, String password,boolean autoLogin) {
-        ResultBean<Staff> result = staffService.userLogin(userName, password);
+    public ResultBean<Staff> login(String loginName, String password,boolean autoLogin) {
+        ResultBean<Staff> result = staffService.userLogin(loginName, password);
         return result;
     }
 }

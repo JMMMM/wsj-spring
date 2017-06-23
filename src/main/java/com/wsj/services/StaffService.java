@@ -8,5 +8,5 @@ import com.wsj.entity.Staff;
  */
 public interface StaffService {
     //用户登录接口
-    ResultBean<Staff> userLogin(String userName, String password);
+    ResultBean<Staff> userLogin(String loginName, String password);
 }
