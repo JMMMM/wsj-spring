@@ -24,7 +24,10 @@ public class CustomerConfigs extends WebMvcConfigurerAdapter {
         FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
 
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
+        fastJsonConfig.setSerializerFeatures(
+                SerializerFeature.PrettyFormat,
+                SerializerFeature.WriteClassName,
+                SerializerFeature.WriteMapNullValue);
         fastConverter.setFastJsonConfig(fastJsonConfig);
 
         converters.add(fastConverter);

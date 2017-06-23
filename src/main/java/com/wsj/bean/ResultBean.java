@@ -3,12 +3,12 @@ package com.wsj.bean;
 /**
  * Created by Jimmy on 2017/6/23.
  */
-public class ResultBean<T> implements java.io.Serializable {
+public class ResultBean<T> {
     private boolean isSuccess;
     private String message;
-    private T obj;
+    private T bean;
 
-    public <T>ResultBean() {
+    public <T> ResultBean() {
         super();
     }
 
@@ -22,7 +22,7 @@ public class ResultBean<T> implements java.io.Serializable {
         super();
         this.isSuccess = isSuccess;
         this.message = message;
-        this.obj = obj;
+        this.bean = obj;
     }
 
     public static <T> ResultBean failure(String message) {
@@ -39,5 +39,29 @@ public class ResultBean<T> implements java.io.Serializable {
 
     public static <T> ResultBean success(String message, T obj) {
         return new ResultBean<T>(true, message, obj);
+    }
+
+    public boolean isSuccess() {
+        return isSuccess;
+    }
+
+    public void setSuccess(boolean success) {
+        isSuccess = success;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public T getBean() {
+        return bean;
+    }
+
+    public void setBean(T bean) {
+        this.bean = bean;
     }
 }
