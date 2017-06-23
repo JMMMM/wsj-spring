@@ -1,6 +1,7 @@
 package com.wsj.controller;
 
 import com.wsj.services.HelloService;
+import com.wsj.tools.MD5Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +16,7 @@ public class HelloController {
     private HelloService helloService;
 
     @RequestMapping("")
-    public String helloWorld() {
-        return helloService.hello();
+    public String helloWorld(String password) {
+        return MD5Helper.encode(password);
     }
 }
