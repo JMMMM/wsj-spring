@@ -5,8 +5,9 @@ import com.wsj.entity.Staff;
 import com.wsj.services.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Jimmy on 2017/6/23.
@@ -18,15 +19,15 @@ public class StaffController {
     private StaffService staffService;
 
     /**
-     *
      * @param loginName 用户名
-     * @param password 密码
+     * @param password  密码
      * @param autoLogin 下次自动登录 true自动登录 false不自动登录
      * @return
      */
     @RequestMapping("/login")
-    public ResultBean<Staff> login(String loginName, String password,boolean autoLogin) {
+    public ResultBean<Staff> login(HttpServletRequest request, String loginName, String password, boolean autoLogin) {
         ResultBean<Staff> result = staffService.userLogin(loginName, password);
+        request.getSession().setAttribute("staffInfo", result.getBean());
         return result;
     }
 }
