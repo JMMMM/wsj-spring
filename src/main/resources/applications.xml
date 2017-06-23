@@ -30,13 +30,13 @@
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>
     </context:component-scan>
 
+    <!-- 启动Springmvc注解驱动 -->
     <mvc:annotation-driven>
         <mvc:message-converters>
-            <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
-            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter" />
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
         </mvc:message-converters>
     </mvc:annotation-driven>
-
     <!-- 使用cglib进行动态代理 -->
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 

@@ -69,6 +69,7 @@ dependencies {
 
     //jackson
     compile("com.fasterxml.jackson.core:jackson-core:2.5.4")
+    compile("com.fasterxml.jackson.core:jackson-databind:2.5.4")
 //    compile('com.mchange:mchange-commons-java:0.2.11')
 //    compile('org.springframework.data:spring-data-jpa:1.11.4.RELEASE')
 
