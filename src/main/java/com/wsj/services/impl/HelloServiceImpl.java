@@ -17,6 +17,6 @@ public class HelloServiceImpl implements HelloService {
     @Override
     public String hello() {
 //        return helloRepository.findCompanyName(2145);
-        return helloRepository.findOne(2145).getName();
+        return helloRepository.findOne(111).getName();
     }
 }
