@@ -1,5 +1,7 @@
 package com.wsj.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -17,6 +19,7 @@ public class Staff {
     private String name;
     @Column(name = "login_name")
     private String loginName;
+    @JSONField(serialize = false)
     @Column(name="password")
     private String password;
     @Column(name = "created_at")
