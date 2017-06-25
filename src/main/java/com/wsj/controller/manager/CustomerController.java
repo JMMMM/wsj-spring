@@ -1,5 +1,6 @@
 package com.wsj.controller.manager;
 
+import com.wsj.annotation.SessionCheck;
 import com.wsj.entity.Customer;
 import com.wsj.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.util.List;
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
-
+    @SessionCheck(checkedType = SessionCheck.Type.MANAGER)
     @RequestMapping("/findCustomers")
     public List<Customer> findCustomers(@RequestParam(name = "customer",required = false) Customer customer,
                                         @RequestParam(name="limit",defaultValue = "1") int limit,

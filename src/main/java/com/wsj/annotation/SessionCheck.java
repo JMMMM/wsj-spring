@@ -1,15 +1,18 @@
 package com.wsj.annotation;
 
+import org.apache.catalina.Manager;
+
 import java.lang.annotation.*;
 
 /**
  * Created by jimmy on 2017/6/25.
  */
-@Target(ElementType.FIELD)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface SessionCheck {
-    public enum Type{MANAGER,WEB};
-    public boolean checked() default true;
+    enum Type{MANAGER,WEB};
+    boolean checked() default true;
+    Type checkedType() default Type.MANAGER;
 
 }
