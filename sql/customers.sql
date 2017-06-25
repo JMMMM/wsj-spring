@@ -1,3 +1,4 @@
+drop table if exists new_wsj.customers;
 create table new_wsj.customers(
  `id` int(8) not null comment '用户ID' primary key AUTO_INCREMENT,
  `name` varchar(255) not null comment '用户名,昵称',
