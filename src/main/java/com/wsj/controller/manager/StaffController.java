@@ -2,6 +2,7 @@ package com.wsj.controller.manager;
 
 import com.wsj.bean.ResultBean;
 import com.wsj.entity.Staff;
+import com.wsj.enums.SysConstants;
 import com.wsj.services.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,7 @@ public class StaffController {
     @RequestMapping("/login")
     public ResultBean<Staff> login(HttpServletRequest request, String loginName, String password, boolean autoLogin) {
         ResultBean<Staff> result = staffService.userLogin(loginName, password);
-        request.getSession().setAttribute("staffInfo", result.getBean());
+        request.getSession().setAttribute(SysConstants.LoginSession.getName(), result.getBean());
         return result;
     }
 }
