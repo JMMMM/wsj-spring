@@ -36,6 +36,8 @@ public class Customer {
     private String phone;
     @Column(name="sex")
     private Integer sex;
+    @Column(name="status")
+    private Integer status;
 
     public Integer getId() {
         return id;
@@ -123,5 +125,13 @@ public class Customer {
 
     public void setSex(Integer sex) {
         this.sex = sex;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }
