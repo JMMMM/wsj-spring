@@ -62,6 +62,7 @@ public class CustomerServiceImpl implements CustomerService {
             db.setSex(customer.getSex());
             db.setUpdatedAt(new Date());
             db.setUpdatedBy(staff.getId());
+            db.setStatus(customer.getStatus());
         }
         return ResultBean.success("成功");
     }
