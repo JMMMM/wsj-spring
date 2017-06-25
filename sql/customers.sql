@@ -14,3 +14,5 @@ create table new_wsj.customers(
  `last_login_at` datetime default null comment '上次登陆时间',
   unique key `login_name_unique` (`login_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '用户登陆表';
+
+insert INTO  new_wsj.customers(name,login_name,password,phone,created_at,created_by,updated_by) values('假数据','test1','e10adc3949ba59abbe56e057f20f883e','12332213331',now(),1,1);

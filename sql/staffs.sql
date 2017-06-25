@@ -16,4 +16,4 @@ create table new_wsj.staffs (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 comment'系统用户登陆表';
 
 
-insert into new_wsj.staffs(login_name,name,password,created_at,created_by,updated_by) values("admin","管理员","e10adc3949ba59abbe56e057f20f883e",now(),1,1) ;
+insert into new_wsj.staffs(login_name,name,password,created_at,created_by,updated_by) values('admin','管理员','e10adc3949ba59abbe56e057f20f883e',now(),1,1) ;
