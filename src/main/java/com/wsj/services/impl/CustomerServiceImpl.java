@@ -19,11 +19,14 @@ public class CustomerServiceImpl implements CustomerService {
     private EntityManager em ;
     @Override
     public List<Customer> findByPage(Customer customer, int limit, int pageSize) {
-        String sql = "select c from Customer c where 1 =1 ";
-        if(!StringUtils.isEmpty(customer.getPhone())){
-            sql += " and phone like "+"'%"+customer.getPhone()+"%' ";
+        String sql = "select c from customers c where 1 =1 ";
+        if(customer != null){
+            if(!StringUtils.isEmpty(customer.getPhone())){
+                sql += " and phone like "+"'%"+customer.getPhone()+"%' ";
+            }
         }
-        Query result = em.createQuery(sql);
+        sql += "limit "+limit+","+pageSize;
+        Query result = em.createNativeQuery(sql);
         return result.getResultList();
     }
 }
