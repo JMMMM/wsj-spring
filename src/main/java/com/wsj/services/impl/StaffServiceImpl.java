@@ -31,7 +31,7 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public List<Staff> findStaffs(Staff staff, int limit, int pageSize) {
-        String sql = "select s from Staff s where 1 =1  ";
+        String sql = "select s.* from staffs s where 1 =1  ";
         if(!StringUtils.isEmpty((staff.getName()))){
             sql += " and name like '%"+staff.getName()+"%'";
         }
