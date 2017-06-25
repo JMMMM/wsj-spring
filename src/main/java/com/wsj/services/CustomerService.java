@@ -1,5 +1,6 @@
 package com.wsj.services;
 
+import com.wsj.bean.ResultBean;
 import com.wsj.entity.Customer;
 
 import java.util.List;
@@ -16,4 +17,11 @@ public interface CustomerService {
      * @return
      */
     List<Customer> findByPage(Customer customer,int limit,int pageSize);
+
+    /**
+     *
+     * @param customer 有ID时update，没ID时insert
+     * @return
+     */
+    ResultBean<Customer> saveOrUpdate(Customer customer);
 }
