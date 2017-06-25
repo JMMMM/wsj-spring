@@ -18,10 +18,10 @@ import java.util.List;
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
-    @SessionCheck(checkedType = SessionCheck.Type.MANAGER)
+    @SessionCheck(checkedType = SessionCheck.Type.MANAGER,checked = false)
     @RequestMapping("/findCustomers")
     public List<Customer> findCustomers(@RequestParam(name = "customer",required = false) Customer customer,
-                                        @RequestParam(name="limit",defaultValue = "1") int limit,
+                                        @RequestParam(name="limit",defaultValue = "0") int limit,
                                         @RequestParam(name="pageSize",defaultValue = "10") int pageSize){
         return customerService.findByPage(customer,limit,pageSize);
     }
