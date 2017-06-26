@@ -6,11 +6,11 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by Jimmy on 2017/6/23.
+ * Created by jimmy on 2017/6/25.
  */
 @Entity
-@Table(name = "staffs")
-public class Staff {
+@Table(name="customers")
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -111,14 +111,6 @@ public class Staff {
         this.lastLoginAt = lastLoginAt;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -135,4 +127,11 @@ public class Staff {
         this.sex = sex;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 }

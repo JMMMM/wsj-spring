@@ -45,10 +45,10 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-aop:$springBootVersion")
-    compile("org.springframework.boot:spring-boot-starter-redis:1.0.1.RELEASE")
-    compile 'org.springframework.session:spring-session-data-redis:1.0.0.RELEASE'
+//    compile("org.springframework.boot:spring-boot-starter-redis:1.0.1.RELEASE")
+//    compile 'org.springframework.session:spring-session-data-redis:1.0.0.RELEASE'
     compile("org.springframework.data:spring-data-jpa:1.11.4.RELEASE")
-    compile("org.springframework.data:spring-data-redis:1.8.4.RELEASE")
+//    compile("org.springframework.data:spring-data-redis:1.8.4.RELEASE")
     testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
 
     //hibernate
