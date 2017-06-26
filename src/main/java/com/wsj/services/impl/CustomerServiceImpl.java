@@ -7,6 +7,7 @@ import com.wsj.enums.SysConstants;
 import com.wsj.repository.CustomerRepository;
 import com.wsj.services.CustomerService;
 import com.wsj.tools.OperatorUtil;
+import com.wsj.tools.QueryTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -15,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,13 +34,18 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Customer> findByPage(Customer customer, int limit, int pageSize) {
         String sql = "select c.* from customers c where 1 =1 ";
+        List<Object> parameter = new ArrayList<Object>();
         if(customer != null){
             if(!StringUtils.isEmpty(customer.getPhone())){
-                sql += " and phone like "+"'%"+customer.getPhone()+"%' ";
+                sql += " and phone like ? ";
+                parameter.add(customer.getPhone());
             }
         }
-        sql += "limit "+limit+","+pageSize;
+        sql += "limit ?,?";
+        parameter.add(limit);
+        parameter.add(pageSize);
         Query result = em.createNativeQuery(sql);
+        QueryTools.initParameter(result,parameter);
         return result.getResultList();
     }
 
