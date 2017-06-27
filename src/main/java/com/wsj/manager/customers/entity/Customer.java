@@ -9,8 +9,8 @@ import java.util.Date;
  * Created by jimmy on 2017/6/25.
  */
 @Entity
-@Table(name="customers")
-public class Customer implements java.io.Serializable{
+@Table(name = "customers")
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -20,23 +20,23 @@ public class Customer implements java.io.Serializable{
     @Column(name = "login_name")
     private String loginName;
     @JSONField(serialize = false)
-    @Column(name="password")
+    @Column(name = "password")
     private String password;
     @Column(name = "created_at")
     private Date createdAt;
-    @Column(name="created_by")
+    @Column(name = "created_by")
     private Integer createdBy;
     @Column(name = "updated_at")
     private Date updatedAt;
-    @Column(name="updated_by")
+    @Column(name = "updated_by")
     private Integer updatedBy;
     @Column(name = "last_login_at")
     private Date lastLoginAt;
-    @Column(name="phone")
+    @Column(name = "phone")
     private String phone;
-    @Column(name="sex")
+    @Column(name = "sex")
     private Integer sex;
-    @Column(name="status")
+    @Column(name = "status")
     private Integer status;
 
     public Integer getId() {
