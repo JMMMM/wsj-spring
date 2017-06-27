@@ -7,6 +7,7 @@ import com.wsj.sys.bean.PageBean;
 import com.wsj.sys.bean.ResultBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,8 +42,8 @@ public class CustomerController {
      * @return
      */
     @SessionCheck(checkedType = SessionCheck.Type.MANAGER)
-    @RequestMapping("/modifyCustomerStatus")
+    @RequestMapping(name="/modifyCustomerStatus", method = RequestMethod.POST)
     public ResultBean modifyCustomerStatus(int customerId, int status) {
-        return customerService.modifyCustomerStatus(customerId,status);
+        return customerService.modifyCustomerStatus(customerId, status);
     }
 }
