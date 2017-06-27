@@ -57,6 +57,15 @@
             var id = e.target.name;
             var companyName = e.target.companyName;
             $("#mainIndex")[0]._showTabPage("company_" + companyName, id);
+        },
+        /**
+         * 比较2个状态是否相等
+         * @param srcType
+         * @param targetType
+         * @returns {boolean}
+         */
+        compareType: function (srcType, targetType) {
+            return srcType === targetType;
         }
     };
     CustomerCompanyBehavior = [OCrudBehavior, OFormatBehavior, CustomerCompanyBehaviorImpl];

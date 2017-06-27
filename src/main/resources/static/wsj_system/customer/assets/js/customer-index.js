@@ -12,27 +12,30 @@ Polymer({
                     name: "罗三三",
                     sex: "男",
                     phone: "12345678901",
-                    createAt: new Date().getTime(),
-                    id: 1
+                    createdAt: new Date().getTime(),
+                    id: 1,
+                    status: 1
                 }, {
                     name: "罗三三",
                     sex: "男",
                     phone: "12345678901",
-                    createAt: new Date().getTime(),
-                    id: 2
+                    createdAt: new Date().getTime(),
+                    id: 2,
+                    status: 0
                 }, {
                     name: "罗三三",
                     sex: "男",
                     phone: "12345678901",
-                    createAt: new Date().getTime(),
-                    id: 3
+                    createdAt: new Date().getTime(),
+                    id: 3,
+                    status: 1
                 }]
             },
             notify: true
         }
     },
-    listeners:{
-        "data-change":'findSimpleCompanies',
+    listeners: {
+        "data-change": 'findSimpleCompanies',
     },
     ready: function () {
     }
