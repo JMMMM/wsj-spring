@@ -24,7 +24,10 @@ public class LoginController {
     private StaffService staffService;
 
     /**
-     * @return
+     * index跳转
+     * @param request
+     * @param response
+     * @throws IOException
      */
     @SessionCheck(checkedType = SessionCheck.Type.MANAGER)
     @RequestMapping(value = {"/", "/index"})
