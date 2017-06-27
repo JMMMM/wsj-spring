@@ -8,7 +8,7 @@ import java.util.List;
 public class PageBean<T> {
     private int start;
     private int limit;
-    private int result;
+    private int results;
     private List<T> rows;
 
     public PageBean() {
@@ -19,7 +19,7 @@ public class PageBean<T> {
         super();
         this.start = start;
         this.limit = limit;
-        this.result = result;
+        this.results = result;
         this.rows = rows;
     }
 
@@ -39,19 +39,19 @@ public class PageBean<T> {
         this.limit = limit;
     }
 
-    public int getResult() {
-        return result;
-    }
-
-    public void setResult(int result) {
-        this.result = result;
-    }
-
     public List<T> getRows() {
         return rows;
     }
 
     public void setRows(List<T> rows) {
         this.rows = rows;
+    }
+
+    public int getResults() {
+        return results;
+    }
+
+    public void setResults(int results) {
+        this.results = results;
     }
 }
