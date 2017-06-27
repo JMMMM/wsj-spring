@@ -13,6 +13,6 @@ public class WsjTools {
      */
     public static String getDomainName(HttpServletRequest request) {
         StringBuffer url = request.getRequestURL();
-        return url.delete(url.length() - request.getRequestURI().length(), url.length()).append("/").toString();
+        return url.delete(url.length() - request.getRequestURI().length(), url.length()).toString();
     }
 }
