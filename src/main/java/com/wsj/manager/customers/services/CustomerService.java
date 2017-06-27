@@ -2,6 +2,7 @@ package com.wsj.manager.customers.services;
 
 
 import com.wsj.manager.customers.entity.Customer;
+import com.wsj.sys.bean.PageBean;
 import com.wsj.sys.bean.ResultBean;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface CustomerService {
      * @param pageSize
      * @return
      */
-    List<Customer> findByPage(Customer customer, int limit, int pageSize);
+    PageBean<Customer> findByPage(Customer customer, int limit, int pageSize);
 
     /**
      *

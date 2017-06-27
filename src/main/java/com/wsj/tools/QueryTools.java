@@ -1,5 +1,9 @@
 package com.wsj.tools;
 
+import com.wsj.sys.bean.PageBean;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -7,11 +11,18 @@ import java.util.List;
  * Created by jimmy on 2017/6/26.
  */
 public class QueryTools {
+    @Autowired
+    private static EntityManager em;
 
-    public static Query initParameter(Query query,List<Object> parameter){
-        for(int i=0;i<parameter.size();i++){
-            query.setParameter(i+1,parameter.get(i));
+    public static <T> PageBean queryPageResult(String sql, List<Object> parameter, int start, int limit, Class<T> clazz) {
+        Query result = em.createNativeQuery(sql, clazz);
+        for (int i = 0; i < parameter.size(); i++) {
+            result.setParameter(i + 1, parameter.get(i));
         }
-        return query;
+        return initPageBean(result.getResultList(), start, limit);
+    }
+
+    public static <T> PageBean initPageBean(List<T> rows, int start, int limit) {
+        return new PageBean(start, limit, rows.size(), rows);
     }
 }
