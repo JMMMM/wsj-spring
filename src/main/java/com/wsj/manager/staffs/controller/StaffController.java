@@ -28,7 +28,7 @@ public class StaffController {
     @RequestMapping("/login")
     public ResultBean<Staff> login(HttpServletRequest request, String loginName, String password, boolean autoLogin) {
         ResultBean<Staff> result = staffService.userLogin(loginName, password);
-        request.getSession().setAttribute(SysConstants.LoginSession.getName(), result.getBean());
+        if(result.isSuccess()) request.getSession().setAttribute(SysConstants.LoginSession.getName(), result.getBean());
         return result;
     }
 }
