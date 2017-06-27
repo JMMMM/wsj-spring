@@ -5,6 +5,7 @@ import com.wsj.manager.staffs.services.StaffService;
 import com.wsj.sys.annotation.SessionCheck;
 import com.wsj.sys.bean.ResultBean;
 import com.wsj.sys.enums.SysConstants;
+import com.wsj.tools.WsjTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +29,7 @@ public class LoginController {
     @SessionCheck(checkedType = SessionCheck.Type.MANAGER)
     @RequestMapping(value = {"/", "/index"})
     public void index(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.sendRedirect(request.getContextPath() + SysConstants.IndexPath.getName());
+        response.sendRedirect(WsjTools.getDomainName(request) + SysConstants.IndexPath.getName());
     }
 
     /**
@@ -41,7 +42,7 @@ public class LoginController {
     public ResultBean<Staff> login(HttpServletRequest request, HttpServletResponse response, String loginName, String password, boolean autoLogin) {
         ResultBean<Staff> result = staffService.userLogin(loginName, password);
         request.getSession().setAttribute(SysConstants.LoginSession.getName(), result.getBean());
-        if(result.isSuccess()){
+        if (result.isSuccess()) {
             try {
                 response.sendRedirect(request.getContextPath() + SysConstants.IndexPath.getName());
             } catch (IOException e) {
