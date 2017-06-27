@@ -26,7 +26,6 @@ import java.util.List;
 public class CustomerConfigs extends WebMvcConfigurerAdapter {
     @Autowired
     private UserSecurityInterceptor userSecurityInterceptor;
-
     /**
      * 使用bean注入,才能使其有效果,验证的话就在Entity字段中使用fastjson的
      * 注解@JSONField(serialize = false),转换出来的信息不含该字段,则成功

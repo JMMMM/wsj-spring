@@ -23,14 +23,15 @@ public class CustomerController {
 
     /**
      * 用户列表
+     *
      * @param customer
-     * @param start
-     * @param limit
+     * @param pageBean
      * @return
      */
     @SessionCheck(checkedType = SessionCheck.Type.MANAGER)
     @RequestMapping("/findCustomers")
-    public List<Customer> findCustomers(@RequestParam(name = "customer",required = false) Customer customer, PageBean pageBean){
-        return customerService.findByPage(customer,pageBean.getStart(),pageBean.getLimit());
+    public PageBean<Customer> findCustomers(@RequestParam(name = "customer", required = false) Customer customer,
+                                        PageBean pageBean) {
+        return customerService.findByPage(customer, pageBean.getStart(), pageBean.getLimit());
     }
 }

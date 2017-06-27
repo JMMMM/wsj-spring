@@ -2,6 +2,7 @@ package com.wsj.manager.customers.services;
 
 
 import com.wsj.manager.customers.entity.Customer;
+import com.wsj.sys.bean.PageBean;
 import com.wsj.sys.bean.ResultBean;
 
 import java.util.List;
@@ -13,11 +14,11 @@ public interface CustomerService {
     /**
      * 搜索
      * @param customer 用来做筛选
-     * @param start 分页
-     * @param limit
+     * @param limit 分页
+     * @param pageSize
      * @return
      */
-    List<Customer> findByPage(Customer customer, int start, int limit);
+    PageBean<Customer> findByPage(Customer customer, int limit, int pageSize);
 
     /**
      *

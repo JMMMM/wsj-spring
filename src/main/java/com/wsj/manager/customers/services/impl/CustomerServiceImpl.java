@@ -4,6 +4,7 @@ import com.wsj.manager.customers.entity.Customer;
 import com.wsj.manager.customers.repository.CustomerRepository;
 import com.wsj.manager.customers.services.CustomerService;
 import com.wsj.manager.staffs.entity.Staff;
+import com.wsj.sys.bean.PageBean;
 import com.wsj.sys.bean.ResultBean;
 import com.wsj.tools.OperatorUtil;
 import com.wsj.tools.QueryTools;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,15 +26,14 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
-    private EntityManager em ;
-    @Autowired
     private HttpSession session;
+
     @Override
-    public List<Customer> findByPage(Customer customer, int start, int limit) {
+    public PageBean<Customer> findByPage(Customer customer, int start, int limit) {
         String sql = "select c.* from customers c where 1 =1 ";
         List<Object> parameter = new ArrayList<Object>();
-        if(customer != null){
-            if(!StringUtils.isEmpty(customer.getPhone())){
+        if (customer != null) {
+            if (!StringUtils.isEmpty(customer.getPhone())) {
                 sql += " and phone like ? ";
                 parameter.add(customer.getPhone());
             }
@@ -42,22 +41,19 @@ public class CustomerServiceImpl implements CustomerService {
         sql += "limit ?,?";
         parameter.add(start);
         parameter.add(limit);
-        Query result = em.createNativeQuery(sql,Customer.class);
-        QueryTools.initParameter(result,parameter);
-        return result.getResultList();
+        return QueryTools.queryPageResult(sql, parameter, start, limit, Customer.class);
     }
 
     @Override
     public ResultBean<Customer> saveOrUpdate(Customer customer) {
         Staff staff = OperatorUtil.getOperatorName(session);
-        if(customer.getId() == null){
+        if (customer.getId() == null) {
             customer.setCreatedAt(new Date());
             customer.setUpdatedAt(new Date());
             customer.setCreatedBy(staff.getId());
             customer.setUpdatedBy(staff.getId());
             customerRepository.save(customer);
-        }
-        else {
+        } else {
             Customer db = customerRepository.findOne(customer.getId());
             db.setLastLoginAt(customer.getLastLoginAt());
             db.setLoginName(customer.getLoginName());
