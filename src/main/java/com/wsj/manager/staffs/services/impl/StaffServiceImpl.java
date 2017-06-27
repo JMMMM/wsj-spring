@@ -26,7 +26,7 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public ResultBean userLogin(String loginName, String password) {
         Staff staff = staffRepository.findStaffByPassword(loginName, MD5Helper.encode(password));
-        return null != staff?ResultBean.success("登录成功!",staff):ResultBean.failure("登陆失败");
+        return null != staff?ResultBean.success("登录成功!",staff):ResultBean.failure("登录失败,账号或密码错误!");
     }
 
     @Override
