@@ -35,5 +35,4 @@ public class LoginController {
         response.sendRedirect(WsjTools.getDomainName(request) + SysConstants.IndexPath.getName());
     }
 
-
 }
