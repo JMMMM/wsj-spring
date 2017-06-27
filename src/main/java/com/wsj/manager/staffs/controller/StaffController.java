@@ -26,7 +26,7 @@ public class StaffController {
      * @param autoLogin 下次自动登录 true自动登录 false不自动登录
      * @return
      */
-    @RequestMapping(name = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResultBean<Staff> login(HttpServletRequest request, String loginName, String password, boolean autoLogin) {
         ResultBean<Staff> result = staffService.userLogin(loginName, password);
         if (result.isSuccess())

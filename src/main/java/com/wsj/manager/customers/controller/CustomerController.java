@@ -42,7 +42,7 @@ public class CustomerController {
      * @return
      */
     @SessionCheck(checkedType = SessionCheck.Type.MANAGER)
-    @RequestMapping(name="/modifyCustomerStatus", method = RequestMethod.POST)
+    @RequestMapping(value="/modifyCustomerStatus", method = RequestMethod.POST)
     public ResultBean modifyCustomerStatus(int customerId, int status) {
         return customerService.modifyCustomerStatus(customerId, status);
     }
