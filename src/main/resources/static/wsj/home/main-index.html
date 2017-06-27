@@ -1,0 +1,45 @@
+<!--主体内容-->
+<dom-module id="main-index">
+    <template>
+        <div class="main-wrap">
+            <div>
+                <paper-tabs class="tab-bar tab-complex" selected="{{tabindex}}" noink no-bar scrollable hide-scroll-buttons>
+                    <template is="dom-repeat" items="[[tabPages]]">
+                        <paper-tab class="tab-item">
+                            <span name$="[[item.id]]" on-click="_clickTitle">[[item.title]]</span>
+                            <paper-icon-button name$="[[item.id]]" on-click="_closeTabPage" class="icon close"
+                                               icon="icons:close"></paper-icon-button>
+                        </paper-tab>
+                    </template>
+                </paper-tabs>
+            </div>
+            <div id="mainCont" class="main-cont">
+                <!--<template is="dom-if" if="{{showTabIndex('home',pageId)}}">
+                    <home-index></home-index>
+                </template>-->
+                <template is="dom-if" if="{{showTabIndex('approval',pageId)}}">
+                    <financial-business-check-pending></financial-business-check-pending>
+                </template>
+                <template is="dom-if" if="{{showTabIndex('pendingPayment',pageId)}}">
+                    <financial-business-obligation></financial-business-obligation>
+                </template>
+                <template is="dom-if" if="{{showTabIndex('dueToday',pageId)}}">
+                    <financial-business-due-today></financial-business-due-today>
+                </template>
+                <template is="dom-if" if="{{showTabIndex('pendingReceipt',pageId)}}">
+                    <financial-business-ongoing></financial-business-ongoing>
+                </template>
+                <template is="dom-if" if="{{showTabIndex('overdue',pageId)}}">
+                    <financial-business-overdue></financial-business-overdue>
+                </template>
+                <template is="dom-if" if="{{showTabIndex('historyOrder',pageId)}}">
+                    <financial-business-past-records></financial-business-past-records>
+                </template>
+                <template is="dom-if" if="{{showTabIndex('allCustomer',pageId)}}">
+                    <customer-index></customer-index>
+                </template>
+            </div>
+        </div>
+    </template>
+    <script type="text/javascript" src="assets/js/main-index.js"></script>
+</dom-module>

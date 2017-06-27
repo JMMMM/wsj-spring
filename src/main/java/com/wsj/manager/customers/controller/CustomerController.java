@@ -20,6 +20,13 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
+    /**
+     * 用户列表
+     * @param customer
+     * @param limit
+     * @param pageSize
+     * @return
+     */
     @SessionCheck(checkedType = SessionCheck.Type.MANAGER)
     @RequestMapping("/findCustomers")
     public List<Customer> findCustomers(@RequestParam(name = "customer",required = false) Customer customer,
