@@ -42,13 +42,6 @@ public class LoginController {
     public ResultBean<Staff> login(HttpServletRequest request, HttpServletResponse response, String loginName, String password, boolean autoLogin) {
         ResultBean<Staff> result = staffService.userLogin(loginName, password);
         request.getSession().setAttribute(SysConstants.LoginSession.getName(), result.getBean());
-        if (result.isSuccess()) {
-            try {
-                response.sendRedirect(request.getContextPath() + SysConstants.IndexPath.getName());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
         return result;
     }
 }
