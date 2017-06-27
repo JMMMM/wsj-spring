@@ -5,6 +5,8 @@ import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.wsj.sys.filter.UserSecurityInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +26,7 @@ import java.util.List;
 public class CustomerConfigs extends WebMvcConfigurerAdapter {
     @Autowired
     private UserSecurityInterceptor userSecurityInterceptor;
+
     /**
      * 使用bean注入,才能使其有效果,验证的话就在Entity字段中使用fastjson的
      * 注解@JSONField(serialize = false),转换出来的信息不含该字段,则成功
@@ -47,14 +50,24 @@ public class CustomerConfigs extends WebMvcConfigurerAdapter {
     }
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry){
+    public void addInterceptors(InterceptorRegistry registry) {
         super.addInterceptors(registry);
         registry.addInterceptor(userSecurityInterceptor);
     }
+
     @Bean
-    public ServletListenerRegistrationBean servletListenerRegistrationBean(){
+    public ServletListenerRegistrationBean servletListenerRegistrationBean() {
         ServletListenerRegistrationBean servletListenerRegistrationBean = new ServletListenerRegistrationBean();
         servletListenerRegistrationBean.setListener(new RequestContextListener());
         return servletListenerRegistrationBean;
+    }
+
+    @Bean
+    public EmbeddedServletContainerCustomizer containerCustomizer() {
+        /**
+         * session超时时间
+         */
+        EmbeddedServletContainerCustomizer embeddedServletContainerCustomizer = (ConfigurableEmbeddedServletContainer container) -> container.setSessionTimeout(1800);
+        return embeddedServletContainerCustomizer;
     }
 }
