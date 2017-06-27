@@ -1,5 +1,8 @@
 package com.wsj.configs;
 
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.wsj.filter.UserSecurityInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
@@ -33,17 +36,17 @@ public class CustomerConfigs extends WebMvcConfigurerAdapter {
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         super.configureMessageConverters(converters);
-        converters.add(new StringHttpMessageConverter(Charset.forName("utf8")));
-        converters.add(new MappingJackson2HttpMessageConverter());
-//
-//        FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
-//
-//        FastJsonConfig fastJsonConfig = new FastJsonConfig();
-////        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat, SerializerFeature.WriteClassName, SerializerFeature.WriteMapNullValue);
-//        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
-//        fastConverter.setFastJsonConfig(fastJsonConfig);
-//
-//        converters.add(fastConverter);
+//        converters.add(new StringHttpMessageConverter(Charset.forName("utf8")));
+//        converters.add(new MappingJackson2HttpMessageConverter());
+
+        FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
+
+        FastJsonConfig fastJsonConfig = new FastJsonConfig();
+//        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat, SerializerFeature.WriteClassName, SerializerFeature.WriteMapNullValue);
+        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
+        fastConverter.setFastJsonConfig(fastJsonConfig);
+
+        converters.add(fastConverter);
     }
 
     @Override
