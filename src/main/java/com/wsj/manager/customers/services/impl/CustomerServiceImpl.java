@@ -30,7 +30,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private HttpSession session;
     @Override
-    public List<Customer> findByPage(Customer customer, int limit, int pageSize) {
+    public List<Customer> findByPage(Customer customer, int start, int limit) {
         String sql = "select c.* from customers c where 1 =1 ";
         List<Object> parameter = new ArrayList<Object>();
         if(customer != null){
@@ -40,8 +40,8 @@ public class CustomerServiceImpl implements CustomerService {
             }
         }
         sql += "limit ?,?";
+        parameter.add(start);
         parameter.add(limit);
-        parameter.add(pageSize);
         Query result = em.createNativeQuery(sql,Customer.class);
         QueryTools.initParameter(result,parameter);
         return result.getResultList();

@@ -23,15 +23,15 @@ public class CustomerController {
     /**
      * 用户列表
      * @param customer
+     * @param start
      * @param limit
-     * @param pageSize
      * @return
      */
     @SessionCheck(checkedType = SessionCheck.Type.MANAGER)
     @RequestMapping("/findCustomers")
     public List<Customer> findCustomers(@RequestParam(name = "customer",required = false) Customer customer,
-                                        @RequestParam(name="limit",defaultValue = "0") int limit,
-                                        @RequestParam(name="pageSize",defaultValue = "10") int pageSize){
-        return customerService.findByPage(customer,limit,pageSize);
+                                        @RequestParam(name="start",defaultValue = "0") int start,
+                                        @RequestParam(name="limit",defaultValue = "10") int limit){
+        return customerService.findByPage(customer, start, limit);
     }
 }
