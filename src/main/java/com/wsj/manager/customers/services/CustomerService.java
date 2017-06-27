@@ -14,11 +14,10 @@ public interface CustomerService {
     /**
      * 搜索
      * @param customer 用来做筛选
-     * @param limit 分页
-     * @param pageSize
+     * @param pageBean 分页
      * @return
      */
-    PageBean<Customer> findByPage(Customer customer, int limit, int pageSize);
+    PageBean<Customer> findByPage(Customer customer, PageBean pageBean);
 
     /**
      *

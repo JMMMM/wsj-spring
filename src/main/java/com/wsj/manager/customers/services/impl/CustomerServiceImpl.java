@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,7 +28,7 @@ public class CustomerServiceImpl implements CustomerService {
     private HttpSession session;
 
     @Override
-    public PageBean<Customer> findByPage(Customer customer, int start, int limit) {
+    public PageBean<Customer> findByPage(Customer customer, PageBean pageBean) {
         String sql = "select c.* from customers c where 1 =1 ";
         List<Object> parameter = new ArrayList<Object>();
         if (customer != null) {
@@ -39,9 +38,7 @@ public class CustomerServiceImpl implements CustomerService {
             }
         }
         sql += "limit ?,?";
-        parameter.add(start);
-        parameter.add(limit);
-        return QueryTools.queryPageResult(sql, parameter, start, limit, Customer.class);
+        return QueryTools.queryPageResult(sql, parameter,pageBean, Customer.class);
     }
 
     @Override

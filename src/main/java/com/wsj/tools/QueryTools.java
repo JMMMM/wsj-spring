@@ -14,16 +14,16 @@ public class QueryTools {
     @Autowired
     private static EntityManager em;
 
-    public static <T> PageBean queryPageResult(String sql, List<Object> parameter, int start, int limit, Class<T> clazz) {
-        if (limit == 0) limit = 10;
+    public static <T> PageBean queryPageResult(String sql, List<Object> parameter, PageBean pageBean, Class<T> clazz) {
+        if (pageBean.getLimit() == 0) pageBean.setLimit(10);
         Query result = em.createNativeQuery(sql, clazz);
         for (int i = 0; i < parameter.size(); i++) {
             result.setParameter(i + 1, parameter.get(i));
         }
-        return initPageBean(result.getResultList(), start, limit);
+        return initPageBean(result.getResultList(), pageBean);
     }
 
-    public static <T> PageBean initPageBean(List<T> rows, int start, int limit) {
-        return new PageBean<>(start, limit, rows.size(), rows);
+    public static <T> PageBean initPageBean(List<T> rows, PageBean pageBean) {
+        return new PageBean<>(pageBean.getStart(), pageBean.getLimit(), rows.size(), rows);
     }
 }
