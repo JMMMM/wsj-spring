@@ -11,7 +11,12 @@ public class PageBean<T> {
     private int result;
     private List<T> rows;
 
+    public PageBean() {
+        super();
+    }
+
     public PageBean(int start, int limit, int result, List<T> rows) {
+        super();
         this.start = start;
         this.limit = limit;
         this.result = result;

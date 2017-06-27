@@ -26,8 +26,6 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
-    private EntityManager em;
-    @Autowired
     private HttpSession session;
 
     @Override

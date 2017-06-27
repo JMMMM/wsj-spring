@@ -15,6 +15,7 @@ public class QueryTools {
     private static EntityManager em;
 
     public static <T> PageBean queryPageResult(String sql, List<Object> parameter, int start, int limit, Class<T> clazz) {
+        if (limit == 0) limit = 10;
         Query result = em.createNativeQuery(sql, clazz);
         for (int i = 0; i < parameter.size(); i++) {
             result.setParameter(i + 1, parameter.get(i));
@@ -23,6 +24,6 @@ public class QueryTools {
     }
 
     public static <T> PageBean initPageBean(List<T> rows, int start, int limit) {
-        return new PageBean(start, limit, rows.size(), rows);
+        return new PageBean<>(start, limit, rows.size(), rows);
     }
 }
