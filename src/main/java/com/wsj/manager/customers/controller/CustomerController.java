@@ -34,4 +34,16 @@ public class CustomerController {
                                         PageBean pageBean) {
         return customerService.findByPage(customer, pageBean.getStart(), pageBean.getLimit());
     }
+
+    /**
+     * 修改用户状态
+     *
+     * @param status 修改后的状态
+     * @return
+     */
+    @SessionCheck(checkedType = SessionCheck.Type.MANAGER)
+    @RequestMapping("/modifyCustomerStatus")
+    public int modifyCustomerStatus(int status) {
+        return 1;
+    }
 }
