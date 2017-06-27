@@ -10,7 +10,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name="customers")
-public class Customer {
+public class Customer implements java.io.Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
