@@ -3,12 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>供应链金融</title>
-    <link href="assets/css/login.css?" rel="stylesheet">
-    <!--<script>
-        if(window != top){
-            top.location =  '/staff/login.do';
-        }
-    </script>-->
+    <link href="assets/css/login.css" rel="stylesheet">
 </head>
 <body>
 <div class="fake-body">
@@ -23,15 +18,15 @@
                 <h2 class="system-title">供应链金融-运营系统</h2>
             </div>
             <div id="loginForm" class="form" style="padding-left:140px;">
-                <p id="errorMsg" style="display:none;">账号或密码错误</p>
-                <p id="exitMsg" style="display:none;color:#DD2233;font-weight: bold;">成功退出</p>
                 <div class="label">账号</div>
-                <input type="text" id="account" name="j_username" class="text "/>
+                <input type="text" id="loginName" name="loginName" class="text "/>
                 <i class="passport"></i>
                 <div class="label">密码</div>
-                <input type="password" id="password" name="j_password" class="text"/>
+                <input type="password" id="password" name="password" class="text"/>
                 <button type="button" class="btn-login" id="loginBtn" value="登录"></button>
                 <i class="password"></i>
+                <p id="errorMsg" style="display:none;color:#DD2233;">你输入的密码或者账号不正确，请重新输入
+                </p>
             </div>
         </div>
     </div>

@@ -6,24 +6,23 @@
 $(function () {
     $("#loginBtn").click(function () {
         var param = {
-            loginName: $('#account').val(),
+            loginName: $('#loginName').val(),
             password: $('#password').val(),
-            autoLogin: true
+            autoLogin: false
         };
         query(
-            '/wsj/login/login.do',
+            '/login/login.do',
             param,
             function (data) {
                 if (data.success) {
-                    query('/wsj/login/index.do', {}, function () {
-                    }, function () {
-                    });
+                    $('#errorMsg').hide();
+                    document.location.href = "/login/index.do";
                 } else {
-                    alert("登陆失败");
+                    $('#errorMsg').show();
                 }
             },
             function () {
-                console.log('失败，回到登陆页面');
+                console.log('回到登陆页面');
             });
     });
     $("#password").keydown(function (key) {
