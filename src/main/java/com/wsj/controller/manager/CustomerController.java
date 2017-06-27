@@ -16,8 +16,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
+
     @Autowired
     private CustomerService customerService;
+
     @SessionCheck(checkedType = SessionCheck.Type.MANAGER)
     @RequestMapping("/findCustomers")
     public List<Customer> findCustomers(@RequestParam(name = "customer",required = false) Customer customer,
