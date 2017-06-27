@@ -25,6 +25,7 @@ public class LoginController {
 
     /**
      * index跳转
+     *
      * @param request
      * @param response
      * @throws IOException
@@ -42,9 +43,15 @@ public class LoginController {
      * @return
      */
     @RequestMapping("/login")
-    public ResultBean<Staff> login(HttpServletRequest request, HttpServletResponse response, String loginName, String password, boolean autoLogin) {
+    public ResultBean<Staff> login(HttpServletRequest request,String loginName, String password, boolean autoLogin) {
         ResultBean<Staff> result = staffService.userLogin(loginName, password);
         request.getSession().setAttribute(SysConstants.LoginSession.getName(), result.getBean());
         return result;
+    }
+
+    @RequestMapping("/logout")
+    public ResultBean logout(HttpServletRequest request) {
+        request.getSession().removeAttribute(SysConstants.LoginSession.getName());
+        return ResultBean.success("退出登录成功!");
     }
 }

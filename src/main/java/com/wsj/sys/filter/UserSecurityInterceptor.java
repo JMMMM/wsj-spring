@@ -2,6 +2,7 @@ package com.wsj.sys.filter;
 
 import com.wsj.sys.annotation.SessionCheck;
 import com.wsj.sys.enums.SysConstants;
+import com.wsj.tools.WsjTools;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -23,7 +24,7 @@ public class UserSecurityInterceptor implements HandlerInterceptor {
         if (sessionCheck == null || !sessionCheck.checked()) return true;
         Object obj = request.getSession().getAttribute(SysConstants.LoginSession.getName());
         if (obj != null) return true;
-        response.sendRedirect(request.getContextPath() + SysConstants.LoginPath.getName());
+        response.sendRedirect(WsjTools.getDomainName(request) + SysConstants.LoginPath.getName());
         return false;
     }
 
