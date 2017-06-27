@@ -1,4 +1,4 @@
-task sourceJar(type: Jar,group:'wsj') {
+task sourceJar(type: Jar) {
     from sourceSets.main.allJava
 }
 publishing {
