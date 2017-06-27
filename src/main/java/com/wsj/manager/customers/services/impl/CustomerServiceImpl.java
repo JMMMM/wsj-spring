@@ -42,7 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
         sql += "limit ?,?";
         parameter.add(limit);
         parameter.add(pageSize);
-        Query result = em.createNativeQuery(sql);
+        Query result = em.createNativeQuery(sql,Customer.class);
         QueryTools.initParameter(result,parameter);
         return result.getResultList();
     }
