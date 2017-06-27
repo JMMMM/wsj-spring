@@ -67,7 +67,6 @@ public class CustomerConfigs extends WebMvcConfigurerAdapter {
         /**
          * session超时时间
          */
-        EmbeddedServletContainerCustomizer embeddedServletContainerCustomizer = (ConfigurableEmbeddedServletContainer container) -> container.setSessionTimeout(1800);
-        return embeddedServletContainerCustomizer;
+        return (ConfigurableEmbeddedServletContainer container) -> container.setSessionTimeout(1800);
     }
 }
