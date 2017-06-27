@@ -1,7 +1,8 @@
 package com.wsj.tools;
 
-import com.wsj.entity.Staff;
-import com.wsj.enums.SysConstants;
+
+import com.wsj.manager.staffs.entity.Staff;
+import com.wsj.sys.enums.SysConstants;
 
 import javax.servlet.http.HttpSession;
 
