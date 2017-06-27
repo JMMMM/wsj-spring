@@ -13,11 +13,11 @@ public interface CustomerService {
     /**
      * 搜索
      * @param customer 用来做筛选
-     * @param limit 分页
-     * @param pageSize
+     * @param start 分页
+     * @param limit
      * @return
      */
-    List<Customer> findByPage(Customer customer, int limit, int pageSize);
+    List<Customer> findByPage(Customer customer, int start, int limit);
 
     /**
      *

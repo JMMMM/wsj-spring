@@ -1,8 +1,6 @@
 /**
  * Created by SkyLin on 2017/6/26.
  */
-/*/wsj-spring/staff/login.do*/
-<!--script-->
 $(function () {
     $("#loginBtn").click(function () {
         var param = {
