@@ -6,8 +6,8 @@ package com.wsj.sys.enums;
 public enum SysConstants {
 
     LoginSession("staffInfo"),
-    IndexPath("/wsj/index.html"),
-    LoginPath("/wsj/login/login.html");
+    IndexPath("/wsj_system/index.html"),
+    LoginPath("/wsj_system/login/login.html");
     private String name;
     private SysConstants(String name){
         this.name = name;
