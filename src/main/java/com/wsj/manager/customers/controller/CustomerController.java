@@ -4,6 +4,7 @@ import com.wsj.manager.customers.entity.Customer;
 import com.wsj.manager.customers.services.CustomerService;
 import com.wsj.sys.annotation.SessionCheck;
 import com.wsj.sys.bean.PageBean;
+import com.wsj.sys.bean.ResultBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,7 +42,7 @@ public class CustomerController {
      */
     @SessionCheck(checkedType = SessionCheck.Type.MANAGER)
     @RequestMapping("/modifyCustomerStatus")
-    public int modifyCustomerStatus(int status) {
-        return 1;
+    public ResultBean modifyCustomerStatus(int customerId, int status) {
+        return customerService.modifyCustomerStatus(customerId,status);
     }
 }

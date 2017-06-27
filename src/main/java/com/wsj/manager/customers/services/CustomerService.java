@@ -5,14 +5,13 @@ import com.wsj.manager.customers.entity.Customer;
 import com.wsj.sys.bean.PageBean;
 import com.wsj.sys.bean.ResultBean;
 
-import java.util.List;
-
 /**
  * Created by jimmy on 2017/6/25.
  */
 public interface CustomerService {
     /**
      * 搜索
+     *
      * @param customer 用来做筛选
      * @param pageBean 分页
      * @return
@@ -20,9 +19,11 @@ public interface CustomerService {
     PageBean<Customer> findByPage(Customer customer, PageBean pageBean);
 
     /**
-     *
      * @param customer 有ID时update，没ID时insert
      * @return
      */
     ResultBean<Customer> saveOrUpdate(Customer customer);
+
+
+    ResultBean modifyCustomerStatus(int customerId, int status);
 }

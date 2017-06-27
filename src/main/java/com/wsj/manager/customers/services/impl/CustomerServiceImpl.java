@@ -10,8 +10,10 @@ import com.wsj.tools.OperatorUtil;
 import com.wsj.tools.QueryTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,11 +23,14 @@ import java.util.List;
  * Created by jimmy on 2017/6/25.
  */
 @Service
+@Transactional
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
     private HttpSession session;
+    @Autowired
+    private EntityManager em;
 
     @Override
     public PageBean<Customer> findByPage(Customer customer, PageBean pageBean) {
@@ -38,7 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
             }
         }
         sql += "limit ?,?";
-        return QueryTools.queryPageResult(sql, parameter,pageBean, Customer.class);
+        return QueryTools.queryPageResult(em, sql, parameter, pageBean, Customer.class);
     }
 
     @Override
@@ -63,5 +68,11 @@ public class CustomerServiceImpl implements CustomerService {
             db.setStatus(customer.getStatus());
         }
         return ResultBean.success("成功");
+    }
+
+    @Override
+    public ResultBean modifyCustomerStatus(int customerId, int status) {
+        customerRepository.modifyCustomerStatus(customerId, status, OperatorUtil.getOperatorName(session).getId());
+        return ResultBean.success("更新成功!");
     }
 }
