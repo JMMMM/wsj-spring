@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 /**
  * Created by jimmy on 2017/6/25.
  */
@@ -31,7 +29,7 @@ public class CustomerController {
     @SessionCheck(checkedType = SessionCheck.Type.MANAGER)
     @RequestMapping("/findCustomers")
     public PageBean<Customer> findCustomers(@RequestParam(name = "customer", required = false) Customer customer,
-                                        PageBean pageBean) {
-        return customerService.findByPage(customer, pageBean.getStart(), pageBean.getLimit());
+                                            PageBean pageBean) {
+        return customerService.findByPage(customer, pageBean);
     }
 }
