@@ -33,7 +33,7 @@ ext {
     hibernateVersion = '5.1.0.Final'
 }
 war{
-    baseName="wsj-spring"
+    baseName="wsj_server"
 }
 repositories {
     maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
