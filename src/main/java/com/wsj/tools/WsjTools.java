@@ -26,7 +26,7 @@ public class WsjTools {
      * @return
      */
     public static String getLoginPath(HttpServletRequest request) {
-        return request.getContextPath() + SysConstants.LoginPath.getName();
+        return getDomainName(request) + SysConstants.LoginPath.getName();
     }
 
     /**
