@@ -1,6 +1,7 @@
-package com.wsj.tools;
+package com.wsj.wechat.tools;
 
 import com.wsj.sys.enums.SysConstants;
+import com.wsj.wechat.bean.token.Token;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -38,5 +39,10 @@ public class WsjTools {
     public static boolean isAjaxRequest(HttpServletRequest request) {
         String requestType = request.getHeader("X-Requested-With");
         return requestType != null && requestType.equals("XMLHttpRequest");
+    }
+
+
+    public static Token getWechatToken(String appid, String secret) {
+        return null;
     }
 }

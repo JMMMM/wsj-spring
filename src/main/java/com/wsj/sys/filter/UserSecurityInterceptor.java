@@ -2,7 +2,6 @@ package com.wsj.sys.filter;
 
 import com.wsj.sys.annotation.SessionCheck;
 import com.wsj.sys.enums.SysConstants;
-import com.wsj.tools.WsjTools;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
