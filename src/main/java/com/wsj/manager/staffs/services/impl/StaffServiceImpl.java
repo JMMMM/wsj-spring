@@ -33,7 +33,7 @@ public class StaffServiceImpl implements StaffService {
             staffRepository.updateLoginTime(staff.getId());
             return ResultBean.success("登录成功!", staff);
         }
-        return ResultBean.success("登录失败，账号或密码错误!");
+        return ResultBean.failure("登录失败，账号或密码错误!");
     }
 
     @Override
