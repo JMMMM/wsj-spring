@@ -9,7 +9,7 @@ $(function () {
             autoLogin: false
         };
         query(
-            '/login/login.do',
+            '/staff/login.do',
             param,
             function (data) {
                 if (data.success) {
@@ -34,7 +34,7 @@ $(function () {
         var realParam = $.extend({}, param);
         $.ajax({
             url: url,
-            type: "GET",
+            type: "POST",
             data: realParam,
             dataType: "json",
             success: function (data) {

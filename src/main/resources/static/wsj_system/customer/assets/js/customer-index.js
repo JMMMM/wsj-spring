@@ -35,7 +35,7 @@ Polymer({
         }
     },
     listeners: {
-        "data-change": 'findSimpleCompanies',
+        "data-change": 'findCustomers',
     },
     ready: function () {
     }
