@@ -6,7 +6,7 @@ create table new_wsj.staffs (
  `password` varchar(255) not null comment '登陆密码',
   `sex` tinyint(1) default null comment '性别',
  `status` tinyint(1) not null default 1 comment '0是禁用，1是启用',
- `phone` varchar(255) default null comment '手机号码',
+ `phone` varchar(11) default null comment '手机号码',
  `created_at` datetime not null comment '创建时间',
  `created_by` int(8) default null comment '创建人,staff_id',
  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
