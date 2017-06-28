@@ -25,9 +25,9 @@ public class UserSecurityInterceptor implements HandlerInterceptor {
         if (sessionCheck == null || !sessionCheck.checked()) return true;
         Object obj = request.getSession().getAttribute(SysConstants.LoginSession.getName());
         if (obj != null) return true;
-        if (UserSecurityInterceptor.isAjaxRequest(request)) {
+        if (WsjTools.isAjaxRequest(request)) {
             String jsonObject = "{\"sessionStatus\":\"timeout\",\"redirectHref\":"
-                    + "\"" + WsjTools.getDomainName(request) + SysConstants.LoginPath.getName() + "\"," +
+                    + "\"" + WsjTools.getLoginPath(request) + "\"," +
                     "\"success\":false}";
             String contentType = "application/json";
             response.setContentType(contentType);
@@ -38,7 +38,7 @@ public class UserSecurityInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        response.sendRedirect(WsjTools.getDomainName(request) + SysConstants.LoginPath.getName());
+        response.sendRedirect(WsjTools.getLoginPath(request));
         return false;
     }
 
@@ -52,8 +52,4 @@ public class UserSecurityInterceptor implements HandlerInterceptor {
 
     }
 
-    public static boolean isAjaxRequest(HttpServletRequest request) {
-        String requestType = request.getHeader("X-Requested-With");
-        return requestType != null && requestType.equals("XMLHttpRequest");
-    }
 }

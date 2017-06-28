@@ -10,7 +10,16 @@ import java.util.List;
  * Created by jimmy on 2017/6/26.
  */
 public class QueryTools {
-
+    /**
+     * 分页查询
+     * @param em entityManager
+     * @param sql sql
+     * @param parameter 参数
+     * @param pageBean 分页参数
+     * @param clazz 类型
+     * @param <T>
+     * @return
+     */
     public static <T> PageBean queryPageResult(EntityManager em, String sql, List<Object> parameter, PageBean pageBean, Class<T> clazz) {
         if (pageBean.getLimit() == 0) pageBean.setLimit(10);
         parameter.add(pageBean.getStart());
@@ -22,6 +31,13 @@ public class QueryTools {
         return initPageBean(result.getResultList(), pageBean);
     }
 
+    /**
+     * 初始化分页实体
+     * @param rows
+     * @param pageBean
+     * @param <T>
+     * @return
+     */
     public static <T> PageBean initPageBean(List<T> rows, PageBean pageBean) {
         return new PageBean<>(pageBean.getStart(), pageBean.getLimit(), rows.size(), rows);
     }
