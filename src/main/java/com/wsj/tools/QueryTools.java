@@ -31,6 +31,13 @@ public class QueryTools {
         return initPageBean(result.getResultList(), pageBean);
     }
 
+    /**
+     * 初始化分页实体
+     * @param rows
+     * @param pageBean
+     * @param <T>
+     * @return
+     */
     public static <T> PageBean initPageBean(List<T> rows, PageBean pageBean) {
         return new PageBean<>(pageBean.getStart(), pageBean.getLimit(), rows.size(), rows);
     }
