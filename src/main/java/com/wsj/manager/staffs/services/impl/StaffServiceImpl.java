@@ -8,6 +8,7 @@ import com.wsj.tools.MD5Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.ArrayList;
@@ -26,16 +27,20 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public ResultBean userLogin(String loginName, String password) {
         Staff staff = staffRepository.findStaffByPassword(loginName, MD5Helper.encode(password));
-        return null != staff?ResultBean.success("登录成功!",staff):ResultBean.failure("登录失败,账号或密码错误!");
+        if (null != staff) {
+            staffRepository.updateLoginTime(staff.getId());
+            return ResultBean.success("登录成功!", staff);
+        }
+        return ResultBean.success("登录失败，账号或密码错误!");
     }
 
     @Override
     public List<Staff> findStaffs(Staff staff, int limit, int pageSize) {
         String sql = "select s.* from staffs s where 1 =1  ";
         List<Object> parameter = new ArrayList<>();
-        if(!StringUtils.isEmpty((staff.getName()))){
+        if (!StringUtils.isEmpty((staff.getName()))) {
             sql += " and name like ?";
-            parameter.add("%"+staff.getName()+"%");
+            parameter.add("%" + staff.getName() + "%");
         }
         sql += " limit ?,? ";
         parameter.add(limit);
