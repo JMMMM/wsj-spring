@@ -39,7 +39,7 @@ public class CustomerServiceImpl implements CustomerService {
         if (customer != null) {
             if (!StringUtils.isEmpty(customer.getPhone())) {
                 sql += " and phone like ? ";
-                parameter.add(customer.getPhone());
+                parameter.add("%"+customer.getPhone()+"%");
             }
         }
         sql += "limit ?,?";
