@@ -21,15 +21,17 @@ public class WsjTools {
 
     /**
      * 登录页面URL
+     *
      * @param request
      * @return
      */
     public static String getLoginPath(HttpServletRequest request) {
-        return request.getContextPath() + SysConstants.LoginPath.getName();
+        return WsjTools.getDomainName(request) + SysConstants.LoginPath.getName();
     }
 
     /**
      * 是否为AJAX请求
+     *
      * @param request
      * @return
      */
