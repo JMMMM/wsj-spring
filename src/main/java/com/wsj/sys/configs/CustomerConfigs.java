@@ -71,11 +71,11 @@ public class CustomerConfigs extends WebMvcConfigurerAdapter implements Environm
         return servletListenerRegistrationBean;
     }
 
+    /**
+     * session超时时间
+     */
     @Bean
     public EmbeddedServletContainerCustomizer containerCustomizer() {
-        /**
-         * session超时时间
-         */
         return (ConfigurableEmbeddedServletContainer container) -> container.setSessionTimeout(1800);
     }
 
