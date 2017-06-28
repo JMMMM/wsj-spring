@@ -1,6 +1,7 @@
 package com.wsj.manager.staffs.controller;
 
 import com.wsj.sys.annotation.SessionCheck;
+import com.wsj.sys.enums.SysConstants;
 import com.wsj.tools.WsjTools;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,7 @@ public class LoginController {
     @SessionCheck(checkedType = SessionCheck.Type.MANAGER)
     @RequestMapping(value = {"/", "/index"})
     public void index(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.sendRedirect(WsjTools.getLoginPath(request));
+        response.sendRedirect(WsjTools.getDomainName(request) + SysConstants.IndexPath.getName());
     }
 
 }
