@@ -27,7 +27,7 @@ public class LoginController {
     @SessionCheck(checkedType = SessionCheck.Type.MANAGER)
     @RequestMapping(value = {"/", "/index"})
     public void index(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.sendRedirect(SysConstants.IndexPath.getName());
+        response.sendRedirect(request.getContextPath()+SysConstants.IndexPath.getName());
     }
 
 }

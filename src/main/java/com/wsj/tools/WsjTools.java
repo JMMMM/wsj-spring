@@ -26,8 +26,9 @@ public class WsjTools {
      * @return
      */
     public static String getLoginPath(HttpServletRequest request) {
-        return WsjTools.getDomainName(request) + SysConstants.LoginPath.getName();
+        return request.getContextPath() + SysConstants.LoginPath.getName();
     }
+
     /**
      * 是否为AJAX请求
      *
