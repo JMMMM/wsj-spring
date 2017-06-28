@@ -40,7 +40,7 @@ public class StaffController {
         return ResultBean.success("退出登录成功!");
     }
 
-    @RequestMapping("loginUser")
+    @RequestMapping("/loginUser")
     public ResultBean loginUser(HttpServletRequest request) {
         Staff staff = (Staff) request.getSession().getAttribute(SysConstants.LoginSession.getName());
         return (null == staff) ? ResultBean.failure("没有登录") : ResultBean.success("返回数据", staff);
