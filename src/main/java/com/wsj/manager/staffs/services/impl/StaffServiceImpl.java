@@ -7,6 +7,7 @@ import com.wsj.sys.bean.ResultBean;
 import com.wsj.tools.MD5Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
@@ -18,6 +19,7 @@ import java.util.List;
  * Created by Jimmy on 2017/6/23.
  */
 @Service
+@Transactional
 public class StaffServiceImpl implements StaffService {
     @Autowired
     private StaffRepository staffRepository;
