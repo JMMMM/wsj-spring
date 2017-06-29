@@ -1,7 +1,7 @@
 package com.wsj.tools;
 
+import com.google.gson.Gson;
 import com.wsj.sys.enums.SysConstants;
-import com.wsj.wechat.bean.token.Token;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
  * Created by Jimmy on 2017/6/27.
  */
 public class WsjTools {
+    private static Gson gson = new Gson();
+
     /**
      * 获取域名
      *
@@ -41,8 +43,11 @@ public class WsjTools {
         return requestType != null && requestType.equals("XMLHttpRequest");
     }
 
-
-    public static Token getWechatToken(String appid, String secret) {
-        return null;
+    /**
+     * json解析
+     */
+    public static <T> T jsonParser(String jsonString, Class<T> clazz) {
+        return gson.fromJson(jsonString, clazz);
     }
+
 }

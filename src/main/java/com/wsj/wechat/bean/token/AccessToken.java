@@ -5,7 +5,7 @@ import com.wsj.wechat.bean.BaseResult;
 /**
  * Created by Jimmy on 2017/6/28.
  */
-public class Token extends BaseResult {
+public class AccessToken extends BaseResult {
     private String access_token;
     private int expires_in;
 
