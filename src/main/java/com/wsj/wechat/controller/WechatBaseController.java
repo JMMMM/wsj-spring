@@ -1,5 +1,6 @@
 package com.wsj.wechat.controller;
 
+import com.wsj.tools.WsjTools;
 import com.wsj.wechat.api.SnsAPI;
 import com.wsj.wechat.entity.AccessToken;
 import com.wsj.wechat.tools.ValidateSignature;
@@ -54,7 +55,8 @@ public class WechatBaseController {
 
     @RequestMapping(value = "/thridPartLoginUrl")
     public String oauth2Authorize(HttpServletRequest request) {
-        return SnsAPI.connectOauth2Authorize(WechatConfigure.getAppId(), request.getContextPath() + "/wechat/userCode", true, "123");
+        String redirectUrl = WsjTools.getDomainName(request)+"/wsj_server/wechat/userCode".replace("http","https");
+        return SnsAPI.connectOauth2Authorize(WechatConfigure.getAppId(), redirectUrl, false, "123");
     }
 
     @RequestMapping(value = "/userCode")
