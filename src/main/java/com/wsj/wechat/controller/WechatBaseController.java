@@ -1,7 +1,6 @@
 package com.wsj.wechat.controller;
 
 import com.wsj.wechat.api.SnsAPI;
-import com.wsj.wechat.bean.user.UserInfo;
 import com.wsj.wechat.entity.AccessToken;
 import com.wsj.wechat.tools.ValidateSignature;
 import com.wsj.wechat.tools.WechatAccessToken;
@@ -48,14 +47,18 @@ public class WechatBaseController {
         }
     }
 
-    @RequestMapping(value = "accessToken")
+    @RequestMapping(value = "/accessToken")
     public AccessToken accessToken() {
         return WechatAccessToken.getAccessToken();
     }
 
-    @RequestMapping(value = "/login")
-    public String oauth2Authorize() {
-        return SnsAPI.connectOauth2Authorize(WechatConfigure.getAppId(),"https%3A%2F%2Fchong.qq.com%2Fphp%2Findex.php%3Fd%3D%26c%3DwxAdap\n" +
-                "ter%26m%3DmobileDeal%26showwxpaytitle%3D1%26vb2ctag%3D4_2030_5_1194_60",true,"123");
+    @RequestMapping(value = "/thridPartLoginUrl")
+    public String oauth2Authorize(HttpServletRequest request) {
+        return SnsAPI.connectOauth2Authorize(WechatConfigure.getAppId(), request.getContextPath() + "/wechat/userCode", true, "123");
+    }
+
+    @RequestMapping(value = "/userCode")
+    public void userCode(String code, String state) {
+        logger.info(code+"======"+state);
     }
 }
