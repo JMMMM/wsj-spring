@@ -1,8 +1,8 @@
 package com.wsj.wechat.tools;
 
+import com.wsj.wechat.bean.token.AccessToken;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.ContentType;
@@ -37,7 +37,7 @@ public class WechatTools {
     }
 
     private static HttpResponse sendRequest(CloseableHttpClient httpclient, HttpUriRequest httpost)
-            throws ClientProtocolException, IOException {
+            throws IOException {
         HttpResponse response = null;
         response = httpclient.execute(httpost);
         return response;
@@ -62,5 +62,10 @@ public class WechatTools {
         }
 
         return body;
+    }
+
+    //TODO
+    public AccessToken accessToken() {
+        return null;
     }
 }

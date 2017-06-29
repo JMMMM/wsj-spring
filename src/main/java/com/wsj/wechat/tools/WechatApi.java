@@ -1,5 +1,5 @@
 package com.wsj.wechat.tools;
 
-public interface WechatApi<T> {
-    T callerUrl();
+public abstract class WechatApi<T> {
+    protected static String PARAM_ACCESS_TOKEN = "access_token";
 }
