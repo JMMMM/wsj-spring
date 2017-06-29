@@ -2,10 +2,7 @@ package com.wsj.wechat.api;
 
 import com.wsj.tools.WsjTools;
 import com.wsj.wechat.bean.callbackip.Callbackip;
-import com.wsj.wechat.tools.WechatApi;
 import com.wsj.wechat.tools.WechatTools;
-
-import static com.wsj.wechat.tools.WechatConfigure.BASE_URI;
 
 /**
  * 获取微信服务器IP地址

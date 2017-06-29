@@ -9,12 +9,6 @@ public class WechatConfigure {
 
     private static String appSecrect;
 
-    public static final String BASE_URI = "https://api.weixin.qq.com";
-    public static final String MEDIA_URI = "http://file.api.weixin.qq.com";
-    public static final String MP_URI = "https://mp.weixin.qq.com";
-    public static final String MCH_URI = "https://api.mch.weixin.qq.com";
-    public static final String OPEN_URI = "https://open.weixin.qq.com";
-
     public static String getAppId() {
         return appId;
     }
