@@ -1,6 +1,8 @@
 package com.wsj.wechat.controller;
 
+import com.wsj.wechat.entity.AccessToken;
 import com.wsj.wechat.tools.ValidateSignature;
+import com.wsj.wechat.tools.WechatAccessToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,5 +43,10 @@ public class WechatBaseController {
                 e.printStackTrace();
             }
         }
+    }
+
+    @RequestMapping(value = "accessToken")
+    public AccessToken accessToken() {
+        return WechatAccessToken.getAccessToken();
     }
 }

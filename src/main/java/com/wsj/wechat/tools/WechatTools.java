@@ -1,7 +1,7 @@
 package com.wsj.wechat.tools;
 
 import com.wsj.tools.WsjTools;
-import com.wsj.wechat.bean.token.AccessToken;
+import com.wsj.wechat.entity.AccessToken;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
