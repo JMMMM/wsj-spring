@@ -1,6 +1,8 @@
 package com.wsj.wechat.controller;
 
 import com.wsj.wechat.tools.ValidateSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +18,8 @@ import java.io.PrintWriter;
 @RestController
 @RequestMapping(value = "/wechat/")
 public class WechatBaseController {
+    private static Logger logger = LoggerFactory.getLogger(WechatBaseController.class);
+
     @RequestMapping(value = "/ownerCheck", method = RequestMethod.GET)
     public void ownerCheck(HttpServletRequest request, HttpServletResponse response) {
         // 微信加密签名
@@ -26,6 +30,8 @@ public class WechatBaseController {
         String nonce = request.getParameter("nonce");
         // 随机字符串
         String echostr = request.getParameter("echostr");
+
+        logger.info("微信OwnerCheck:" + signature + "--" + timestamp + "--" + nonce + "--" + nonce);
         if (signature != null && ValidateSignature.checkSignature(signature, timestamp, nonce)) {
             try {
                 PrintWriter print = response.getWriter();
