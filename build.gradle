@@ -32,8 +32,8 @@ ext {
     springBootVersion = '1.5.4.RELEASE'
     hibernateVersion = '5.1.0.Final'
 }
-war{
-    baseName="wsj_server"
+war {
+    baseName = "wsj_server"
 }
 repositories {
     maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
@@ -68,13 +68,12 @@ dependencies {
     //redis
     compile("redis.clients:jedis:2.9.0")
 
-    //jackson
-//    compile("com.fasterxml.jackson.core:jackson-core:2.5.4")
-//    compile("com.fasterxml.jackson.core:jackson-databind:2.5.4")
+    //fastjson
     compile("com.alibaba:fastjson:1.2.15")
-//    compile('com.mchange:mchange-commons-java:0.2.11')
-//    compile('org.springframework.data:spring-data-jpa:1.11.4.RELEASE')
-    compile ('org.apache.httpcomponents:httpclient:4.5.3')
-//    providedRuntime("org.apache.tomcat:tomcat-juli:$tomcatVersion")
+
+    //apache
+    compile('org.apache.httpcomponents:httpclient:4.5.3')
+    compile('group:org.apache.commons:commons-lang3:3.6')
+
 
 }
