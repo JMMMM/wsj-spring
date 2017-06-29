@@ -91,7 +91,7 @@
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
     <bean id="wechatConfigure" class="com.wsj.wechat.tools.WechatConfigure">
-        <property name="appId" value="${wsj.wx.appId}"/>
-        <property name="appSecrect" value="${wsj.wx.appSecrect}"/>
+        <property name="appId" value="${WSJ_WX_APPID}"/>
+        <property name="appSecrect" value="${WSJ_WX_APPSECRET}"/>
     </bean>
 </beans>
