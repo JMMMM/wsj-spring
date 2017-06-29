@@ -1,7 +1,7 @@
 package com.wsj.wechat.api.model.query;
 
-import com.wsj.wx.api.model.common.CommonReqData;
-import com.wsj.wx.api.util.StringRandomGen;
+import com.wsj.wechat.api.model.common.CommonReqData;
+import com.wsj.wechat.api.util.StringRandomGen;
 
 /**
  * 订单查询接口参数

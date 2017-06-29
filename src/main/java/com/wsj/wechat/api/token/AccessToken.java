@@ -1,8 +1,9 @@
 package com.wsj.wechat.api.token;
 
+import com.wsj.wechat.api.util.WeiXinConfigure;
 import org.apache.log4j.Logger;
 
-import com.wsj.wx.api.util.WeiXinConfigure;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Access token实体模型
@@ -12,7 +13,6 @@ public class AccessToken extends Token {
 	private static Logger logger = Logger.getLogger(AccessToken.class);
 	private static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential";
 	
-
 	@Override
 	protected String tokenName() {
 		return "access_token";

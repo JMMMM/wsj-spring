@@ -1,6 +1,7 @@
 package com.wsj.wechat.api.model.micropay;
 
-import com.wsj.wx.api.model.common.CommonResData;
+
+import com.wsj.wechat.api.model.common.CommonResData;
 
 /**
  * 刷卡支付返回数据

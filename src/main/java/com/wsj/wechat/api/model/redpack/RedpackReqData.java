@@ -1,8 +1,8 @@
 package com.wsj.wechat.api.model.redpack;
 
-import com.wsj.wx.api.model.common.CommonReqData;
-import com.wsj.wx.api.util.StringRandomGen;
 
+import com.wsj.wechat.api.model.common.CommonReqData;
+import com.wsj.wechat.api.util.StringRandomGen;
 
 public class RedpackReqData extends CommonReqData {
 

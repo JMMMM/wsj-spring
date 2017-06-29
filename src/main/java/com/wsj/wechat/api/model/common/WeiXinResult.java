@@ -1,6 +1,6 @@
 package com.wsj.wechat.api.model.common;
 
-import com.wsj.wx.api.constant.WeiXinResultStatus;
+import com.wsj.wechat.api.constant.WeiXinResultStatus;
 
 /**
  * 请求结果

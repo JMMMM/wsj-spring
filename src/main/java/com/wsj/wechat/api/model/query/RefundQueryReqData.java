@@ -1,13 +1,13 @@
 package com.wsj.wechat.api.model.query;
 
-import com.wsj.wx.api.model.common.CommonReqData;
-import com.wsj.wx.api.util.StringRandomGen;
+import com.wsj.wechat.api.model.common.CommonReqData;
+import com.wsj.wechat.api.util.StringRandomGen;
 
 /**
  * 申请退款查询参数
  * https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_5&index=7
  */
-public class RefundQueryReqData extends CommonReqData{
+public class RefundQueryReqData extends CommonReqData {
 
     /**
      * 设备号

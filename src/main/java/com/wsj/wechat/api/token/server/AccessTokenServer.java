@@ -1,8 +1,7 @@
 package com.wsj.wechat.api.token.server;
 
-import com.wsj.wx.api.token.AccessToken;
 import com.uap.common.utils.AppContextUtils;
-import com.uap.core.domain.dao.IRedisDao;
+import com.wsj.wechat.api.token.AccessToken;
 
 
 /**

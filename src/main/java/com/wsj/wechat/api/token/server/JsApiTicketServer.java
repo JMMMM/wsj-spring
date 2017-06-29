@@ -1,9 +1,8 @@
 package com.wsj.wechat.api.token.server;
 
-import com.wsj.wx.api.token.Ticket;
-import com.wsj.wx.api.token.TicketType;
 import com.uap.common.utils.AppContextUtils;
-import com.uap.core.domain.dao.IRedisDao;
+import com.wsj.wechat.api.token.Ticket;
+import com.wsj.wechat.api.token.TicketType;
 
 /**
  * Ticket server适配器
