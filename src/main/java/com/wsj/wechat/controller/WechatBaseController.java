@@ -59,7 +59,7 @@ public class WechatBaseController {
     @RequestMapping(value = "/thridPartLoginUrl")
     public String oauth2Authorize(HttpServletRequest request) {
         String redirectUrl = WsjTools.getDomainName(request)+"/wsj_server/wechat/userCode";
-        return SnsAPI.connectOauth2Authorize(WechatConfigure.getAppId(), redirectUrl.replace("http","https"), false, "123");
+        return SnsAPI.connectOauth2Authorize(WechatConfigure.getAppId(), redirectUrl.replace("http","https"), true, "123");
     }
 
     @RequestMapping(value = "/userCode")
@@ -68,7 +68,7 @@ public class WechatBaseController {
         String state = request.getParameter("state");
         logger.info(code+"======"+state);
         SnsToken snsToken = SnsAPI.oauth2AccessToken(WechatConfigure.getAppId(),WechatConfigure.getAppSecrect(),code);
-        UserInfo userInfo = WechatUserInfoApi.callerUrl(snsToken.getAccess_token(),snsToken.getOpenid());
+        UserInfo userInfo = SnsAPI.userinfo(snsToken.getAccess_token(),snsToken.getOpenid(),"zh_CN");
         return userInfo;
     }
 
