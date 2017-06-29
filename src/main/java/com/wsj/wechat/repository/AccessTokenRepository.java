@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface AccessTokenRepository extends JpaRepository<AccessToken, Integer> {
 
-    @Query(value = "select a.* from access_token a where createAt >= DATE_ADD(now(),INTERVAL -1.8 hour)", nativeQuery = true)
+    @Query(value = "select a.* from wx_access_token a where created_at >= DATE_ADD(now(),INTERVAL -1.8 hour)", nativeQuery = true)
     AccessToken getValidAccessToken();
 }

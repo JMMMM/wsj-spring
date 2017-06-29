@@ -10,7 +10,7 @@ import java.util.Date;
 @Table(name = "wx_access_token")
 public class AccessToken {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
     @Column(name = "access_token")
