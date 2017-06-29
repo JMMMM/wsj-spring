@@ -1,6 +1,6 @@
 package com.wsj.wechat.controller;
 
-import com.wsj.wechat.tools.WechatTools;
+import com.wsj.wechat.tools.ValidateSignature;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +26,7 @@ public class WechatBaseController {
         String nonce = request.getParameter("nonce");
         // 随机字符串
         String echostr = request.getParameter("echostr");
-        if (signature != null && WechatTools.checkSignature(signature, timestamp, nonce)) {
+        if (signature != null && ValidateSignature.checkSignature(signature, timestamp, nonce)) {
             try {
                 PrintWriter print = response.getWriter();
                 print.write(echostr);

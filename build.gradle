@@ -71,6 +71,5 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
     compile group: 'commons-lang', name: 'commons-lang', version: '2.5'
     compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.10'
-    compile fileTree(dir:'libs',include:['*.jar'])
 
 }
