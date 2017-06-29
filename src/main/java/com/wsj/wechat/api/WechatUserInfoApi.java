@@ -11,7 +11,7 @@ public class WechatUserInfoApi extends WechatApi {
 
     public static UserInfo callerUrl(String accessToken, String openId) {
         StringBuilder url = new StringBuilder();
-        url.append(BASE_URI + "cgi-bin/user/info?")
+        url.append(BASE_URI + "/cgi-bin/user/info?")
                 .append(PARAM_ACCESS_TOKEN + "=" + accessToken + "&")
                 .append("openid=" + openId + "&")
                 .append("lang=zh_CN");

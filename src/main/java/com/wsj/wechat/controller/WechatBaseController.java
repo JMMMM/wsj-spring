@@ -2,6 +2,9 @@ package com.wsj.wechat.controller;
 
 import com.wsj.tools.WsjTools;
 import com.wsj.wechat.api.SnsAPI;
+import com.wsj.wechat.api.WechatUserInfoApi;
+import com.wsj.wechat.bean.sns.SnsToken;
+import com.wsj.wechat.bean.user.UserInfo;
 import com.wsj.wechat.entity.AccessToken;
 import com.wsj.wechat.tools.ValidateSignature;
 import com.wsj.wechat.tools.WechatAccessToken;
@@ -55,12 +58,18 @@ public class WechatBaseController {
 
     @RequestMapping(value = "/thridPartLoginUrl")
     public String oauth2Authorize(HttpServletRequest request) {
-        String redirectUrl = WsjTools.getDomainName(request)+"/wsj_server/wechat/userCode".replace("http","https");
-        return SnsAPI.connectOauth2Authorize(WechatConfigure.getAppId(), redirectUrl, false, "123");
+        String redirectUrl = WsjTools.getDomainName(request)+"/wsj_server/wechat/userCode";
+        return SnsAPI.connectOauth2Authorize(WechatConfigure.getAppId(), redirectUrl.replace("http","https"), false, "123");
     }
 
     @RequestMapping(value = "/userCode")
-    public void userCode(String code, String state) {
+    public UserInfo userCode(HttpServletRequest request,HttpServletResponse response) {
+        String code = request.getParameter("code");
+        String state = request.getParameter("state");
         logger.info(code+"======"+state);
+        SnsToken snsToken = SnsAPI.oauth2AccessToken(WechatConfigure.getAppId(),WechatConfigure.getAppSecrect(),code);
+        UserInfo userInfo = WechatUserInfoApi.callerUrl(snsToken.getAccess_token(),snsToken.getOpenid());
+        return userInfo;
     }
+
 }
