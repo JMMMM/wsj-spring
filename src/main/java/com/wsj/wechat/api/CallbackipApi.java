@@ -9,7 +9,7 @@ import com.wsj.wechat.tools.WechatTools;
  *
  * @author LiYi
  */
-public class CallbackipApi extends WechatApi<Callbackip> {
+public class CallbackipApi extends WechatApi {
 
     public static Callbackip callerUrl(String access_token) {
         StringBuilder url = new StringBuilder();

@@ -1,5 +1,6 @@
 package com.wsj.wechat.tools;
 
+import com.wsj.tools.WsjTools;
 import com.wsj.wechat.bean.token.AccessToken;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -67,5 +68,19 @@ public class WechatTools {
     //TODO
     public AccessToken accessToken() {
         return null;
+    }
+
+    public static <T> T executeJsonResult(HttpUriRequest httpUriRequest, Class<T> clazz) {
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
+            logger.info("create httppost:" + httpUriRequest.getURI().toString());
+            httpUriRequest.addHeader("Accept-Charset", "utf-8");
+            HttpResponse response = sendRequest(httpClient, httpUriRequest);
+            String body = parseResponse(response);
+            return WsjTools.jsonParser(body, clazz);
+        } catch (IOException e) {
+            logger.error("send post request failed: {}", e.getMessage());
+        }
+        return null;
+
     }
 }

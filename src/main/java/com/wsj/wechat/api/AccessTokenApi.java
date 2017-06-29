@@ -8,7 +8,7 @@ import com.wsj.wechat.tools.WechatTools;
 /**
  * Created by Jimmy on 2017/6/29.
  */
-public class AccessTokenApi extends WechatApi<AccessToken> {
+public class AccessTokenApi extends WechatApi {
     /**
      * 次数有限
      *

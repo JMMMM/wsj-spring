@@ -7,7 +7,7 @@ import com.wsj.wechat.tools.WechatTools;
 /**
  * Created by Jimmy on 2017/6/29.
  */
-public class WechatUserInfoApi extends WechatApi<UserInfo> {
+public class WechatUserInfoApi extends WechatApi {
 
     public static UserInfo callerUrl(String accessToken, String openId) {
         StringBuilder url = new StringBuilder();
