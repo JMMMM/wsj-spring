@@ -68,8 +68,8 @@
 
     <!-- 数据源 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-        <property name="driverClassName" value="${wsj_mysql_driver}"/>
-        <property name="url" value="${wsj_mysql_url}"/>
+        <property name="driverClassName" value="${WSJ_MYSQL_DRIVER}"/>
+        <property name="url" value="${WSJ_MYSQL_URL}"/>
         <property name="username" value="${dbUserName}"/>
         <property name="password" value="${password}"/>
         <property name="initialSize" value="${druid.initialSize}"/>
