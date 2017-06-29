@@ -1,4 +1,4 @@
-package com.wsj.wechat.tools;
+package com.wsj.tools;
 
 import com.wsj.sys.enums.SysConstants;
 import com.wsj.wechat.bean.token.Token;
