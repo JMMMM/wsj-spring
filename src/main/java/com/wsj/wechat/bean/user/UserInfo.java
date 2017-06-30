@@ -25,7 +25,7 @@ public class UserInfo extends BaseResult {
 
     private String headimgurl;
 
-    private Integer subscribe_time;
+    private Long subscribe_time;
 
     private String[] privilege;        //sns 用户特权信息，json 数组，如微信沃卡用户为（chinaunicom）
 
@@ -109,12 +109,12 @@ public class UserInfo extends BaseResult {
         this.headimgurl = headimgurl;
     }
 
-    public Integer getSubscribe_time() {
+    public Long getSubscribe_time() {
         return subscribe_time;
     }
 
-    public void setSubscribe_time(Integer subscribeTime) {
-        subscribe_time = subscribeTime;
+    public void setSubscribe_time(Long subscribe_time) {
+        this.subscribe_time = subscribe_time;
     }
 
     public String[] getPrivilege() {
