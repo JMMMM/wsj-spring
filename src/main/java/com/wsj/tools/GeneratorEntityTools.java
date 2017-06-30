@@ -40,7 +40,6 @@ public class GeneratorEntityTools {
             try {
                 Class.forName(DRIVER);
             } catch (ClassNotFoundException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
             con = DriverManager.getConnection(URL,NAME,PASS);
@@ -89,7 +88,6 @@ public class GeneratorEntityTools {
 //          try {
 //              con.close();
 //          } catch (SQLException e) {
-//              // TODO Auto-generated catch block
 //              e.printStackTrace();
 //          }
         }
@@ -232,7 +230,6 @@ public class GeneratorEntityTools {
 
     /**
      * 出口
-     * TODO
      * @param args
      */
     public static void main(String[] args) {
