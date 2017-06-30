@@ -11,9 +11,15 @@ create table new_wsj.wx_customers(
  `city` varchar (255) default null comment '城市',
  `country` varchar(255) default null comment '国家',
  `head_img_url` varchar(255) default null comment '用户头像',
- `subscribe_time` varchar(255) default null comment '关注时间',
+ `subscribe_time` int(11) default null comment '关注时间',
  `group_id` int(8) default null comment '分组ID',
  `privilege` varchar(255) default null comment '用户特权信息',
  `remark` varchar(255) default null comment '公众号运营者对粉丝的备注',
- `targid_list` varchar(255) default null comment '用户被搭上的标签ID'
+ `targid_list` varchar(255) default null comment '用户被搭上的标签ID',
+ `access_token` varchar(255) DEFAULT  null comment 'access_token',
+ `access_token_created_at` datetime default null comment 'access_token_time',
+ `refresh_token` varchar(255) default null comment 'refresh_token',
+ `refresh_token_created_at` datetime default null comment 'refresh token time',
+ `created_at` datetime not null comment '创建时间',
+ `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间'
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '微信用户信息表';
