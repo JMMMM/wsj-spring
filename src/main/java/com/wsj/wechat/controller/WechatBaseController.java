@@ -93,10 +93,14 @@ public class WechatBaseController {
             response.sendRedirect(WsjTools.getDomainName(request) + "/wsj_server/wechat/wxLoginUserInfoUrl");
             return null;
         } else {
-            String refreshToken = StringUtils.isEmpty(snsToken.getRefresh_token())?wxCustomer.getRefreshToken():snsToken.getRefresh_token();
+            String refreshToken = StringUtils.isEmpty(snsToken.getRefresh_token()) ? wxCustomer.getRefreshToken() : snsToken.getRefresh_token();
             SnsToken snsToken1 = SnsAPI.oauth2RefreshToken(WechatConfigure.getAppId(), refreshToken);
+            if (!snsToken1.isSuccess()) {
+                logger.info("refresh token 过期，重定向到 wxLoginUserInfoUrl");
+                response.sendRedirect(WsjTools.getDomainName(request) + "/wsj_server/wechat/wxLoginUserInfoUrl");
+            }
             UserInfo userInfo = SnsAPI.userinfo(snsToken1.getAccess_token(), snsToken.getOpenid(), "zh_CN");
-            return wechatBaseService.insertOrUpdateUserInfo(userInfo,snsToken1);
+            return wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken1);
         }
 
     }
@@ -115,7 +119,7 @@ public class WechatBaseController {
         logger.info(code + "======" + state);
         SnsToken snsToken = SnsAPI.oauth2AccessToken(WechatConfigure.getAppId(), WechatConfigure.getAppSecrect(), code);
         UserInfo userInfo = SnsAPI.userinfo(snsToken.getAccess_token(), snsToken.getOpenid(), "zh_CN");
-        return wechatBaseService.insertOrUpdateUserInfo(userInfo,snsToken);
+        return wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
     }
 
 }
