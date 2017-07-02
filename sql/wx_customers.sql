@@ -1,7 +1,7 @@
 drop table if exists new_wsj.wx_customers;
 create table new_wsj.wx_customers(
  `id` int(8) not null comment '用户ID' primary key AUTO_INCREMENT,
- `subscribe` int(8) not null default 0 comment '用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息。',
+ `subscribe` int(8) default null comment '用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息。',
  `openid` varchar(255) not null comment '用户的标识，对当前公众号唯一',
  `nickname` varchar(255) not null comment '微信用户昵称',
  `nickname_emoji` varchar(255) default null comment '昵称 表情转义',

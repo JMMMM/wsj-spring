@@ -68,11 +68,11 @@ public class SnsAPI extends WechatApi {
      * @return SnsToken
      */
     public static SnsToken oauth2RefreshToken(String appid, String refresh_token) {
-        HttpUriRequest httpUriRequest = RequestBuilder.post()
+        HttpUriRequest httpUriRequest = RequestBuilder.get()
                 .setUri(BASE_URI + "/sns/oauth2/refresh_token")
                 .addParameter("appid", appid)
-                .addParameter("refresh_token", refresh_token)
                 .addParameter("grant_type", "refresh_token")
+                .addParameter("refresh_token", refresh_token)
                 .build();
         return WechatTools.executeJsonResult(httpUriRequest, SnsToken.class);
     }

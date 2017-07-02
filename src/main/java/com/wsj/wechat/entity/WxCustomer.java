@@ -2,19 +2,18 @@ package com.wsj.wechat.entity;
 
 import com.sun.javafx.beans.IDProperty;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "wx_customers")
 public class WxCustomer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
     @Column(name = "subscribe")
-    private int subscribe;
+    private Integer subscribe;
     @Column(name = "openid")
     private String openid;
     @Column(name = "nickname")
@@ -34,9 +33,9 @@ public class WxCustomer {
     @Column(name = "head_img_url")
     private String headImgUrl;
     @Column(name = "subscribe_time")
-    private int subscribeTime;
+    private Long subscribeTime;
     @Column(name = "group_id")
-    private int groupId;
+    private Integer groupId;
     @Column(name = "privilege")
     private String privilege;
     @Column(name = "remark")
@@ -56,19 +55,19 @@ public class WxCustomer {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getSubscribe() {
+    public Integer getSubscribe() {
         return subscribe;
     }
 
-    public void setSubscribe(int subscribe) {
+    public void setSubscribe(Integer subscribe) {
         this.subscribe = subscribe;
     }
 
@@ -144,19 +143,19 @@ public class WxCustomer {
         this.headImgUrl = headImgUrl;
     }
 
-    public int getSubscribeTime() {
+    public Long getSubscribeTime() {
         return subscribeTime;
     }
 
-    public void setSubscribeTime(int subscribeTime) {
+    public void setSubscribeTime(Long subscribeTime) {
         this.subscribeTime = subscribeTime;
     }
 
-    public int getGroupId() {
+    public Integer getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(int groupId) {
+    public void setGroupId(Integer groupId) {
         this.groupId = groupId;
     }
 
