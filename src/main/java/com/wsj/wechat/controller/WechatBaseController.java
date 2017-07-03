@@ -49,7 +49,7 @@ public class WechatBaseController {
         if (signature != null && ValidateSignature.checkSignature(signature, timestamp, nonce)) {
             try {
                 PrintWriter print = response.getWriter();
-                print.write(echostr);
+                print.write(echostr==null?"":echostr);
                 print.flush();
             } catch (IOException e) {
                 e.printStackTrace();
