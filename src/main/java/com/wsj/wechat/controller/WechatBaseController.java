@@ -65,7 +65,7 @@ public class WechatBaseController {
     @RequestMapping(value = "/wxLoginUserInfoUrl")
     public void oauth2Authorize(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String redirectUrl = WsjTools.getDomainName(request) + "/wsj_server/wechat/userCode";
-        logger.info(redirectUrl.replace("http", "https"));
+        logger.info("微信登录授权:"+redirectUrl.replace("http", "https"));
         response.sendRedirect(SnsAPI.connectOauth2Authorize(WechatConfigure.getAppId(), redirectUrl.replace("http", "https"), true, "wsj_checking"));
     }
 
@@ -77,7 +77,7 @@ public class WechatBaseController {
     @RequestMapping(value = "/wxLoginUserBaseUrl")
     public void getUserAccessToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String redirectUrl = WsjTools.getDomainName(request) + "/wsj_server/wechat/baseUserCode";
-        logger.info(redirectUrl.replace("http", "https"));
+        logger.info("微信免授权登录:"+redirectUrl.replace("http", "https"));
         response.sendRedirect(SnsAPI.connectOauth2Authorize(WechatConfigure.getAppId(), redirectUrl.replace("http", "https"), false, "wsj_checking"));
     }
 
@@ -86,7 +86,7 @@ public class WechatBaseController {
         String code = request.getParameter("code");
         String state = request.getParameter("state");
         if (!"wsj_checking".equals(state)) return null;
-        logger.info(code + "======" + state);
+        logger.info("微信免授权登录跳转："+code + "======" + state);
         SnsToken snsToken = SnsAPI.oauth2AccessToken(WechatConfigure.getAppId(), WechatConfigure.getAppSecrect(), code);
         WxCustomer wxCustomer = wechatBaseService.findWxCustomerByOpenid(snsToken.getOpenid());
         if (wxCustomer == null) {
