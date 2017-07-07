@@ -4,7 +4,7 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/aop
@@ -14,7 +14,7 @@
         http://www.springframework.org/schema/data/jpa
         http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-4.2.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
     <!--参数配置-->
     <context:property-placeholder location="classpath:config.properties" local-override="false"
@@ -22,7 +22,7 @@
     <!-- 数据库连接 -->
     <!--<context:property-placeholder location="classpath:config.properties" ignore-unresolvable="true" />-->
 
-    <context:component-scan base-package="com.wsj.manager" />
+    <context:component-scan base-package="com.wsj.manager,com.wsj.wechat"/>
 
     <!-- 使用cglib进行动态代理 -->
     <aop:aspectj-autoproxy proxy-target-class="true"/>
@@ -34,7 +34,7 @@
     <!-- 实体管理器 -->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan" value="com.wsj.**.entity"/>
+        <property name="packagesToScan" value="com.wsj.**.entity,com.wsj.**.entity"/>
         <property name="persistenceProvider">
             <bean class="org.hibernate.jpa.HibernatePersistenceProvider"/>
         </property>
@@ -68,8 +68,8 @@
 
     <!-- 数据源 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-        <property name="driverClassName" value="${wsj.mysql.driver}"/>
-        <property name="url" value="${wsj.mysql.url}"/>
+        <property name="driverClassName" value="${WSJ_MYSQL_DRIVER}"/>
+        <property name="url" value="${WSJ_MYSQL_URL}"/>
         <property name="username" value="${dbUserName}"/>
         <property name="password" value="${password}"/>
         <property name="initialSize" value="${druid.initialSize}"/>
@@ -90,5 +90,8 @@
     <!-- 使用annotation定义事务 -->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
-
+    <bean id="wechatConfigure" class="com.wsj.wechat.tools.WechatConfigure">
+        <property name="appId" value="${WSJ_WX_APPID}"/>
+        <property name="appSecrect" value="${WSJ_WX_APPSECRET}"/>
+    </bean>
 </beans>

@@ -1,86 +1,86 @@
 package com.wsj.wechat.tools;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import com.wsj.tools.WsjTools;
+import com.wsj.wechat.entity.AccessToken;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.ContentType;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
 
 /**
- * Created by Jimmy on 2017/6/28.
+ * Created by Jimmy on 2017/6/29.
  */
 public class WechatTools {
-    // 与接口配置信息中的Token要一致
-    private static String token = "wsj_develop_token";
+    private static final Logger logger = LoggerFactory.getLogger(WechatTools.class);
 
-    /**
-     * 验证签名
-     *
-     * @param signature
-     * @param timestamp
-     * @param nonce
-     * @return
-     */
-    public static boolean checkSignature(String signature, String timestamp, String nonce) {
-        String[] arr = new String[]{token, timestamp, nonce};
-        // 将token、timestamp、nonce三个参数进行字典序排序
-        // Arrays.sort(arr);
-        sort(arr);
-        StringBuilder content = new StringBuilder();
-        for (int i = 0; i < arr.length; i++) {
-            content.append(arr[i]);
+    public static String callerClient(String url) {
+        String body = null;
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
+            logger.info("create httppost:" + url);
+            HttpGet get = new HttpGet(url);
+            get.addHeader("Accept-Charset", "utf-8");
+            HttpResponse response = sendRequest(httpClient, get);
+            body = parseResponse(response);
+        } catch (IOException e) {
+            logger.error("send post request failed: {}", e.getMessage());
         }
-        MessageDigest md = null;
-        String tmpStr = null;
 
+        return body;
+    }
+
+    private static HttpResponse sendRequest(CloseableHttpClient httpclient, HttpUriRequest httpost)
+            throws IOException {
+        HttpResponse response = null;
+        response = httpclient.execute(httpost);
+        return response;
+    }
+
+    private static String parseResponse(HttpResponse response) {
+        logger.info("get response from http server..");
+        HttpEntity entity = response.getEntity();
+
+        logger.info("response status: " + response.getStatusLine());
+        Charset charset = ContentType.getOrDefault(entity).getCharset();
+        if (charset != null) {
+            logger.info(charset.name());
+        }
+
+        String body = null;
         try {
-            md = MessageDigest.getInstance("SHA-1");
-            // 将三个参数字符串拼接成一个字符串进行sha1加密
-            byte[] digest = md.digest(content.toString().getBytes());
-            tmpStr = byteToStr(digest);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            body = EntityUtils.toString(entity, "utf-8");
+            logger.info("body " + body);
+        } catch (IOException e) {
+            logger.warn("{}: cannot parse the entity", e.getMessage());
         }
-        content = null;
-        // 将sha1加密后的字符串可与signature对比，标识该请求来源于微信
-        return tmpStr != null ? tmpStr.equals(signature.toUpperCase()) : false;
+
+        return body;
     }
 
-    /**
-     * 将字节数组转换为十六进制字符串
-     *
-     * @param byteArray
-     * @return
-     */
-    private static String byteToStr(byte[] byteArray) {
-        String strDigest = "";
-        for (int i = 0; i < byteArray.length; i++) {
-            strDigest += byteToHexStr(byteArray[i]);
-        }
-        return strDigest;
+    //TODO
+    public AccessToken accessToken() {
+        return null;
     }
 
-    /**
-     * 将字节转换为十六进制字符串
-     *
-     * @param mByte
-     * @return
-     */
-    private static String byteToHexStr(byte mByte) {
-        char[] Digit = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
-        char[] tempArr = new char[2];
-        tempArr[0] = Digit[(mByte >>> 4) & 0X0F];
-        tempArr[1] = Digit[mByte & 0X0F];
-        String s = new String(tempArr);
-        return s;
-    }
-
-    public static void sort(String a[]) {
-        for (int i = 0; i < a.length - 1; i++) {
-            for (int j = i + 1; j < a.length; j++) {
-                if (a[j].compareTo(a[i]) < 0) {
-                    String temp = a[i];
-                    a[i] = a[j];
-                    a[j] = temp;
-                }
-            }
+    public static <T> T executeJsonResult(HttpUriRequest httpUriRequest, Class<T> clazz) {
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
+            logger.info("create httppost:" + httpUriRequest.getURI().toString());
+            httpUriRequest.addHeader("Accept-Charset", "utf-8");
+            HttpResponse response = sendRequest(httpClient, httpUriRequest);
+            String body = parseResponse(response);
+            return WsjTools.jsonParser(body, clazz);
+        } catch (IOException e) {
+            logger.error("send post request failed: {}", e.getMessage());
         }
+        return null;
+
     }
 }

@@ -12,7 +12,7 @@ import java.util.Date;
 @Table(name = "customers")
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
     @Column(name = "name")
