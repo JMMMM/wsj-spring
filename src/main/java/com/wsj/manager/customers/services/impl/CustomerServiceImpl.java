@@ -7,6 +7,7 @@ import com.wsj.manager.staffs.entity.Staff;
 import com.wsj.sys.bean.PageBean;
 import com.wsj.sys.bean.ResultBean;
 import com.wsj.sys.enums.ErrorCode;
+import com.wsj.tools.MD5Helper;
 import com.wsj.tools.OperatorUtil;
 import com.wsj.tools.QueryTools;
 import com.wsj.tools.ValidatorHelper;
@@ -63,6 +64,8 @@ public class CustomerServiceImpl implements CustomerService {
         ErrorCode validatorErrorCode = ValidatorHelper.validator(customer, new CustomerValidator());
         if (validatorErrorCode.getCode() > 0)
             return ResultBean.failure(validatorErrorCode.getMessage(), validatorErrorCode);
+        //密码md5处理
+        customer.setPassword(MD5Helper.encode(customer.getPassword()));
         customer.setCreatedAt(new Date());
         customer.setUpdatedAt(new Date());
         customerRepository.save(customer);
