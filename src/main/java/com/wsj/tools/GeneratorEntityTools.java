@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class GeneratorEntityTools {
 
-    private String tablename = "new_wsj.sms_log";//表名
+    private String tablename = "sms_log";//表名
     private String[] colnames; // 列名数组
     private String[] colTypes; //列名类型数组
     private int[] colSizes; //列名大小数组
@@ -71,9 +71,7 @@ public class GeneratorEntityTools {
                 //System.out.println("相对路径："+directory.getCanonicalPath());
                 String path=this.getClass().getResource("").getPath();
 
-                System.out.println(path);
-                System.out.println("src/?/"+path.substring(path.lastIndexOf("/com/", path.length())) );
-                FileWriter fw = new FileWriter(directory.getAbsolutePath()+ "/src/"+path.substring(path.lastIndexOf("/com/", path.length()), path.length()) + initcap(tablename) + ".java");
+                FileWriter fw = new FileWriter(directory.getAbsolutePath()+ "/src/main/java/"+path.substring(path.lastIndexOf("/com/", path.length()), path.length()) + initcap(tablename) + ".java");
                 PrintWriter pw = new PrintWriter(fw);
                 pw.println(content);
                 pw.flush();
@@ -129,12 +127,12 @@ public class GeneratorEntityTools {
         if(f_sql){
             sb.append("import java.sql.*;\r\n");
         }
-        sb.append("package com.share.barter.tool;\r\n");
+        sb.append("package com.wsj.tools;\r\n");
         sb.append("\r\n");
         //注释部分
         sb.append("   /**\r\n");
         sb.append("    * "+tablename+" 实体类\r\n");
-        sb.append("    * "+new Date()+"  Ze Ming\r\n");
+        sb.append("    * "+new Date()+"  Jimmy\r\n");
         sb.append("    */ \r\n");
         //实体部分
         sb.append("\r\n\r\npublic class " + initcap(tablename) + "{\r\n");
