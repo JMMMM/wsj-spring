@@ -45,4 +45,6 @@ public class CustomerController {
     public ResultBean modifyCustomerStatus(int customerId, int status) {
         return customerService.modifyCustomerStatus(customerId, status);
     }
+
+
 }
