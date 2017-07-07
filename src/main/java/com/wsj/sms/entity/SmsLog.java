@@ -13,27 +13,27 @@ import java.util.Date;
 @Table(name="sms_log")
 public class SmsLog {
     @Column(name = "id")
-    private int id;
+    private Integer id;
     @Column(name = "identifying_code")
     private String identifyingCode;
     @Column(name = "type")
-    private short type;
+    private Integer type;
     @Column(name = "phone")
     private String phone;
     @Column(name = "created_at")
     private Date createdAt;
     @Column(name = "created_by")
-    private int createdBy;
+    private Integer createdBy;
     @Column(name = "updated_at")
     private Date updatedAt;
     @Column(name = "updated_by")
-    private int updatedBy;
+    private Integer updatedBy;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -45,11 +45,11 @@ public class SmsLog {
         this.identifyingCode = identifyingCode;
     }
 
-    public short getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(short type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
@@ -69,11 +69,11 @@ public class SmsLog {
         this.createdAt = createdAt;
     }
 
-    public int getCreatedBy() {
+    public Integer getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(int createdBy) {
+    public void setCreatedBy(Integer createdBy) {
         this.createdBy = createdBy;
     }
 
@@ -85,11 +85,11 @@ public class SmsLog {
         this.updatedAt = updatedAt;
     }
 
-    public int getUpdatedBy() {
+    public Integer getUpdatedBy() {
         return updatedBy;
     }
 
-    public void setUpdatedBy(int updatedBy) {
+    public void setUpdatedBy(Integer updatedBy) {
         this.updatedBy = updatedBy;
     }
 }

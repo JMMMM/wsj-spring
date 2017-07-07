@@ -8,4 +8,5 @@ import com.wsj.sys.bean.ResultBean;
  */
 public interface SmsLogService {
     ResultBean<SmsLog> saveSmsLog(SmsLog smsLog);
+    SmsLog findSmsLogByCondition(String phone, String identifyingCode, int type);
 }
