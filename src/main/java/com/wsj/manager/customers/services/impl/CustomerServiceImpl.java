@@ -58,6 +58,10 @@ public class CustomerServiceImpl implements CustomerService {
     public ResultBean<Customer> saveOrUpdate(Customer customer) {
         Staff staff = OperatorUtil.getOperatorName(session);
         if (customer.getId() == null) {
+            //如果没有填写用户名，系统默认提供用户名
+            if(StringUtils.isEmpty(customer.getName())){
+                customer.setName("wsj_"+customer.getPhone());
+            }
             ErrorCode validatorErrorCode = ValidatorHelper.validator(customer, new CustomerValidator());
             if(validatorErrorCode.getCode()>0) return ResultBean.failure(validatorErrorCode.getMessage(),validatorErrorCode);
             customer.setCreatedAt(new Date());
