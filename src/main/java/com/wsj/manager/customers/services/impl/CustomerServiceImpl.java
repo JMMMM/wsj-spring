@@ -8,6 +8,8 @@ import com.wsj.sys.bean.PageBean;
 import com.wsj.sys.bean.ResultBean;
 import com.wsj.tools.OperatorUtil;
 import com.wsj.tools.QueryTools;
+import com.wsj.tools.ValidatorHelper;
+import com.wsj.tools.validator.CustomerValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,9 +57,7 @@ public class CustomerServiceImpl implements CustomerService {
     public ResultBean<Customer> saveOrUpdate(Customer customer) {
         Staff staff = OperatorUtil.getOperatorName(session);
         if (customer.getId() == null) {
-            if (customerRepository.findCustomerByLoginName(customer.getName()) != null) {
-                return ResultBean.failure("已存在登录账号");
-            }
+            if (!ValidatorHelper.validator(customer, new CustomerValidator())) return ResultBean.failure("用户信息错误");
             customer.setCreatedAt(new Date());
             customer.setUpdatedAt(new Date());
             customer.setCreatedBy(staff.getId());

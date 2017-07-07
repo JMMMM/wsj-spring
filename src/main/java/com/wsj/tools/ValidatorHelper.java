@@ -1,5 +1,7 @@
 package com.wsj.tools;
 
+import com.wsj.tools.validator.ValidatorFunction;
+
 /**
  * Created by Jimmy on 2017/7/7.
  */
@@ -10,6 +12,3 @@ public class ValidatorHelper {
 }
 
 
-interface ValidatorFunction {
-    <T> boolean validate(T obj);
-}
