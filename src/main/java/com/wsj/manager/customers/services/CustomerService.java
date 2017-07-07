@@ -22,7 +22,7 @@ public interface CustomerService {
      * @param customer 有ID时update，没ID时insert
      * @return
      */
-    ResultBean<Customer> saveOrUpdate(Customer customer);
+    ResultBean<Customer> register(Customer customer);
 
 
     ResultBean modifyCustomerStatus(int customerId, int status);

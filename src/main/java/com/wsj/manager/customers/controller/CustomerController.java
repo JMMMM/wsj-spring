@@ -46,5 +46,8 @@ public class CustomerController {
         return customerService.modifyCustomerStatus(customerId, status);
     }
 
-
+    @RequestMapping("/register")
+    public ResultBean register(Customer customer){
+        return customerService.register(customer);
+    }
 }

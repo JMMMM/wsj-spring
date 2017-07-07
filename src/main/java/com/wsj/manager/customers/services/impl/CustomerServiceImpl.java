@@ -55,32 +55,17 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public ResultBean<Customer> saveOrUpdate(Customer customer) {
-        Staff staff = OperatorUtil.getOperatorName(session);
-        if (customer.getId() == null) {
-            //如果没有填写用户名，系统默认提供用户名
-            if(StringUtils.isEmpty(customer.getName())){
-                customer.setName("wsj_"+customer.getPhone());
-            }
-            ErrorCode validatorErrorCode = ValidatorHelper.validator(customer, new CustomerValidator());
-            if(validatorErrorCode.getCode()>0) return ResultBean.failure(validatorErrorCode.getMessage(),validatorErrorCode);
-            customer.setCreatedAt(new Date());
-            customer.setUpdatedAt(new Date());
-            customer.setCreatedBy(staff.getId());
-            customer.setUpdatedBy(staff.getId());
-            customerRepository.save(customer);
-        } else {
-            Customer db = customerRepository.findOne(customer.getId());
-            db.setLastLoginAt(customer.getLastLoginAt());
-            db.setLoginName(customer.getLoginName());
-            db.setName(customer.getName());
-            db.setPhone(customer.getPhone());
-            db.setPassword(customer.getPassword());
-            db.setSex(customer.getSex());
-            db.setUpdatedAt(new Date());
-            db.setUpdatedBy(staff.getId());
-            db.setStatus(customer.getStatus());
+    public ResultBean<Customer> register(Customer customer) {
+        //如果没有填写用户名，系统默认提供用户名
+        if (StringUtils.isEmpty(customer.getName())) {
+            customer.setName("wsj_" + customer.getPhone());
         }
+        ErrorCode validatorErrorCode = ValidatorHelper.validator(customer, new CustomerValidator());
+        if (validatorErrorCode.getCode() > 0)
+            return ResultBean.failure(validatorErrorCode.getMessage(), validatorErrorCode);
+        customer.setCreatedAt(new Date());
+        customer.setUpdatedAt(new Date());
+        customerRepository.save(customer);
         return ResultBean.success("注册成功");
     }
 
