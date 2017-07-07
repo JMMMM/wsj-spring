@@ -7,6 +7,7 @@ import com.wsj.manager.staffs.entity.Staff;
 import com.wsj.sys.bean.PageBean;
 import com.wsj.sys.bean.ResultBean;
 import com.wsj.sys.enums.ErrorCode;
+import com.wsj.sys.enums.SysConstants;
 import com.wsj.tools.MD5Helper;
 import com.wsj.tools.OperatorUtil;
 import com.wsj.tools.QueryTools;
@@ -76,5 +77,12 @@ public class CustomerServiceImpl implements CustomerService {
     public ResultBean modifyCustomerStatus(int customerId, int status) {
         customerRepository.modifyCustomerStatus(customerId, status, OperatorUtil.getOperatorName(session).getId());
         return ResultBean.success("更新成功!");
+    }
+
+    @Override
+    public ResultBean login(String loginName, String password) {
+        Customer customer = customerRepository.findCustomerByLoginNameAndPassword(loginName,MD5Helper.encode(password));
+        session.setAttribute(SysConstants.WebLoginSession.getName(),customer);
+        return ResultBean.success("登陆成功");
     }
 }

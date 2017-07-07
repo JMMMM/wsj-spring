@@ -50,4 +50,9 @@ public class CustomerController {
     public ResultBean register(Customer customer){
         return customerService.register(customer);
     }
+
+    @RequestMapping(value = "/login",method =RequestMethod.POST)
+    public ResultBean login(String loginName,String password){
+        return customerService.login(loginName,password);
+    }
 }

@@ -26,4 +26,6 @@ public interface CustomerService {
 
 
     ResultBean modifyCustomerStatus(int customerId, int status);
+
+    ResultBean login(String loginName,String password);
 }

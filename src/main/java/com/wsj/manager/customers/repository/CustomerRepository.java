@@ -16,4 +16,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     void modifyCustomerStatus(@Param("customerId") int customerId,@Param("status")int status,@Param("operatorId") int operatorId);
     @Query("select c from Customer c where c.loginName = ?1")
     Customer findCustomerByLoginName(String loginName);
+    @Query("select c from Customer c where c.loginName = ?1 and c.password = ?2")
+    Customer findCustomerByLoginNameAndPassword(String loginName,String password);
 }
