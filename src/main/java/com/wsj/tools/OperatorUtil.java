@@ -12,6 +12,6 @@ import javax.servlet.http.HttpSession;
 public class OperatorUtil {
 
     public static Staff getOperatorName(HttpSession httpSession){
-        return (Staff)httpSession.getAttribute(SysConstants.LoginSession.getName());
+        return (Staff)httpSession.getAttribute(SysConstants.ManagerLoginSession.getName());
     }
 }
