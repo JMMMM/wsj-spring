@@ -2,7 +2,7 @@ drop table if exists new_wsj.customers;
 create table new_wsj.customers(
  `id` int(8) not null comment '用户ID' primary key AUTO_INCREMENT,
  `name` varchar(255) not null comment '用户名,昵称' UNIQUE ,
- `login_name` varchar(255) not null comment '登陆账号',
+ `login_name` varchar(255) not null comment '登陆账号' UNIQUE ,
  `password` varchar(255) not null comment '登陆密码',
  `phone` varchar(11) default null comment '手机号码',
  `sex` tinyint(1) default null comment '性别,0女，1男',
