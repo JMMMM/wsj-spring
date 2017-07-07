@@ -1,6 +1,8 @@
 package com.wsj.tools.validator;
 
 
+import com.wsj.sys.enums.ErrorCode;
+
 public interface ValidatorFunction<T> {
-    boolean validate(T obj);
+    ErrorCode validate(T obj);
 }

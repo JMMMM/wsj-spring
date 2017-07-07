@@ -6,6 +6,7 @@ import com.wsj.manager.customers.services.CustomerService;
 import com.wsj.manager.staffs.entity.Staff;
 import com.wsj.sys.bean.PageBean;
 import com.wsj.sys.bean.ResultBean;
+import com.wsj.sys.enums.ErrorCode;
 import com.wsj.tools.OperatorUtil;
 import com.wsj.tools.QueryTools;
 import com.wsj.tools.ValidatorHelper;
@@ -57,7 +58,8 @@ public class CustomerServiceImpl implements CustomerService {
     public ResultBean<Customer> saveOrUpdate(Customer customer) {
         Staff staff = OperatorUtil.getOperatorName(session);
         if (customer.getId() == null) {
-            if (!ValidatorHelper.validator(customer, new CustomerValidator())) return ResultBean.failure("用户信息错误");
+            ErrorCode validatorErrorCode = ValidatorHelper.validator(customer, new CustomerValidator());
+            if(validatorErrorCode.getCode()>0) return ResultBean.failure(validatorErrorCode.getMessage(),validatorErrorCode);
             customer.setCreatedAt(new Date());
             customer.setUpdatedAt(new Date());
             customer.setCreatedBy(staff.getId());
