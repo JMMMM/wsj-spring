@@ -23,7 +23,12 @@ public class UserSecurityInterceptor implements HandlerInterceptor {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         SessionCheck sessionCheck = handlerMethod.getMethodAnnotation(SessionCheck.class);
         if (sessionCheck == null || !sessionCheck.checked()) return true;
-        Object obj = request.getSession().getAttribute(SysConstants.LoginSession.getName());
+        Object obj ;
+        if (sessionCheck.checkedType() == SessionCheck.Type.MANAGER) {
+            obj = request.getSession().getAttribute(SysConstants.ManagerLoginSession.getName());
+        } else {
+            obj = request.getSession().getAttribute(SysConstants.WebLoginSession.getName());
+        }
         if (obj != null) return true;
         if (WsjTools.isAjaxRequest(request)) {
             String jsonObject = "{\"sessionStatus\":\"timeout\",\"redirectHref\":"

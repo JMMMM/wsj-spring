@@ -30,19 +30,19 @@ public class StaffController {
     public ResultBean<Staff> login(HttpServletRequest request, String loginName, String password, boolean autoLogin) {
         ResultBean<Staff> result = staffService.userLogin(loginName, password);
         if (result.isSuccess())
-            request.getSession().setAttribute(SysConstants.LoginSession.getName(), result.getBean());
+            request.getSession().setAttribute(SysConstants.ManagerLoginSession.getName(), result.getBean());
         return result;
     }
 
     @RequestMapping("/logout")
     public ResultBean logout(HttpServletRequest request) {
-        request.getSession().removeAttribute(SysConstants.LoginSession.getName());
+        request.getSession().removeAttribute(SysConstants.ManagerLoginSession.getName());
         return ResultBean.success("退出登录成功!");
     }
 
     @RequestMapping("/loginUser")
     public ResultBean loginUser(HttpServletRequest request) {
-        Staff staff = (Staff) request.getSession().getAttribute(SysConstants.LoginSession.getName());
+        Staff staff = (Staff) request.getSession().getAttribute(SysConstants.ManagerLoginSession.getName());
         return (null == staff) ? ResultBean.failure("没有登录") : ResultBean.success("返回数据", staff);
     }
 }

@@ -6,8 +6,13 @@ import com.wsj.manager.customers.services.CustomerService;
 import com.wsj.manager.staffs.entity.Staff;
 import com.wsj.sys.bean.PageBean;
 import com.wsj.sys.bean.ResultBean;
+import com.wsj.sys.enums.ErrorCode;
+import com.wsj.sys.enums.SysConstants;
+import com.wsj.tools.MD5Helper;
 import com.wsj.tools.OperatorUtil;
 import com.wsj.tools.QueryTools;
+import com.wsj.tools.ValidatorHelper;
+import com.wsj.tools.validator.CustomerValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,32 +57,32 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public ResultBean<Customer> saveOrUpdate(Customer customer) {
-        Staff staff = OperatorUtil.getOperatorName(session);
-        if (customer.getId() == null) {
-            customer.setCreatedAt(new Date());
-            customer.setUpdatedAt(new Date());
-            customer.setCreatedBy(staff.getId());
-            customer.setUpdatedBy(staff.getId());
-            customerRepository.save(customer);
-        } else {
-            Customer db = customerRepository.findOne(customer.getId());
-            db.setLastLoginAt(customer.getLastLoginAt());
-            db.setLoginName(customer.getLoginName());
-            db.setName(customer.getName());
-            db.setPhone(customer.getPhone());
-            db.setPassword(customer.getPassword());
-            db.setSex(customer.getSex());
-            db.setUpdatedAt(new Date());
-            db.setUpdatedBy(staff.getId());
-            db.setStatus(customer.getStatus());
+    public ResultBean<Customer> register(Customer customer) {
+        //如果没有填写用户名，系统默认提供用户名
+        if (StringUtils.isEmpty(customer.getName())) {
+            customer.setName("wsj_" + customer.getPhone());
         }
-        return ResultBean.success("成功");
+        ErrorCode validatorErrorCode = ValidatorHelper.validator(customer, new CustomerValidator());
+        if (validatorErrorCode.getCode() > 0)
+            return ResultBean.failure(validatorErrorCode.getMessage(), validatorErrorCode);
+        //密码md5处理
+        customer.setPassword(MD5Helper.encode(customer.getPassword()));
+        customer.setCreatedAt(new Date());
+        customer.setUpdatedAt(new Date());
+        customerRepository.save(customer);
+        return ResultBean.success("注册成功");
     }
 
     @Override
     public ResultBean modifyCustomerStatus(int customerId, int status) {
         customerRepository.modifyCustomerStatus(customerId, status, OperatorUtil.getOperatorName(session).getId());
         return ResultBean.success("更新成功!");
+    }
+
+    @Override
+    public ResultBean login(String loginName, String password) {
+        Customer customer = customerRepository.findCustomerByLoginNameAndPassword(loginName,MD5Helper.encode(password));
+        session.setAttribute(SysConstants.WebLoginSession.getName(),customer);
+        return ResultBean.success("登陆成功");
     }
 }
