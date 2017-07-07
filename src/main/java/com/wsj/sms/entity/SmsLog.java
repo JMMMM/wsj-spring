@@ -1,8 +1,6 @@
 package com.wsj.sms.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -12,6 +10,8 @@ import java.util.Date;
 @Entity
 @Table(name="sms_log")
 public class SmsLog {
+    @Id
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
     @Column(name = "identifying_code")
