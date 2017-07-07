@@ -55,7 +55,7 @@ public class CustomerServiceImpl implements CustomerService {
     public ResultBean<Customer> saveOrUpdate(Customer customer) {
         Staff staff = OperatorUtil.getOperatorName(session);
         if (customer.getId() == null) {
-            if(customerRepository.findCustomerByLoginName(customer.getName())!=null){
+            if (customerRepository.findCustomerByLoginName(customer.getName()) != null) {
                 return ResultBean.failure("已存在登录账号");
             }
             customer.setCreatedAt(new Date());
