@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class GeneratorEntityTools {
 
-    private String tablename = "new_wsj.wx_customers";//表名
+    private String tablename = "new_wsj.sms_log";//表名
     private String[] colnames; // 列名数组
     private String[] colTypes; //列名类型数组
     private int[] colSizes; //列名大小数组
