@@ -3,6 +3,7 @@ package com.wsj.sys.configs;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.wsj.sys.filter.LogInterceptor;
 import com.wsj.sys.filter.UserSecurityInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
@@ -28,7 +29,8 @@ import java.util.List;
 public class CustomerConfigs extends WebMvcConfigurerAdapter implements EnvironmentAware {
     @Autowired
     private UserSecurityInterceptor userSecurityInterceptor;
-
+    @Autowired
+    private LogInterceptor logInterceptor;
     private Environment environment;
 
     @Override
@@ -61,6 +63,7 @@ public class CustomerConfigs extends WebMvcConfigurerAdapter implements Environm
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         super.addInterceptors(registry);
+        registry.addInterceptor(logInterceptor);
         registry.addInterceptor(userSecurityInterceptor);
     }
 
