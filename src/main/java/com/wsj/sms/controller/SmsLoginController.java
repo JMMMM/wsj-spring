@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
@@ -36,16 +37,19 @@ public class SmsLoginController {
     private CustomerService customerService;
 
     @RequestMapping(value = "/sendIdentifyingCode", method = RequestMethod.GET)
-    public ResultBean sendIdentifyingCode(String mobile) {
+    public ResultBean sendIdentifyingCode(HttpServletRequest request,String mobile) {
         /**
          * 保存短信验证码
          */
         int code = (int) ((Math.random() * 9 + 1) * 100000);
+        String ipAddress = request.getRemoteAddr();
+        if(smsLogService.countSmsLogByIpAddress(ipAddress)>2) return ResultBean.failure("请求过于频繁！");
         SmsLog smsLog = new SmsLog();
         smsLog.setCreatedAt(new Date());
         smsLog.setIdentifyingCode(code + "");
         smsLog.setPhone(mobile + "");
         smsLog.setType(1);
+        smsLog.setIpAddress(ipAddress);
         ResultBean resultBean = smsLogService.saveSmsLog(smsLog);
         if(!resultBean.isSuccess()) return resultBean;
         /**
