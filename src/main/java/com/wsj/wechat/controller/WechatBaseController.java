@@ -45,7 +45,7 @@ public class WechatBaseController {
         // 随机字符串
         String echostr = request.getParameter("echostr");
 
-        logger.info("微信OwnerCheck:" + signature + "--" + timestamp + "--" + nonce + "--" + nonce);
+        logger.info("微信OwnerCheck:" + signature + "--" + timestamp + "--" + nonce + "--" + echostr);
         if (signature != null && ValidateSignature.checkSignature(signature, timestamp, nonce)) {
             try {
                 PrintWriter print = response.getWriter();
