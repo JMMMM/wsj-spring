@@ -65,7 +65,7 @@ public class CustomerServiceImpl implements CustomerService {
         ErrorCode validatorErrorCode = ValidatorHelper.validator(customer, new CustomerValidator());
         if (validatorErrorCode.getCode() > 0)
             return ResultBean.failure(validatorErrorCode.getMessage(), validatorErrorCode);
-        if(customerRepository.findCustomerByLoginName(customer.getLoginName())!=null) return ResultBean.failure(ErrorCode.LOGINNAME_EXISTS.getMessage(), ErrorCode.LOGINNAME_EXISTS);
+        if(customerRepository.findCustomerByLoginName(customer.getLoginName())!=null) return ResultBean.failure(ErrorCode.LOGIN_NAME_EXISTS.getMessage(), ErrorCode.LOGIN_NAME_EXISTS);
         //密码md5处理
         customer.setStatus(1);
         customer.setPassword(MD5Helper.encode(customer.getPassword()));
