@@ -1,7 +1,9 @@
 package com.wsj.wechat.controller;
 
+import com.google.gson.Gson;
 import com.wsj.manager.customers.entity.Customer;
 import com.wsj.manager.customers.services.CustomerService;
+import com.wsj.sys.bean.ResultBean;
 import com.wsj.tools.WsjTools;
 import com.wsj.wechat.api.SnsAPI;
 import com.wsj.wechat.api.WechatUserInfoApi;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 
 /**
@@ -139,6 +142,15 @@ public class WechatBaseController {
                 UserInfo userInfo = SnsAPI.userinfo(snsToken.getAccess_token(), snsToken.getOpenid(), "zh_CN");
                 wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
                 Customer customer = customerService.findCustomerByWxCustomerId(wxCustomer.getId());
+                if(customer==null){
+                    ResultBean resultBean = ResultBean.failure("未注册味食家账号!");
+                    String contentType = "application/json";
+                    response.setContentType(contentType);
+                    PrintWriter out = response.getWriter();
+                    out.print(new Gson().toJson(resultBean));
+                    out.flush();
+                    out.close();
+                }
                 customerService.login(customer.getLoginName(),customer.getPassword());
             }
         }
