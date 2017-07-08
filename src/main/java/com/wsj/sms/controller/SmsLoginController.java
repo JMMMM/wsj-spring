@@ -36,7 +36,7 @@ public class SmsLoginController {
     private CustomerService customerService;
 
     @RequestMapping(value = "/sendIdentifyingCode", method = RequestMethod.GET)
-    public ResultBean sendIdentifyingCode(long mobile) {
+    public ResultBean sendIdentifyingCode(String mobile) {
         /**
          * 保存短信验证码
          */
