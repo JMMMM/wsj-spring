@@ -46,8 +46,8 @@ public class SmsLoginController {
         smsLog.setIdentifyingCode(code + "");
         smsLog.setPhone(mobile + "");
         smsLog.setType(1);
-        smsLogService.saveSmsLog(smsLog);
-
+        ResultBean resultBean = smsLogService.saveSmsLog(smsLog);
+        if(!resultBean.isSuccess()) return resultBean;
         /**
          * 发送短信验证码
          */
