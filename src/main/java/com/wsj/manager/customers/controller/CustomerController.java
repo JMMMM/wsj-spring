@@ -63,7 +63,14 @@ public class CustomerController {
     @SessionCheck(checkedType = SessionCheck.Type.WEB)
     @RequestMapping(value="/getLoginCustomerInfo")
     public ResultBean getLoginCustomerInfo(HttpServletRequest request){
-        Customer customre = (Customer)request.getSession().getAttribute(SysConstants.WebLoginSession.getName());
-        return ResultBean.success("在线用户",customre);
+        Customer customer = (Customer)request.getSession().getAttribute(SysConstants.WebLoginSession.getName());
+        return ResultBean.success("在线用户",customer);
+    }
+
+    @SessionCheck(checkedType = SessionCheck.Type.WEB)
+    @RequestMapping(value="/changeCustomerNickName")
+    public ResultBean changeCustomerNickName(HttpServletRequest request,String nickName){
+        Customer customer = (Customer)request.getSession().getAttribute(SysConstants.WebLoginSession.getName());
+        return customerService.changeCustomerNickName(nickName,customer.getId());
     }
 }

@@ -105,4 +105,10 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer findCustomerByWxCustomerId(int wxCustomerId) {
         return customerRepository.findCustomerByOpenId(wxCustomerId);
     }
+
+    @Override
+    public ResultBean changeCustomerNickName(String nickName,int id) {
+        customerRepository.changeCustomerNickName(nickName,id);
+        return ResultBean.success("更新成功!");
+    }
 }

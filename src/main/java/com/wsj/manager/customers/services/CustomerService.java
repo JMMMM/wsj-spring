@@ -32,4 +32,6 @@ public interface CustomerService {
     ResultBean login(String loginName, String md5Password);
 
     Customer findCustomerByWxCustomerId(int wxCustomerId);
+
+    ResultBean changeCustomerNickName(String nickName,int id);
 }
