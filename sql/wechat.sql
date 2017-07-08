@@ -1,3 +1,4 @@
+drop table if exists new_wsj.wx_access_token;
 create table new_wsj.wx_access_token(
   `id` int(8) not null comment 'ID' primary key AUTO_INCREMENT,
   `access_token` varchar(255) comment 'access_token',

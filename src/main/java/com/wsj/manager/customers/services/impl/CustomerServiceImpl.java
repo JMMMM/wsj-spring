@@ -92,9 +92,23 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public ResultBean login(String loginName, String password) {
-        Customer customer = customerRepository.findCustomerByLoginNameAndPassword(loginName, MD5Helper.encode(password));
+    public ResultBean login(String loginName, String md5Password) {
+        Customer customer = customerRepository.findCustomerByLoginNameAndPassword(loginName,md5Password);
+        if(customer ==null){
+            return ResultBean.failure("账号或密码错误");
+        }
         session.setAttribute(SysConstants.WebLoginSession.getName(), customer);
         return ResultBean.success("登陆成功");
+    }
+
+    @Override
+    public Customer findCustomerByWxCustomerId(int wxCustomerId) {
+        return customerRepository.findCustomerByOpenId(wxCustomerId);
+    }
+
+    @Override
+    public ResultBean changeCustomerNickName(String nickName,int id) {
+        customerRepository.changeCustomerNickName(nickName,id);
+        return ResultBean.success("更新成功!");
     }
 }

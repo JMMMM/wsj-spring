@@ -7,6 +7,8 @@ import com.wsj.sys.bean.ResultBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+
 
 /**
  * Created by jimmy on 2017/7/7.
@@ -27,6 +29,18 @@ public class SmsLogServiceImpl implements SmsLogService {
     @Override
     public SmsLog findSmsLogByCondition(String phone, String identifyingCode, int type) {
         return smsLogRepository.findSmsLogByCondition(phone,identifyingCode,type);
+    }
+
+    /**
+     * 获取5分钟内同一ip请求次数
+     * @param ipAddress
+     * @return
+     */
+    @Override
+    public int countSmsLogByIpAddress(String ipAddress) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE,-5);
+        return smsLogRepository.countLogByIpAddress(ipAddress,calendar.getTime());
     }
 
 

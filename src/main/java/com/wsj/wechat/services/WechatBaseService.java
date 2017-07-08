@@ -10,5 +10,4 @@ import com.wsj.wechat.entity.WxCustomer;
 public interface WechatBaseService {
     public WxCustomer insertOrUpdateUserInfo(UserInfo userInfo,SnsToken snsToken);
     public WxCustomer findWxCustomerByOpenid(String openid);
-
 }

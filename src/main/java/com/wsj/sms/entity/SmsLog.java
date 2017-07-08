@@ -20,6 +20,8 @@ public class SmsLog {
     private Integer type;
     @Column(name = "phone")
     private String phone;
+    @Column(name="ip_address")
+    private String ipAddress;
     @Column(name = "created_at")
     private Date createdAt;
     @Column(name = "created_by")
@@ -91,6 +93,14 @@ public class SmsLog {
 
     public void setUpdatedBy(Integer updatedBy) {
         this.updatedBy = updatedBy;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
     }
 }
 

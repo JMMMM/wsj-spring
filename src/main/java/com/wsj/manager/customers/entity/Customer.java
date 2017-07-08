@@ -38,6 +38,8 @@ public class Customer {
     private Integer sex;
     @Column(name = "status")
     private Integer status;
+    @Column(name="wx_customer_id")
+    private Integer wxCustomerId;
 
     public Integer getId() {
         return id;
@@ -133,5 +135,13 @@ public class Customer {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getWxCustomerId() {
+        return wxCustomerId;
+    }
+
+    public void setWxCustomerId(Integer wxCustomerId) {
+        this.wxCustomerId = wxCustomerId;
     }
 }

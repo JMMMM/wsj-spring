@@ -47,6 +47,8 @@ public class WechatBaseServiceImpl implements WechatBaseService {
      * @return
      */
     private WxCustomer fixWxCustomerInfo(WxCustomer wxCustomer, UserInfo userInfo,SnsToken snsToken) {
+        wxCustomer.setNickname(userInfo.getNickname());
+        wxCustomer.setNicknameEmoji(userInfo.getNickname_emoji());
         wxCustomer.setSubscribeTime(userInfo.getSubscribe_time());
         wxCustomer.setHeadImgUrl(userInfo.getHeadimgurl());
         wxCustomer.setAccessToken(snsToken.getAccess_token());
