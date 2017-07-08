@@ -161,10 +161,16 @@ public class WechatBaseController {
                     out.flush();
                     out.close();
                 }
-                customerService.login(customer.getLoginName(),customer.getPassword());
+                ResultBean resultBean = customerService.login(customer.getLoginName(),customer.getPassword());
                 Cookie cookie = new Cookie(SysConstants.WsjWxOpenId.getName(),openId);
                 cookie.setMaxAge(2592000);//一个月有效
                 response.addCookie(cookie);
+                String contentType = "application/json";
+                response.setContentType(contentType);
+                PrintWriter out = response.getWriter();
+                out.print(new Gson().toJson(resultBean));
+                out.flush();
+                out.close();
             }
         }
     }
