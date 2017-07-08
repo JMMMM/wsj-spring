@@ -139,6 +139,7 @@ public class WechatBaseController {
         String openId = "";
         if (cookies != null) {
             for (Cookie cookie : cookies) {
+                logger.info("thirdPartLogin:"+cookie.getName()+"->"+cookie.getValue());
                 if (SysConstants.WsjWxOpenId.getName().equals(cookie.getName())) {
                     openId = cookie.getValue();
                 }
