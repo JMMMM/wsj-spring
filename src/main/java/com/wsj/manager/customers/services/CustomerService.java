@@ -24,8 +24,10 @@ public interface CustomerService {
      */
     ResultBean<Customer> register(Customer customer);
 
+    Customer findByLoginName(String loginName);
+
 
     ResultBean modifyCustomerStatus(int customerId, int status);
 
-    ResultBean login(String loginName,String password);
+    ResultBean login(String loginName, String password);
 }

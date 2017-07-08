@@ -62,15 +62,20 @@ public class CustomerServiceImpl implements CustomerService {
         if (StringUtils.isEmpty(customer.getName())) {
             customer.setName("wsj_" + customer.getPhone());
         }
-        ErrorCode validatorErrorCode = ValidatorHelper.validator(customer, new CustomerValidator());
+        /*ErrorCode validatorErrorCode = ValidatorHelper.validator(customer, new CustomerValidator());
         if (validatorErrorCode.getCode() > 0)
-            return ResultBean.failure(validatorErrorCode.getMessage(), validatorErrorCode);
+            return ResultBean.failure(validatorErrorCode.getMessage(), validatorErrorCode);*/
         //密码md5处理
         customer.setPassword(MD5Helper.encode(customer.getPassword()));
         customer.setCreatedAt(new Date());
         customer.setUpdatedAt(new Date());
         customerRepository.save(customer);
         return ResultBean.success("注册成功");
+    }
+
+    @Override
+    public Customer findByLoginName(String phone) {
+        return customerRepository.findCustomerByLoginName(phone);
     }
 
     @Override
