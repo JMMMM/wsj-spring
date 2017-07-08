@@ -14,6 +14,7 @@ create table new_wsj.customers(
  `updated_by` int(8) default null comment '更新人',
  `last_login_at` datetime default null comment '上次登陆时间',
   unique key `customer_login_name_unique` (`login_name`),
+  unique key `customer_phone_unique` (`phone`),
   unique key `customer_name_unique`(`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '用户登陆表';
 

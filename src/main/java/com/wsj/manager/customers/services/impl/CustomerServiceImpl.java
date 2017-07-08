@@ -65,14 +65,19 @@ public class CustomerServiceImpl implements CustomerService {
         ErrorCode validatorErrorCode = ValidatorHelper.validator(customer, new CustomerValidator());
         if (validatorErrorCode.getCode() > 0)
             return ResultBean.failure(validatorErrorCode.getMessage(), validatorErrorCode);
-        if(customerRepository.findCustomerByLoginName(customer.getLoginName())!=null) return ResultBean.failure(ErrorCode.LOGIN_NAME_EXISTS.getMessage(), ErrorCode.LOGIN_NAME_EXISTS);
+        if (customerRepository.findCustomerByLoginName(customer.getLoginName()) != null)
+            return ResultBean.failure(ErrorCode.LOGIN_NAME_EXISTS.getMessage(), ErrorCode.LOGIN_NAME_EXISTS);
         //密码md5处理
         customer.setStatus(1);
         customer.setPassword(MD5Helper.encode(customer.getPassword()));
         customer.setCreatedAt(new Date());
         customer.setUpdatedAt(new Date());
-        customerRepository.save(customer);
-        return ResultBean.success("注册成功");
+        Customer result = customerRepository.save(customer);
+
+        // 返回保存成功的客户信息，只提供默认的昵称
+        Customer resultCustmer = new Customer();
+        resultCustmer.setName(result.getName());
+        return ResultBean.success("注册成功", resultCustmer);
     }
 
     @Override

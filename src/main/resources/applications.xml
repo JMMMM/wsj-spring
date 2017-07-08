@@ -94,4 +94,12 @@
         <property name="appId" value="${WSJ_WX_APPID}"/>
         <property name="appSecrect" value="${WSJ_WX_APPSECRET}"/>
     </bean>
+    <!--短信平台配置-->
+    <bean id="smsConfigure" class="com.wsj.sms.tools.SmsConfigure">
+        <property name="username" value="${WSJ_SMS_USERNAME}"/>
+        <property name="password" value="${WSJ_SMS_PASSWORD}"/>
+        <property name="productId" value="${WSJ_SMS_PRODUCT_ID}"/>
+        <property name="url" value="${WSJ_SMS_URL}"/>
+    </bean>
+
 </beans>
