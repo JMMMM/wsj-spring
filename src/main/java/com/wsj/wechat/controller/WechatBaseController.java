@@ -73,6 +73,12 @@ public class WechatBaseController {
         return WechatAccessToken.getAccessToken();
     }
 
+    /**
+     * 微信登陆授权页面
+     * @param request
+     * @param response
+     * @throws IOException
+     */
     @RequestMapping(value = "/wxLoginUserInfoUrl")
     public void oauth2Authorize(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String redirectUrl = WsjTools.getDomainName(request) + "/wsj_server/wechat/userCode";
@@ -137,6 +143,12 @@ public class WechatBaseController {
         return wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
     }
 
+    /**
+     * 微信第三方登陆接口
+     * @param request
+     * @param response
+     * @throws IOException
+     */
     @RequestMapping(value = "/thirdPartLogin")
     public void thirdPartLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Cookie[] cookies = request.getCookies();

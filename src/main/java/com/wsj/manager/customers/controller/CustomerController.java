@@ -96,6 +96,11 @@ public class CustomerController {
         return customerService.changeCustomerNickName(nickName,customer.getId());
     }
 
+    /**
+     * 根据昵称获取用户信息
+     * @param nickName
+     * @return
+     */
     @RequestMapping(value="/findCustomerByNickName")
     public ResultBean findCustomerByNickName(String nickName){
         return customerService.findCustomerByNickName(nickName);
