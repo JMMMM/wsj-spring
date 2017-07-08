@@ -133,8 +133,8 @@ public class WechatBaseController {
         return wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
     }
 
-    @RequestMapping(value="/thridPartLogin")
-    public void userInfoByOpernId(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    @RequestMapping(value="/thirdPartLogin")
+    public void thirdPartLogin(HttpServletRequest request,HttpServletResponse response) throws IOException {
         Cookie[] cookies = request.getCookies();
         String openId = "";
         for(Cookie cookie : cookies){
@@ -164,6 +164,7 @@ public class WechatBaseController {
                 ResultBean resultBean = customerService.login(customer.getLoginName(),customer.getPassword());
                 Cookie cookie = new Cookie(SysConstants.WsjWxOpenId.getName(),openId);
                 cookie.setMaxAge(2592000);//一个月有效
+                cookie.setPath("/");
                 response.addCookie(cookie);
                 String contentType = "application/json";
                 response.setContentType(contentType);
