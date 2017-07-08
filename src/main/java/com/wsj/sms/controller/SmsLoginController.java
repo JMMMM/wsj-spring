@@ -88,12 +88,12 @@ public class SmsLoginController {
     public ResultBean validateCode(long mobile, int code) {
         SmsLog smsLog = smsLogService.findSmsLogByCondition(mobile + "", code + "", 1);
         if (null == smsLog) {
-            return ResultBean.failure("登录失败！");
+            return ResultBean.failure("Error-001,验证码错误，请重新验证");
         }
         Date now = new Date();
         long timeDiff = now.getTime() - smsLog.getCreatedAt().getTime();
         if (timeDiff > 60 * 1000) {
-            return ResultBean.failure("验证码超时，请重新验证");
+            return ResultBean.failure("Error-002,验证码超时，请重新验证");
         }
 
         /**
@@ -104,7 +104,7 @@ public class SmsLoginController {
         if (null != customer) {
             Customer resultCustomer = new Customer();
             resultCustomer.setName(customer.getName());
-            return ResultBean.success("登录成功！", resultCustomer);
+            return ResultBean.success("登录成功", resultCustomer);
         }
         /**
          * 注册
