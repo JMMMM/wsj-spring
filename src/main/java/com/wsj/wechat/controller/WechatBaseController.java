@@ -145,6 +145,7 @@ public class WechatBaseController {
                 }
             }
         }
+        logger.info("thirdPartLogin:"+"openId->"+openId);
         WxCustomer wxCustomer = wechatBaseService.findWxCustomerByOpenid(openId);
         if (wxCustomer == null) {
             response.sendRedirect(WsjTools.getDomainName(request) + "/wsj_server/wechat/wxLoginUserInfoUrl");
