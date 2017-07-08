@@ -1,5 +1,7 @@
 package com.wsj.wechat.controller;
 
+import com.wsj.manager.customers.entity.Customer;
+import com.wsj.manager.customers.services.CustomerService;
 import com.wsj.tools.WsjTools;
 import com.wsj.wechat.api.SnsAPI;
 import com.wsj.wechat.api.WechatUserInfoApi;
@@ -32,6 +34,8 @@ import java.io.PrintWriter;
 public class WechatBaseController {
     @Autowired
     private WechatBaseService wechatBaseService;
+    @Autowired
+    private CustomerService customerService;
     private static Logger logger = LoggerFactory.getLogger(WechatBaseController.class);
 
     @RequestMapping(value = "/ownerCheck", method = RequestMethod.GET)
@@ -122,4 +126,21 @@ public class WechatBaseController {
         return wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
     }
 
+    @RequestMapping(value="/thridPartLogin")
+    public void userInfoByOpernId(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        String openId = request.getParameter("openId");
+        WxCustomer wxCustomer = wechatBaseService.findWxCustomerByOpenid(openId);
+        if(wxCustomer==null){
+            response.sendRedirect(WsjTools.getDomainName(request) + "/wsj_server/wechat/wxLoginUserInfoUrl");
+        }else{
+            SnsToken snsToken = SnsAPI.oauth2RefreshToken(WechatConfigure.getAppId(),wxCustomer.getRefreshToken());
+            if(!snsToken.isSuccess()) response.sendRedirect(WsjTools.getDomainName(request) + "/wsj_server/wechat/wxLoginUserInfoUrl");
+            else{
+                UserInfo userInfo = SnsAPI.userinfo(snsToken.getAccess_token(), snsToken.getOpenid(), "zh_CN");
+                wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
+                Customer customer = customerService.findCustomerByWxCustomerId(wxCustomer.getId());
+                customerService.login(customer.getLoginName(),customer.getPassword());
+            }
+        }
+    }
 }

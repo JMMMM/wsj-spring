@@ -18,4 +18,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     Customer findCustomerByLoginName(String loginName);
     @Query("select c from Customer c where c.loginName = ?1 and c.password = ?2")
     Customer findCustomerByLoginNameAndPassword(String loginName, String password);
+
+    @Query("select c from Customer c where c.wxCustomerId=?1")
+    Customer findCustomerByOpenId(int wxCustomerId);
 }

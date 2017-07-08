@@ -5,11 +5,15 @@ import com.wsj.manager.customers.services.CustomerService;
 import com.wsj.sys.annotation.SessionCheck;
 import com.wsj.sys.bean.PageBean;
 import com.wsj.sys.bean.ResultBean;
+import com.wsj.sys.enums.SysConstants;
+import com.wsj.tools.MD5Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by jimmy on 2017/6/25.
@@ -53,6 +57,13 @@ public class CustomerController {
 
     @RequestMapping(value = "/login",method =RequestMethod.POST)
     public ResultBean login(String loginName,String password){
-        return customerService.login(loginName,password);
+        return customerService.login(loginName, MD5Helper.encode(password));
+    }
+
+    @SessionCheck(checkedType = SessionCheck.Type.WEB)
+    @RequestMapping(value="/getLoginCustomerInfo")
+    public ResultBean getLoginCustomerInfo(HttpServletRequest request){
+        Customer customre = (Customer)request.getSession().getAttribute(SysConstants.WebLoginSession.getName());
+        return ResultBean.success("在线用户",customre);
     }
 }
