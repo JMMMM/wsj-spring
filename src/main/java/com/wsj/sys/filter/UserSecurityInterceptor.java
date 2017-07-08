@@ -31,16 +31,30 @@ public class UserSecurityInterceptor implements HandlerInterceptor {
         }
         if (obj != null) return true;
         if (WsjTools.isAjaxRequest(request)) {
-            String jsonObject = "{\"sessionStatus\":\"timeout\",\"redirectHref\":"
-                    + "\"" + WsjTools.getLoginPath(request) + "\"," +
-                    "\"success\":false}";
-            String contentType = "application/json";
-            response.setContentType(contentType);
-            PrintWriter out = response.getWriter();
-            out.print(jsonObject);
-            out.flush();
-            out.close();
-            return false;
+            if(sessionCheck.checkedType() == SessionCheck.Type.MANAGER){
+                String jsonObject = "{\"sessionStatus\":\"timeout\",\"redirectHref\":"
+                        + "\"" + WsjTools.getLoginPath(request) + "\"," +
+                        "\"success\":false}";
+                String contentType = "application/json";
+                response.setContentType(contentType);
+                PrintWriter out = response.getWriter();
+                out.print(jsonObject);
+                out.flush();
+                out.close();
+                return false;
+            }else{
+                String jsonObject = "{\"sessionStatus\":\"timeout\",\"redirectHref\":"
+                        + "\"" + WsjTools.getWebLoginPath(request) + "\"," +
+                        "\"success\":false}";
+                String contentType = "application/json";
+                response.setContentType(contentType);
+                PrintWriter out = response.getWriter();
+                out.print(jsonObject);
+                out.flush();
+                out.close();
+                return false;
+            }
+
         }
 
         response.sendRedirect(WsjTools.getLoginPath(request));
