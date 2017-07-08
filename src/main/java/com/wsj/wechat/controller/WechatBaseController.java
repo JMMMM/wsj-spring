@@ -80,41 +80,41 @@ public class WechatBaseController {
         response.sendRedirect(SnsAPI.connectOauth2Authorize(WechatConfigure.getAppId(), redirectUrl, true, "wsj_checking"));
     }
 
-    /**
-     * 根据refresh token 刷新用户access_token
-     *
-     * @param request
-     */
-    @RequestMapping(value = "/wxLoginUserBaseUrl")
-    public void getUserAccessToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String redirectUrl = WsjTools.getDomainName(request) + "/wsj_server/wechat/baseUserCode";
-        logger.info("微信免授权登录:" + redirectUrl);
-        response.sendRedirect(SnsAPI.connectOauth2Authorize(WechatConfigure.getAppId(), redirectUrl, false, "wsj_checking"));
-    }
+//    /**
+//     * 根据refresh token 刷新用户access_token
+//     *
+//     * @param request
+//     */
+//    @RequestMapping(value = "/wxLoginUserBaseUrl")
+//    public void getUserAccessToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//        String redirectUrl = WsjTools.getDomainName(request) + "/wsj_server/wechat/baseUserCode";
+//        logger.info("微信免授权登录:" + redirectUrl);
+//        response.sendRedirect(SnsAPI.connectOauth2Authorize(WechatConfigure.getAppId(), redirectUrl, false, "wsj_checking"));
+//    }
 
-    @RequestMapping(value = "/baseUserCode")
-    public WxCustomer baseUserCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String code = request.getParameter("code");
-        String state = request.getParameter("state");
-        if (!"wsj_checking".equals(state)) return null;
-        logger.info("微信免授权登录跳转：" + code + "======" + state);
-        SnsToken snsToken = SnsAPI.oauth2AccessToken(WechatConfigure.getAppId(), WechatConfigure.getAppSecrect(), code);
-        WxCustomer wxCustomer = wechatBaseService.findWxCustomerByOpenid(snsToken.getOpenid());
-        if (wxCustomer == null) {
-            response.sendRedirect(WsjTools.getDomainName(request) + "/wsj_server/wechat/wxLoginUserInfoUrl");
-            return null;
-        } else {
-            String refreshToken = StringUtils.isEmpty(snsToken.getRefresh_token()) ? wxCustomer.getRefreshToken() : snsToken.getRefresh_token();
-            SnsToken snsToken1 = SnsAPI.oauth2RefreshToken(WechatConfigure.getAppId(), refreshToken);
-            if (!snsToken1.isSuccess()) {
-                logger.info("refresh token 过期，重定向到 wxLoginUserInfoUrl");
-                response.sendRedirect(WsjTools.getDomainName(request) + "/wsj_server/wechat/wxLoginUserInfoUrl");
-            }
-            UserInfo userInfo = SnsAPI.userinfo(snsToken1.getAccess_token(), snsToken.getOpenid(), "zh_CN");
-            return wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken1);
-        }
-
-    }
+//    @RequestMapping(value = "/baseUserCode")
+//    public WxCustomer baseUserCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//        String code = request.getParameter("code");
+//        String state = request.getParameter("state");
+//        if (!"wsj_checking".equals(state)) return null;
+//        logger.info("微信免授权登录跳转：" + code + "======" + state);
+//        SnsToken snsToken = SnsAPI.oauth2AccessToken(WechatConfigure.getAppId(), WechatConfigure.getAppSecrect(), code);
+//        WxCustomer wxCustomer = wechatBaseService.findWxCustomerByOpenid(snsToken.getOpenid());
+//        if (wxCustomer == null) {
+//            response.sendRedirect(WsjTools.getDomainName(request) + "/wsj_server/wechat/wxLoginUserInfoUrl");
+//            return null;
+//        } else {
+//            String refreshToken = StringUtils.isEmpty(snsToken.getRefresh_token()) ? wxCustomer.getRefreshToken() : snsToken.getRefresh_token();
+//            SnsToken snsToken1 = SnsAPI.oauth2RefreshToken(WechatConfigure.getAppId(), refreshToken);
+//            if (!snsToken1.isSuccess()) {
+//                logger.info("refresh token 过期，重定向到 wxLoginUserInfoUrl");
+//                response.sendRedirect(WsjTools.getDomainName(request) + "/wsj_server/wechat/wxLoginUserInfoUrl");
+//            }
+//            UserInfo userInfo = SnsAPI.userinfo(snsToken1.getAccess_token(), snsToken.getOpenid(), "zh_CN");
+//            return wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken1);
+//        }
+//
+//    }
 
     /**
      * 用户重新授权并获取用户信息
