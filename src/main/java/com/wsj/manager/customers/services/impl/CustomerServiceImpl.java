@@ -108,6 +108,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public ResultBean changeCustomerNickName(String nickName,int id) {
+        Customer customer = customerRepository.findCustomerByNickName(nickName);
+        if(customer!=null) return  ResultBean.failure("已存在昵称");
         customerRepository.changeCustomerNickName(nickName,id);
         return ResultBean.success("更新成功!");
     }
