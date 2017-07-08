@@ -60,7 +60,7 @@ public class WechatBaseController {
         if (signature != null && ValidateSignature.checkSignature(signature, timestamp, nonce)) {
             try {
                 PrintWriter print = response.getWriter();
-                print.write(echostr==null?"":echostr);
+                print.write(echostr == null ? "" : echostr);
                 print.flush();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -76,8 +76,8 @@ public class WechatBaseController {
     @RequestMapping(value = "/wxLoginUserInfoUrl")
     public void oauth2Authorize(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String redirectUrl = WsjTools.getDomainName(request) + "/wsj_server/wechat/userCode";
-        logger.info("微信登录授权:"+redirectUrl);
-        response.sendRedirect(SnsAPI.connectOauth2Authorize(WechatConfigure.getAppId(), redirectUrl,true, "wsj_checking"));
+        logger.info("微信登录授权:" + redirectUrl);
+        response.sendRedirect(SnsAPI.connectOauth2Authorize(WechatConfigure.getAppId(), redirectUrl, true, "wsj_checking"));
     }
 
     /**
@@ -88,7 +88,7 @@ public class WechatBaseController {
     @RequestMapping(value = "/wxLoginUserBaseUrl")
     public void getUserAccessToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String redirectUrl = WsjTools.getDomainName(request) + "/wsj_server/wechat/baseUserCode";
-        logger.info("微信免授权登录:"+redirectUrl);
+        logger.info("微信免授权登录:" + redirectUrl);
         response.sendRedirect(SnsAPI.connectOauth2Authorize(WechatConfigure.getAppId(), redirectUrl, false, "wsj_checking"));
     }
 
@@ -97,7 +97,7 @@ public class WechatBaseController {
         String code = request.getParameter("code");
         String state = request.getParameter("state");
         if (!"wsj_checking".equals(state)) return null;
-        logger.info("微信免授权登录跳转："+code + "======" + state);
+        logger.info("微信免授权登录跳转：" + code + "======" + state);
         SnsToken snsToken = SnsAPI.oauth2AccessToken(WechatConfigure.getAppId(), WechatConfigure.getAppSecrect(), code);
         WxCustomer wxCustomer = wechatBaseService.findWxCustomerByOpenid(snsToken.getOpenid());
         if (wxCustomer == null) {
@@ -133,26 +133,29 @@ public class WechatBaseController {
         return wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
     }
 
-    @RequestMapping(value="/thirdPartLogin")
-    public void thirdPartLogin(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/thirdPartLogin")
+    public void thirdPartLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Cookie[] cookies = request.getCookies();
         String openId = "";
-        for(Cookie cookie : cookies){
-            if(SysConstants.WsjWxOpenId.getName().equals(cookie.getName())){
-                openId = cookie.getValue();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (SysConstants.WsjWxOpenId.getName().equals(cookie.getName())) {
+                    openId = cookie.getValue();
+                }
             }
         }
         WxCustomer wxCustomer = wechatBaseService.findWxCustomerByOpenid(openId);
-        if(wxCustomer==null){
+        if (wxCustomer == null) {
             response.sendRedirect(WsjTools.getDomainName(request) + "/wsj_server/wechat/wxLoginUserInfoUrl");
-        }else{
-            SnsToken snsToken = SnsAPI.oauth2RefreshToken(WechatConfigure.getAppId(),wxCustomer.getRefreshToken());
-            if(!snsToken.isSuccess()) response.sendRedirect(WsjTools.getDomainName(request) + "/wsj_server/wechat/wxLoginUserInfoUrl");
-            else{
+        } else {
+            SnsToken snsToken = SnsAPI.oauth2RefreshToken(WechatConfigure.getAppId(), wxCustomer.getRefreshToken());
+            if (!snsToken.isSuccess())
+                response.sendRedirect(WsjTools.getDomainName(request) + "/wsj_server/wechat/wxLoginUserInfoUrl");
+            else {
                 UserInfo userInfo = SnsAPI.userinfo(snsToken.getAccess_token(), snsToken.getOpenid(), "zh_CN");
                 wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
                 Customer customer = customerService.findCustomerByWxCustomerId(wxCustomer.getId());
-                if(customer==null){
+                if (customer == null) {
                     ResultBean resultBean = ResultBean.failure("未注册味食家账号!");
                     String contentType = "application/json";
                     response.setContentType(contentType);
@@ -161,8 +164,8 @@ public class WechatBaseController {
                     out.flush();
                     out.close();
                 }
-                ResultBean resultBean = customerService.login(customer.getLoginName(),customer.getPassword());
-                Cookie cookie = new Cookie(SysConstants.WsjWxOpenId.getName(),openId);
+                ResultBean resultBean = customerService.login(customer.getLoginName(), customer.getPassword());
+                Cookie cookie = new Cookie(SysConstants.WsjWxOpenId.getName(), openId);
                 cookie.setMaxAge(2592000);//一个月有效
                 cookie.setPath("/");
                 response.addCookie(cookie);
