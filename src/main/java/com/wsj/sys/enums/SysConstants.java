@@ -8,7 +8,8 @@ public enum SysConstants {
     ManagerLoginSession("staffInfo"),
     WebLoginSession("customerInfo"),
     IndexPath("/wsj_system/index.html"),
-    LoginPath("/wsj_system/login/login.html");
+    LoginPath("/wsj_system/login/login.html"),
+    WsjWxOpenId("wsj_wx_openId");
     private String name;
     private SysConstants(String name){
         this.name = name;

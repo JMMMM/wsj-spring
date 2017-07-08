@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.wsj.manager.customers.entity.Customer;
 import com.wsj.manager.customers.services.CustomerService;
 import com.wsj.sys.bean.ResultBean;
+import com.wsj.sys.enums.SysConstants;
 import com.wsj.tools.WsjTools;
 import com.wsj.wechat.api.SnsAPI;
 import com.wsj.wechat.api.WechatUserInfoApi;
@@ -23,11 +24,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Date;
 
 /**
  * Created by Jimmy on 2017/6/28.
@@ -131,7 +135,13 @@ public class WechatBaseController {
 
     @RequestMapping(value="/thridPartLogin")
     public void userInfoByOpernId(HttpServletRequest request,HttpServletResponse response) throws IOException {
-        String openId = request.getParameter("openId");
+        Cookie[] cookies = request.getCookies();
+        String openId = "";
+        for(Cookie cookie : cookies){
+            if(SysConstants.WsjWxOpenId.getName().equals(cookie.getName())){
+                openId = cookie.getValue();
+            }
+        }
         WxCustomer wxCustomer = wechatBaseService.findWxCustomerByOpenid(openId);
         if(wxCustomer==null){
             response.sendRedirect(WsjTools.getDomainName(request) + "/wsj_server/wechat/wxLoginUserInfoUrl");
@@ -152,6 +162,9 @@ public class WechatBaseController {
                     out.close();
                 }
                 customerService.login(customer.getLoginName(),customer.getPassword());
+                Cookie cookie = new Cookie(SysConstants.WsjWxOpenId.getName(),openId);
+                cookie.setMaxAge(2592000);//一个月有效
+                response.addCookie(cookie);
             }
         }
     }
