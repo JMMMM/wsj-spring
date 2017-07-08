@@ -4,6 +4,7 @@ create table new_wsj.sms_log(
  `identifying_code` varchar(128) not null comment '手机验证码',
  `type` SMALLINT(1) not null comment '类型：1.登陆验证码',
  `phone` varchar(11) default null comment '手机号码',
+ `ip_address` varchar(255) DEFAULT null comment 'ip地址',
  `created_at` datetime not null comment '创建时间',
  `created_by` int(8) default null comment '创建人',
  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
