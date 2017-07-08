@@ -95,4 +95,9 @@ public class CustomerController {
         Customer customer = (Customer)request.getSession().getAttribute(SysConstants.WebLoginSession.getName());
         return customerService.changeCustomerNickName(nickName,customer.getId());
     }
+
+    @RequestMapping(value="/findCustomerByNickName")
+    public ResultBean findCustomerByNickName(String nickName){
+        return customerService.findCustomerByNickName(nickName);
+    }
 }

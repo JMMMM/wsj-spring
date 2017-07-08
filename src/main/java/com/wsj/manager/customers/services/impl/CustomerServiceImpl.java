@@ -111,4 +111,10 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.changeCustomerNickName(nickName,id);
         return ResultBean.success("更新成功!");
     }
+
+    @Override
+    public ResultBean findCustomerByNickName(String nickName) {
+        Customer customer = customerRepository.findCustomerByNickName(nickName);
+        return null == customer ? ResultBean.success("存在用户",customer):ResultBean.failure("不存在用户",null);
+    }
 }
