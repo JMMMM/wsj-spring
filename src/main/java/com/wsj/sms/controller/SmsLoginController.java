@@ -40,7 +40,7 @@ public class SmsLoginController {
     public ResultBean sendIdentifyingCode(HttpServletRequest request, String mobile) {
         String ipAddress = getRemoteHost(request);
         if (smsLogService.countSmsLogByIpAddress(ipAddress) > 2) {
-            return ResultBean.failure("Error-003,发送验证码过于频繁，请5分钟后重试");
+            return ResultBean.failure("Error-003,操作过于频繁，请5分钟后重试");
         }
         /**
          * 保存短信验证码
