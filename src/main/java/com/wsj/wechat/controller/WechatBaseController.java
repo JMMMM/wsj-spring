@@ -143,13 +143,13 @@ public class WechatBaseController {
         String openId = "";
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                logger.info("thirdPartLogin:"+cookie.getName()+"->"+cookie.getValue());
+                logger.info("thirdPartLogin:" + cookie.getName() + "->" + cookie.getValue());
                 if (SysConstants.WsjWxOpenId.getName().equals(cookie.getName())) {
                     openId = cookie.getValue();
                 }
             }
         }
-        logger.info("thirdPartLogin:"+"openId->"+openId);
+        logger.info("thirdPartLogin:" + "openId->" + openId);
         WxCustomer wxCustomer = wechatBaseService.findWxCustomerByOpenid(openId);
         if (wxCustomer == null) {
             response.sendRedirect(WsjTools.getDomainName(request) + "/wsj_server/wechat/wxLoginUserInfoUrl");
@@ -169,18 +169,20 @@ public class WechatBaseController {
                     out.print(new Gson().toJson(resultBean));
                     out.flush();
                     out.close();
+                } else {
+                    ResultBean resultBean = customerService.login(customer.getLoginName(), customer.getPassword());
+                    Cookie cookie = new Cookie(SysConstants.WsjWxOpenId.getName(), openId);
+                    cookie.setMaxAge(2592000);//一个月有效
+                    cookie.setPath("/");
+                    response.addCookie(cookie);
+                    String contentType = "application/json";
+                    response.setContentType(contentType);
+                    PrintWriter out = response.getWriter();
+                    out.print(new Gson().toJson(resultBean));
+                    out.flush();
+                    out.close();
                 }
-                ResultBean resultBean = customerService.login(customer.getLoginName(), customer.getPassword());
-                Cookie cookie = new Cookie(SysConstants.WsjWxOpenId.getName(), openId);
-                cookie.setMaxAge(2592000);//一个月有效
-                cookie.setPath("/");
-                response.addCookie(cookie);
-                String contentType = "application/json";
-                response.setContentType(contentType);
-                PrintWriter out = response.getWriter();
-                out.print(new Gson().toJson(resultBean));
-                out.flush();
-                out.close();
+
             }
         }
     }
