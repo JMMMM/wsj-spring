@@ -130,6 +130,10 @@ public class WechatBaseController {
         logger.info(code + "======" + state);
         SnsToken snsToken = SnsAPI.oauth2AccessToken(WechatConfigure.getAppId(), WechatConfigure.getAppSecrect(), code);
         UserInfo userInfo = SnsAPI.userinfo(snsToken.getAccess_token(), snsToken.getOpenid(), "zh_CN");
+        Cookie cookie = new Cookie(SysConstants.WsjWxOpenId.getName(), userInfo.getOpenid());
+        cookie.setMaxAge(2592000);//一个月有效
+        cookie.setPath("/");
+        response.addCookie(cookie);
         return wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
     }
 
