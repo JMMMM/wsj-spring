@@ -65,12 +65,19 @@ public class CustomerServiceImpl implements CustomerService {
         ErrorCode validatorErrorCode = ValidatorHelper.validator(customer, new CustomerValidator());
         if (validatorErrorCode.getCode() > 0)
             return ResultBean.failure(validatorErrorCode.getMessage(), validatorErrorCode);
+        if(customerRepository.findCustomerByLoginName(customer.getLoginName())!=null) return ResultBean.failure(ErrorCode.LOGIN_NAME_EXISTS.getMessage(), ErrorCode.LOGIN_NAME_EXISTS);
         //密码md5处理
+        customer.setStatus(1);
         customer.setPassword(MD5Helper.encode(customer.getPassword()));
         customer.setCreatedAt(new Date());
         customer.setUpdatedAt(new Date());
         customerRepository.save(customer);
         return ResultBean.success("注册成功");
+    }
+
+    @Override
+    public Customer findByLoginName(String phone) {
+        return customerRepository.findCustomerByLoginName(phone);
     }
 
     @Override
@@ -81,8 +88,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public ResultBean login(String loginName, String password) {
-        Customer customer = customerRepository.findCustomerByLoginNameAndPassword(loginName,MD5Helper.encode(password));
-        session.setAttribute(SysConstants.WebLoginSession.getName(),customer);
+        Customer customer = customerRepository.findCustomerByLoginNameAndPassword(loginName, MD5Helper.encode(password));
+        session.setAttribute(SysConstants.WebLoginSession.getName(), customer);
         return ResultBean.success("登陆成功");
     }
 }

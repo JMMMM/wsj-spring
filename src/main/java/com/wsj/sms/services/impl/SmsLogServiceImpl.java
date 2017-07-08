@@ -18,8 +18,8 @@ public class SmsLogServiceImpl implements SmsLogService {
 
     @Override
     public ResultBean<SmsLog> saveSmsLog(SmsLog smsLog) {
-        if (smsLog.getId() > 0) return ResultBean.failure("已存在短信");
-        if (smsLog.getType() > 0) return ResultBean.failure("短信类型不能为空");
+//        if (smsLog.getId() > 0) return ResultBean.failure("已存在短信");
+        if (smsLog.getType() == null) return ResultBean.failure("短信类型不能为空");
         SmsLog log = smsLogRepository.save(smsLog);
         return ResultBean.success("保存成功", log);
     }
