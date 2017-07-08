@@ -34,4 +34,6 @@ public interface CustomerService {
     Customer findCustomerByWxCustomerId(int wxCustomerId);
 
     ResultBean changeCustomerNickName(String nickName,int id);
+
+    ResultBean findCustomerByNickName(String nickName);
 }

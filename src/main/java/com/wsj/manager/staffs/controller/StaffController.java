@@ -34,12 +34,22 @@ public class StaffController {
         return result;
     }
 
+    /**
+     * 退出登陆
+     * @param request
+     * @return
+     */
     @RequestMapping("/logout")
     public ResultBean logout(HttpServletRequest request) {
         request.getSession().removeAttribute(SysConstants.ManagerLoginSession.getName());
         return ResultBean.success("退出登录成功!");
     }
 
+    /**
+     * 获取当前用户登陆信息
+     * @param request
+     * @return
+     */
     @RequestMapping("/loginUser")
     public ResultBean loginUser(HttpServletRequest request) {
         Staff staff = (Staff) request.getSession().getAttribute(SysConstants.ManagerLoginSession.getName());

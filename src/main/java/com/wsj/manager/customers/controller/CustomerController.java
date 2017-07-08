@@ -50,16 +50,32 @@ public class CustomerController {
         return customerService.modifyCustomerStatus(customerId, status);
     }
 
+    /**
+     * customer 注册
+     * @param customer
+     * @return
+     */
     @RequestMapping("/register")
     public ResultBean register(Customer customer){
         return customerService.register(customer);
     }
 
+    /**
+     * 登陆
+     * @param loginName
+     * @param password
+     * @return
+     */
     @RequestMapping(value = "/login",method =RequestMethod.POST)
     public ResultBean login(String loginName,String password){
         return customerService.login(loginName, MD5Helper.encode(password));
     }
 
+    /**
+     * 获取登陆用户信息
+     * @param request
+     * @return
+     */
     @SessionCheck(checkedType = SessionCheck.Type.WEB)
     @RequestMapping(value="/getLoginCustomerInfo")
     public ResultBean getLoginCustomerInfo(HttpServletRequest request){
@@ -67,10 +83,26 @@ public class CustomerController {
         return ResultBean.success("在线用户",customer);
     }
 
+    /**
+     * 修改用户昵称
+     * @param request
+     * @param nickName
+     * @return
+     */
     @SessionCheck(checkedType = SessionCheck.Type.WEB)
     @RequestMapping(value="/changeCustomerNickName")
     public ResultBean changeCustomerNickName(HttpServletRequest request,String nickName){
         Customer customer = (Customer)request.getSession().getAttribute(SysConstants.WebLoginSession.getName());
         return customerService.changeCustomerNickName(nickName,customer.getId());
+    }
+
+    /**
+     * 根据昵称获取用户信息
+     * @param nickName
+     * @return
+     */
+    @RequestMapping(value="/findCustomerByNickName")
+    public ResultBean findCustomerByNickName(String nickName){
+        return customerService.findCustomerByNickName(nickName);
     }
 }
