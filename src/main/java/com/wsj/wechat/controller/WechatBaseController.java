@@ -5,6 +5,7 @@ import com.wsj.manager.customers.entity.Customer;
 import com.wsj.manager.customers.services.CustomerService;
 import com.wsj.sys.bean.ResultBean;
 import com.wsj.sys.enums.SysConstants;
+import com.wsj.tools.CookieUtil;
 import com.wsj.tools.WsjTools;
 import com.wsj.wechat.api.SnsAPI;
 import com.wsj.wechat.api.WechatUserInfoApi;
@@ -146,21 +147,13 @@ public class WechatBaseController {
     /**
      * 微信第三方登陆接口
      * @param request
-     * @param response
+     * @param response  resultBean json
      * @throws IOException
      */
     @RequestMapping(value = "/thirdPartLogin")
     public void thirdPartLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Cookie[] cookies = request.getCookies();
-        String openId = "";
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                logger.info("thirdPartLogin:" + cookie.getName() + "->" + cookie.getValue());
-                if (SysConstants.WsjWxOpenId.getName().equals(cookie.getName())) {
-                    openId = cookie.getValue();
-                }
-            }
-        }
+        String openId = CookieUtil.getCookieValue(cookies,SysConstants.WsjWxOpenId.getName());
         logger.info("thirdPartLogin:" + "openId->" + openId);
         WxCustomer wxCustomer = wechatBaseService.findWxCustomerByOpenid(openId);
         if (wxCustomer == null) {
@@ -174,7 +167,7 @@ public class WechatBaseController {
                 wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
                 Customer customer = customerService.findCustomerByWxCustomerId(wxCustomer.getId());
                 if (customer == null) {
-                    ResultBean resultBean = ResultBean.failure("未注册味食家账号!");
+                    ResultBean<WxCustomer> resultBean = ResultBean.failure("未注册味食家账号!",wxCustomer);
                     String contentType = "application/json";
                     response.setContentType(contentType);
                     PrintWriter out = response.getWriter();

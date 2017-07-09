@@ -1,5 +1,7 @@
 package com.wsj.sys.filter;
 
+import com.wsj.sys.enums.SysConstants;
+import com.wsj.tools.WsjTools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -26,7 +28,13 @@ public class LogInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-
+        if(response.getStatus()==500){
+            logger.info("/500");
+            response.sendRedirect(WsjTools.getDomainName(request)+ SysConstants.ServerError.getName());
+        }else if(response.getStatus()==404){
+            logger.info("/404");
+            response.sendRedirect(WsjTools.getDomainName(request)+SysConstants.NotFound.getName());
+        }
     }
 
     @Override
