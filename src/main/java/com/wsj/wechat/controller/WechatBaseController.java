@@ -5,6 +5,7 @@ import com.wsj.manager.customers.entity.Customer;
 import com.wsj.manager.customers.services.CustomerService;
 import com.wsj.sys.bean.ResultBean;
 import com.wsj.sys.enums.SysConstants;
+import com.wsj.tools.CookieUtil;
 import com.wsj.tools.WsjTools;
 import com.wsj.wechat.api.SnsAPI;
 import com.wsj.wechat.api.WechatUserInfoApi;
@@ -152,15 +153,7 @@ public class WechatBaseController {
     @RequestMapping(value = "/thirdPartLogin")
     public void thirdPartLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Cookie[] cookies = request.getCookies();
-        String openId = "";
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                logger.info("thirdPartLogin:" + cookie.getName() + "->" + cookie.getValue());
-                if (SysConstants.WsjWxOpenId.getName().equals(cookie.getName())) {
-                    openId = cookie.getValue();
-                }
-            }
-        }
+        String openId = CookieUtil.getCookieValue(cookies,SysConstants.WsjWxOpenId.getName());
         logger.info("thirdPartLogin:" + "openId->" + openId);
         WxCustomer wxCustomer = wechatBaseService.findWxCustomerByOpenid(openId);
         if (wxCustomer == null) {
