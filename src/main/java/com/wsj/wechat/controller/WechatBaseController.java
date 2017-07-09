@@ -186,11 +186,7 @@ public class WechatBaseController {
                 if (customer == null) {
                     logger.info("未注册味食家账号!");
 //                    ResultBean<WxCustomer> resultBean = ResultBean.failure("未注册味食家账号!",wxCustomer);
-                    response.sendRedirect(WsjTools.getDomainName(request)+SysConstants.WebLoginPath.getName());
-                    PrintWriter out = response.getWriter();
-                    out.print("{\"isWechat\":\"true\"}");
-                    out.flush();
-                    out.close();
+                    response.sendRedirect(WsjTools.getDomainName(request)+SysConstants.WebLoginPath.getName()+"?isWechat=true");
 //                    out.print(new Gson().toJson(resultBean));
 //                    String contentType = "application/json";
 //                    response.setContentType(contentType);
