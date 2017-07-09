@@ -101,7 +101,9 @@ public class CustomerServiceImpl implements CustomerService {
 
         if(openId!=null){
             WxCustomer wxCustomer = wxCustomerRepository.findWxCustomerByOpenId(openId);
-            customerRepository.updateCustomerWxCustomerId(wxCustomer.getId(),customer.getId());
+            if(wxCustomer !=null ) {
+                customerRepository.updateCustomerWxCustomerId(wxCustomer.getId(),customer.getId());
+            }
         }
         return ResultBean.success("登陆成功",customer);
     }
