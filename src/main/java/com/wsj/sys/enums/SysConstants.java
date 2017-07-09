@@ -13,6 +13,7 @@ public enum SysConstants {
     NotFound("/wsj_system/wechat/view/index.html"),
     ChangeNikeName("/wsj_system/wechat/view/login/change_nickname.html"),
     ServerError(""),
+    WebIndexPath("/wsj_system/wechat/view/index.html"),
     WsjWxOpenId("wsj_wx_openId");
     private String name;
     private SysConstants(String name){

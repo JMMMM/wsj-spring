@@ -144,7 +144,7 @@ public class WechatBaseController {
         WxCustomer exists = wechatBaseService.findWxCustomerByOpenid(snsToken.getOpenid());
         if(exists==null){
             wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
-            response.sendRedirect(WsjTools.getDomainName(request)+SysConstants.ChangeNikeName.getName());
+            response.sendRedirect(WsjTools.getDomainName(request)+SysConstants.WebLoginPath.getName());
         }else{
             WxCustomer wxCustomer = wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
             String contentType = "application/json";
@@ -178,27 +178,31 @@ public class WechatBaseController {
             else {
                 UserInfo userInfo = SnsAPI.userinfo(snsToken.getAccess_token(), snsToken.getOpenid(), "zh_CN");
                 wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
+                Cookie cookie = new Cookie(SysConstants.WsjWxOpenId.getName(), openId);
+                cookie.setMaxAge(2592000);//一个月有效
+                cookie.setPath("/");
+                response.addCookie(cookie);
                 Customer customer = customerService.findCustomerByWxCustomerId(wxCustomer.getId());
                 if (customer == null) {
-                    ResultBean<WxCustomer> resultBean = ResultBean.failure("未注册味食家账号!",wxCustomer);
-                    String contentType = "application/json";
-                    response.setContentType(contentType);
-                    PrintWriter out = response.getWriter();
-                    out.print(new Gson().toJson(resultBean));
-                    out.flush();
-                    out.close();
+                    logger.info("未注册味食家账号!");
+//                    ResultBean<WxCustomer> resultBean = ResultBean.failure("未注册味食家账号!",wxCustomer);
+                    response.sendRedirect(WsjTools.getDomainName(request)+SysConstants.WebLoginPath.getName());
+//                    String contentType = "application/json";
+//                    response.setContentType(contentType);
+//                    PrintWriter out = response.getWriter();
+//                    out.print(new Gson().toJson(resultBean));
+//                    out.flush();
+//                    out.close();
                 } else {
+                    logger.info("已绑定味食家账号");
                     ResultBean resultBean = customerService.login(customer.getLoginName(), customer.getPassword());
-                    Cookie cookie = new Cookie(SysConstants.WsjWxOpenId.getName(), openId);
-                    cookie.setMaxAge(2592000);//一个月有效
-                    cookie.setPath("/");
-                    response.addCookie(cookie);
                     String contentType = "application/json";
                     response.setContentType(contentType);
-                    PrintWriter out = response.getWriter();
-                    out.print(new Gson().toJson(resultBean));
-                    out.flush();
-                    out.close();
+                    response.sendRedirect(WsjTools.getDomainName(request)+SysConstants.WebIndexPath.getName());
+//                    PrintWriter out = response.getWriter();
+//                    out.print(new Gson().toJson(resultBean));
+//                    out.flush();
+//                    out.close();
                 }
 
             }
