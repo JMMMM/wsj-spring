@@ -147,7 +147,7 @@ public class WechatBaseController {
     /**
      * 微信第三方登陆接口
      * @param request
-     * @param response
+     * @param response  resultBean json
      * @throws IOException
      */
     @RequestMapping(value = "/thirdPartLogin")
