@@ -10,6 +10,8 @@ public enum SysConstants {
     IndexPath("/wsj_system/index.html"),
     LoginPath("/wsj_system/login/login.html"),
     WebLoginPath(""),
+    NotFound(""),
+    ServerError(""),
     WsjWxOpenId("wsj_wx_openId");
     private String name;
     private SysConstants(String name){
