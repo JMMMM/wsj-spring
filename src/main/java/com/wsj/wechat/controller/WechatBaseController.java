@@ -178,6 +178,10 @@ public class WechatBaseController {
             else {
                 UserInfo userInfo = SnsAPI.userinfo(snsToken.getAccess_token(), snsToken.getOpenid(), "zh_CN");
                 wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
+                Cookie cookie = new Cookie(SysConstants.WsjWxOpenId.getName(), openId);
+                cookie.setMaxAge(2592000);//一个月有效
+                cookie.setPath("/");
+                response.addCookie(cookie);
                 Customer customer = customerService.findCustomerByWxCustomerId(wxCustomer.getId());
                 if (customer == null) {
                     logger.info("未注册味食家账号!");
@@ -192,10 +196,6 @@ public class WechatBaseController {
                 } else {
                     logger.info("已绑定味食家账号");
                     ResultBean resultBean = customerService.login(customer.getLoginName(), customer.getPassword());
-                    Cookie cookie = new Cookie(SysConstants.WsjWxOpenId.getName(), openId);
-                    cookie.setMaxAge(2592000);//一个月有效
-                    cookie.setPath("/");
-                    response.addCookie(cookie);
                     String contentType = "application/json";
                     response.setContentType(contentType);
                     response.sendRedirect(WsjTools.getDomainName(request)+SysConstants.WebIndexPath.getName());
