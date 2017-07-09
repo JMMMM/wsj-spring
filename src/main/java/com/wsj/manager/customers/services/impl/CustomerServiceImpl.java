@@ -8,17 +8,18 @@ import com.wsj.sys.bean.PageBean;
 import com.wsj.sys.bean.ResultBean;
 import com.wsj.sys.enums.ErrorCode;
 import com.wsj.sys.enums.SysConstants;
-import com.wsj.tools.MD5Helper;
-import com.wsj.tools.OperatorUtil;
-import com.wsj.tools.QueryTools;
-import com.wsj.tools.ValidatorHelper;
+import com.wsj.tools.*;
 import com.wsj.tools.validator.CustomerValidator;
+import com.wsj.wechat.entity.WxCustomer;
+import com.wsj.wechat.repository.WxCustomerRepository;
+import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,11 +36,14 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private HttpSession session;
     @Autowired
+    private HttpServletRequest request;
+    @Autowired
     private EntityManager em;
-
+    @Autowired
+    private WxCustomerRepository wxCustomerRepository;
     @Override
     public PageBean<Customer> findByPage(Customer customer, PageBean pageBean) {
-        String sql = "select c.* from customers c where 1 =1 ";
+        String sql = " select c.* from customers c where 1 =1 ";
         List<Object> parameter = new ArrayList<Object>();
         if (customer != null) {
             if (!StringUtils.isEmpty(customer.getPhone())) {
@@ -52,7 +56,6 @@ public class CustomerServiceImpl implements CustomerService {
                 parameter.add("%" + customer.getName() + "%");
             }
         }
-        sql += "limit ?,?";
         return QueryTools.queryPageResult(em, sql, parameter, pageBean, Customer.class);
     }
 
@@ -94,6 +97,12 @@ public class CustomerServiceImpl implements CustomerService {
             return ResultBean.failure("账号或密码错误");
         }
         session.setAttribute(SysConstants.WebLoginSession.getName(), customer);
+        String openId = CookieUtil.getCookieValue(request.getCookies(),SysConstants.WsjWxOpenId.getName());
+
+        if(openId!=null){
+            WxCustomer wxCustomer = wxCustomerRepository.findWxCustomerByOpenId(openId);
+            customerRepository.updateCustomerWxCustomerId(wxCustomer.getId(),customer.getId());
+        }
         return ResultBean.success("登陆成功",customer);
     }
 

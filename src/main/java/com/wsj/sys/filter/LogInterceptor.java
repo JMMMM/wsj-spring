@@ -30,7 +30,7 @@ public class LogInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         if(response.getStatus()==500){
             logger.info("/500");
-            response.sendRedirect(WsjTools.getDomainName(request)+ SysConstants.ServerError.getName());
+//            response.sendRedirect(WsjTools.getDomainName(request)+ SysConstants.ServerError.getName());
         }else if(response.getStatus()==404){
             logger.info("/404");
             response.sendRedirect(WsjTools.getDomainName(request)+SysConstants.NotFound.getName());

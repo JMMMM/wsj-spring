@@ -27,4 +27,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     @Query("select c from Customer c where c.name =?1")
     Customer findCustomerByNickName(String nickName);
+
+    @Modifying(clearAutomatically = true)
+    @Query("update Customer c set c.wxCustomerId = ?1,updatedAt=now() where id =?2")
+    void updateCustomerWxCustomerId(int wxCustomerId,int customerId);
 }

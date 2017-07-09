@@ -32,7 +32,7 @@ public class CustomerController {
      * @param pageBean
      * @return
      */
-    @SessionCheck(checkedType = SessionCheck.Type.MANAGER)
+//    @SessionCheck(checkedType = SessionCheck.Type.MANAGER)
     @RequestMapping("/findCustomers")
     public PageBean<Customer> findCustomers(Customer customer,PageBean pageBean) {
         return customerService.findByPage(customer, pageBean);

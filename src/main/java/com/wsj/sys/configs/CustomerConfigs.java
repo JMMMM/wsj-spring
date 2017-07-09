@@ -84,8 +84,8 @@ public class CustomerConfigs extends WebMvcConfigurerAdapter implements Environm
     public EmbeddedServletContainerCustomizer containerCustomizer() {
         return (ConfigurableEmbeddedServletContainer container) -> {
             container.setSessionTimeout(1800);
-            container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND , SysConstants.NotFound.getName()));
-            container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR,SysConstants.ServerError.getName()));
+//            container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND , SysConstants.NotFound.getName()));
+//            container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR,SysConstants.ServerError.getName()));
         };
     }
 
