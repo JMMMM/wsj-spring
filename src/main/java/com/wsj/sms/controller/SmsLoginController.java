@@ -108,9 +108,7 @@ public class SmsLoginController {
         String phone = mobile + "";
         Customer customer = customerService.findByLoginName(phone);
         if (null != customer) {
-            // 登陆
-            customerService.login(customer.getLoginName(), customer.getPassword());
-            return ResultBean.success("登录成功");
+            return customerService.login(customer.getLoginName(), customer.getPassword());
         }
         /**
          * 注册
