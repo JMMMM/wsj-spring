@@ -88,13 +88,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public ResultBean login(String loginName, String md5Password) {
+    public ResultBean<Customer> login(String loginName, String md5Password) {
         Customer customer = customerRepository.findCustomerByLoginNameAndPassword(loginName,md5Password);
         if(customer ==null){
             return ResultBean.failure("账号或密码错误");
         }
         session.setAttribute(SysConstants.WebLoginSession.getName(), customer);
-        return ResultBean.success("登陆成功");
+        return ResultBean.success("登陆成功",customer);
     }
 
     @Override

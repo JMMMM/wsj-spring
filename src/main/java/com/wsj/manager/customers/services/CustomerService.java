@@ -29,7 +29,7 @@ public interface CustomerService {
 
     ResultBean modifyCustomerStatus(int customerId, int status);
 
-    ResultBean login(String loginName, String md5Password);
+    ResultBean<Customer> login(String loginName, String md5Password);
 
     Customer findCustomerByWxCustomerId(int wxCustomerId);
 

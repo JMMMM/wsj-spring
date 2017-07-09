@@ -167,7 +167,7 @@ public class WechatBaseController {
                 wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
                 Customer customer = customerService.findCustomerByWxCustomerId(wxCustomer.getId());
                 if (customer == null) {
-                    ResultBean resultBean = ResultBean.failure("未注册味食家账号!",wxCustomer);
+                    ResultBean<WxCustomer> resultBean = ResultBean.failure("未注册味食家账号!",wxCustomer);
                     String contentType = "application/json";
                     response.setContentType(contentType);
                     PrintWriter out = response.getWriter();
