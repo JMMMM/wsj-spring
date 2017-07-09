@@ -55,7 +55,6 @@ public class CustomerServiceImpl implements CustomerService {
                 parameter.add("%" + customer.getName() + "%");
             }
         }
-        sql += "limit ?,?";
         return QueryTools.queryPageResult(em, sql, parameter, pageBean, Customer.class);
     }
 
