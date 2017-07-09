@@ -37,13 +37,15 @@ public class SmsLoginController {
     private CustomerService customerService;
 
     @RequestMapping(value = "/sendIdentifyingCode", method = RequestMethod.GET)
-    public ResultBean sendIdentifyingCode(HttpServletRequest request,String mobile) {
+    public ResultBean sendIdentifyingCode(HttpServletRequest request, String mobile) {
+        String ipAddress = getRemoteHost(request);
+        if (smsLogService.countSmsLogByIpAddress(ipAddress) > 2) {
+            return ResultBean.failure("Error-003,操作过于频繁，请5分钟后重试");
+        }
         /**
          * 保存短信验证码
          */
         int code = (int) ((Math.random() * 9 + 1) * 100000);
-        String ipAddress = request.getRemoteAddr();
-        if(smsLogService.countSmsLogByIpAddress(ipAddress)>2) return ResultBean.failure("请求过于频繁！");
         SmsLog smsLog = new SmsLog();
         smsLog.setCreatedAt(new Date());
         smsLog.setIdentifyingCode(code + "");
@@ -51,7 +53,7 @@ public class SmsLoginController {
         smsLog.setType(1);
         smsLog.setIpAddress(ipAddress);
         ResultBean resultBean = smsLogService.saveSmsLog(smsLog);
-        if(!resultBean.isSuccess()) return resultBean;
+        if (!resultBean.isSuccess()) return ResultBean.failure("发送短信失败，接口异常");
         /**
          * 发送短信验证码
          */
@@ -106,9 +108,9 @@ public class SmsLoginController {
         String phone = mobile + "";
         Customer customer = customerService.findByLoginName(phone);
         if (null != customer) {
-            Customer resultCustomer = new Customer();
-            resultCustomer.setName(customer.getName());
-            return ResultBean.success("登录成功", resultCustomer);
+            // 登陆
+            customerService.login(customer.getLoginName(), customer.getPassword());
+            return ResultBean.success("登录成功");
         }
         /**
          * 注册
@@ -119,7 +121,12 @@ public class SmsLoginController {
         customer.setPhone(phone);
         customer.setStatus(1);
         customer.setPassword(code + "");
-        return customerService.register(customer);
+
+        // 返回保存成功的客户信息，只提供默认的昵称
+        ResultBean<Customer> bean = customerService.register(customer);
+        // 登陆
+        customerService.login(bean.getBean().getLoginName(), bean.getBean().getPassword());
+        return ResultBean.success("注册成功");
     }
 
     /**
@@ -176,6 +183,20 @@ public class SmsLoginController {
             }
         }
         return result;
+    }
+
+    private String getRemoteHost(HttpServletRequest request) {
+        String ip = request.getHeader("x-forwarded-for");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+        return ip.equals("0:0:0:0:0:0:0:1") ? "127.0.0.1" : ip;
     }
 }
 

@@ -73,11 +73,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setCreatedAt(new Date());
         customer.setUpdatedAt(new Date());
         Customer result = customerRepository.save(customer);
-
-        // 返回保存成功的客户信息，只提供默认的昵称
-        Customer resultCustmer = new Customer();
-        resultCustmer.setName(result.getName());
-        return ResultBean.success("注册成功", resultCustmer);
+        return ResultBean.success("注册成功", result);
     }
 
     @Override
