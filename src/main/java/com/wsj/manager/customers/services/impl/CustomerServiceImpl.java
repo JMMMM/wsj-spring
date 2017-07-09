@@ -12,6 +12,7 @@ import com.wsj.tools.*;
 import com.wsj.tools.validator.CustomerValidator;
 import com.wsj.wechat.entity.WxCustomer;
 import com.wsj.wechat.repository.WxCustomerRepository;
+import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
     private WxCustomerRepository wxCustomerRepository;
     @Override
     public PageBean<Customer> findByPage(Customer customer, PageBean pageBean) {
-        String sql = "select c.* from customers c where 1 =1 ";
+        String sql = " select c.* from customers c where 1 =1 ";
         List<Object> parameter = new ArrayList<Object>();
         if (customer != null) {
             if (!StringUtils.isEmpty(customer.getPhone())) {
