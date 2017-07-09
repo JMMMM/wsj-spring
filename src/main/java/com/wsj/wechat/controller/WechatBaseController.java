@@ -180,25 +180,27 @@ public class WechatBaseController {
                 wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
                 Customer customer = customerService.findCustomerByWxCustomerId(wxCustomer.getId());
                 if (customer == null) {
-                    ResultBean<WxCustomer> resultBean = ResultBean.failure("未注册味食家账号!",wxCustomer);
-                    String contentType = "application/json";
-                    response.setContentType(contentType);
-                    PrintWriter out = response.getWriter();
-                    out.print(new Gson().toJson(resultBean));
-                    out.flush();
-                    out.close();
+//                    ResultBean<WxCustomer> resultBean = ResultBean.failure("未注册味食家账号!",wxCustomer);
+                    response.sendRedirect(WsjTools.getDomainName(request)+SysConstants.WebLoginPath.getName());
+//                    String contentType = "application/json";
+//                    response.setContentType(contentType);
+//                    PrintWriter out = response.getWriter();
+//                    out.print(new Gson().toJson(resultBean));
+//                    out.flush();
+//                    out.close();
                 } else {
-                    ResultBean resultBean = customerService.login(customer.getLoginName(), customer.getPassword());
+//                    ResultBean resultBean = customerService.login(customer.getLoginName(), customer.getPassword());
                     Cookie cookie = new Cookie(SysConstants.WsjWxOpenId.getName(), openId);
                     cookie.setMaxAge(2592000);//一个月有效
                     cookie.setPath("/");
                     response.addCookie(cookie);
                     String contentType = "application/json";
                     response.setContentType(contentType);
-                    PrintWriter out = response.getWriter();
-                    out.print(new Gson().toJson(resultBean));
-                    out.flush();
-                    out.close();
+                    response.sendRedirect(WsjTools.getDomainName(request)+SysConstants.WebIndexPath.getName());
+//                    PrintWriter out = response.getWriter();
+//                    out.print(new Gson().toJson(resultBean));
+//                    out.flush();
+//                    out.close();
                 }
 
             }
