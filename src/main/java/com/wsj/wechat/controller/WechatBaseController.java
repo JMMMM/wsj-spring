@@ -144,7 +144,7 @@ public class WechatBaseController {
         WxCustomer exists = wechatBaseService.findWxCustomerByOpenid(snsToken.getOpenid());
         if(exists==null){
             wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
-            response.sendRedirect(WsjTools.getDomainName(request)+SysConstants.WebLoginPath.getName());
+            response.sendRedirect(WsjTools.getDomainName(request)+SysConstants.WebLoginPath.getName()+"?isWechat=true");
         }else{
             WxCustomer wxCustomer = wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
             String contentType = "application/json";
