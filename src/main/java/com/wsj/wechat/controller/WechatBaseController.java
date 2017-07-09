@@ -147,12 +147,9 @@ public class WechatBaseController {
             response.sendRedirect(WsjTools.getDomainName(request)+SysConstants.WebLoginPath.getName()+"?isWechat=true");
         }else{
             WxCustomer wxCustomer = wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
-            String contentType = "application/json";
-            response.setContentType(contentType);
-            PrintWriter out = response.getWriter();
-            out.print(new Gson().toJson(wxCustomer));
-            out.flush();
-            out.close();
+            Customer customer = customerService.findCustomerByWxCustomerId(wxCustomer.getId());
+            customerService.login(customer.getLoginName(),customer.getPassword());
+            response.sendRedirect(WsjTools.getDomainName(request)+SysConstants.WebIndexPath.getName());
         }
 
     }
