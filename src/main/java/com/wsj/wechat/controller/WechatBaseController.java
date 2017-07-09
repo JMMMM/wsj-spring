@@ -131,7 +131,7 @@ public class WechatBaseController {
      * @return
      */
     @RequestMapping(value = "/userCode")
-    public WxCustomer userCode(HttpServletRequest request, HttpServletResponse response) {
+    public void userCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String code = request.getParameter("code");
         String state = request.getParameter("state");
         logger.info(code + "======" + state);
@@ -141,7 +141,20 @@ public class WechatBaseController {
         cookie.setMaxAge(2592000);//一个月有效
         cookie.setPath("/");
         response.addCookie(cookie);
-        return wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
+        WxCustomer exists = wechatBaseService.findWxCustomerByOpenid(snsToken.getOpenid());
+        if(exists==null){
+            wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
+            response.sendRedirect(WsjTools.getDomainName(request)+SysConstants.ChangeNikeName.getName());
+        }else{
+            WxCustomer wxCustomer = wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
+            String contentType = "application/json";
+            response.setContentType(contentType);
+            PrintWriter out = response.getWriter();
+            out.print(new Gson().toJson(wxCustomer));
+            out.flush();
+            out.close();
+        }
+
     }
 
     /**
