@@ -39,8 +39,8 @@ public class SmsLoginController {
     @RequestMapping(value = "/sendIdentifyingCode", method = RequestMethod.GET)
     public ResultBean sendIdentifyingCode(HttpServletRequest request, String mobile) {
         String ipAddress = getRemoteHost(request);
-        if (smsLogService.countSmsLogByIpAddress(ipAddress) > 2) {
-            return ResultBean.failure("Error-003,操作过于频繁，请5分钟后重试");
+        if (smsLogService.countSmsLogByIpAddress(ipAddress) > 13) {
+            return ResultBean.failure("操作错误，同一IP每天只能发送15条验证短信");
         }
         /**
          * 保存短信验证码
