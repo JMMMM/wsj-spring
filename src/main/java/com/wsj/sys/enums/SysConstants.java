@@ -9,9 +9,9 @@ public enum SysConstants {
     WebLoginSession("customerInfo"),
     IndexPath("/wsj_system/index.html"),
     LoginPath("/wsj_system/login/login.html"),
-    WebLoginPath("/wsy_system/wechat/view/login/login.html"),
-    NotFound("/wsy_system/wechat/view/index.html"),
-    ChangeNikeName("/wsy_system/wechat/view/login/change_nickname.html"),
+    WebLoginPath("/wsj_system/wechat/view/login/login.html"),
+    NotFound("/wsj_system/wechat/view/index.html"),
+    ChangeNikeName("/wsj_system/wechat/view/login/change_nickname.html"),
     ServerError(""),
     WsjWxOpenId("wsj_wx_openId");
     private String name;
