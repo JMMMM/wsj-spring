@@ -10,7 +10,7 @@ create table new_wsj.wx_customers(
  `province` varchar (128) default null comment '省份',
  `city` varchar (128) default null comment '城市',
  `country` varchar(128) default null comment '国家',
- `head_img_url` varchar(128) default null comment '用户头像',
+ `head_img_url` varchar(200) default null comment '用户头像',
  `subscribe_time` int(11) default null comment '关注时间',
  `group_id` int(8) default null comment '分组ID',
  `privilege` varchar(128) default null comment '用户特权信息',
