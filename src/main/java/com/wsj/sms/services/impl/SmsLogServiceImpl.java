@@ -32,15 +32,18 @@ public class SmsLogServiceImpl implements SmsLogService {
     }
 
     /**
-     * 获取5分钟内同一ip请求次数
+     * 获取今天内同一ip请求次数
      * @param ipAddress
      * @return
      */
     @Override
     public int countSmsLogByIpAddress(String ipAddress) {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MINUTE,-5);
-        return smsLogRepository.countLogByIpAddress(ipAddress,calendar.getTime());
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return smsLogRepository.countLogByIpAddress(ipAddress, calendar.getTime());
     }
 
 
