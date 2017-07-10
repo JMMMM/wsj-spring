@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 
 /**
  * Created by Jimmy on 2017/6/28.
@@ -191,7 +192,7 @@ public class WechatBaseController {
                     logger.info("已绑定味食家账号");
                     ResultBean resultBean = customerService.login(customer.getLoginName(), customer.getPassword());
                     if (!resultBean.isSuccess()) {
-                        response.sendRedirect(WsjTools.getDomainName(request) + SysConstants.WebLoginPath.getName() + "?isSuccess=false&message=" + resultBean.getMessage());
+                        response.sendRedirect(WsjTools.getDomainName(request) + SysConstants.WebLoginPath.getName() + "?isSuccess=false&message=" + URLEncoder.encode(resultBean.getMessage(), "utf-8"));
                     } else {
                         response.sendRedirect(WsjTools.getDomainName(request) + SysConstants.WebIndexPath.getName());
                     }
