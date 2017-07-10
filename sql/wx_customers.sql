@@ -23,3 +23,4 @@ create table new_wsj.wx_customers(
  `created_at` datetime not null comment '创建时间',
  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间'
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '微信用户信息表';
+alter table new_wsj.wx_customers convert to character set utf8mb4 collate utf8mb4_bin;
