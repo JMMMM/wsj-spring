@@ -17,5 +17,5 @@ create table new_wsj.customers(
   unique key `customer_phone_unique` (`phone`),
   unique key `customer_name_unique`(`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '用户登陆表';
-
+alter table new_wsj.customers convert to character set utf8mb4 collate utf8mb4_bin;
 insert INTO  new_wsj.customers(name,login_name,password,phone,created_at,created_by,updated_by) values('假数据','test1','e10adc3949ba59abbe56e057f20f883e','12345678910',now(),1,1);
