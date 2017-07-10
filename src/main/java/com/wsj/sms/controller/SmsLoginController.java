@@ -9,6 +9,7 @@ import com.wsj.sys.bean.ResultBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -91,15 +92,16 @@ public class SmsLoginController {
      * @return
      */
     @RequestMapping(value = "/validateCode", method = RequestMethod.GET)
-    public ResultBean validateCode(long mobile, int code) {
+    public ResultBean validateCode(String mobile, String code) {
+        if(StringUtils.isEmpty(mobile)||StringUtils.isEmpty(code)) return ResultBean.failure("手机号码或验证码不能为空");
         SmsLog smsLog = smsLogService.findSmsLogByCondition(mobile + "", code + "", 1);
         if (null == smsLog) {
-            return ResultBean.failure("Error-001,验证码错误，请重新验证");
+            return ResultBean.failure("验证码错误，请重新验证");
         }
         Date now = new Date();
         long timeDiff = now.getTime() - smsLog.getCreatedAt().getTime();
         if (timeDiff > 60 * 1000) {
-            return ResultBean.failure("Error-002,验证码超时，请重新验证");
+            return ResultBean.failure("验证码超时，请重新验证");
         }
 
         /**
