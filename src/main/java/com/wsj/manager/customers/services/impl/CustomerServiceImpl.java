@@ -3,7 +3,6 @@ package com.wsj.manager.customers.services.impl;
 import com.wsj.manager.customers.entity.Customer;
 import com.wsj.manager.customers.repository.CustomerRepository;
 import com.wsj.manager.customers.services.CustomerService;
-import com.wsj.manager.staffs.entity.Staff;
 import com.wsj.sys.bean.PageBean;
 import com.wsj.sys.bean.ResultBean;
 import com.wsj.sys.enums.ErrorCode;
@@ -12,7 +11,6 @@ import com.wsj.tools.*;
 import com.wsj.tools.validator.CustomerValidator;
 import com.wsj.wechat.entity.WxCustomer;
 import com.wsj.wechat.repository.WxCustomerRepository;
-import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +39,7 @@ public class CustomerServiceImpl implements CustomerService {
     private EntityManager em;
     @Autowired
     private WxCustomerRepository wxCustomerRepository;
+
     @Override
     public PageBean<Customer> findByPage(Customer customer, PageBean pageBean) {
         String sql = " select c.* from customers c where 1 =1 ";
@@ -92,20 +91,22 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public ResultBean<Customer> login(String loginName, String md5Password) {
-        Customer customer = customerRepository.findCustomerByLoginNameAndPassword(loginName,md5Password);
-        if(customer ==null){
+        Customer customer = customerRepository.findCustomerByLoginNameAndPassword(loginName, md5Password);
+        if (customer == null) {
             return ResultBean.failure("账号或密码错误");
+        } else if (customer.getStatus() == 0) {
+            return ResultBean.failure("账号被禁用");
         }
         session.setAttribute(SysConstants.WebLoginSession.getName(), customer);
-        String openId = CookieUtil.getCookieValue(request.getCookies(),SysConstants.WsjWxOpenId.getName());
+        String openId = CookieUtil.getCookieValue(request.getCookies(), SysConstants.WsjWxOpenId.getName());
 
-        if(openId!=null){
+        if (openId != null) {
             WxCustomer wxCustomer = wxCustomerRepository.findWxCustomerByOpenId(openId);
-            if(wxCustomer !=null ) {
-                customerRepository.updateCustomerWxCustomerId(wxCustomer.getId(),customer.getId());
+            if (wxCustomer != null) {
+                customerRepository.updateCustomerWxCustomerId(wxCustomer.getId(), customer.getId());
             }
         }
-        return ResultBean.success("登陆成功",customer);
+        return ResultBean.success("登陆成功", customer);
     }
 
     @Override
@@ -114,16 +115,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public ResultBean changeCustomerNickName(String nickName,int id) {
+    public ResultBean changeCustomerNickName(String nickName, int id) {
         Customer customer = customerRepository.findCustomerByNickName(nickName);
-        if(customer!=null) return  ResultBean.failure("已存在昵称");
-        customerRepository.changeCustomerNickName(nickName,id);
+        if (customer != null) return ResultBean.failure("已存在昵称");
+        customerRepository.changeCustomerNickName(nickName, id);
         return ResultBean.success("更新成功!");
     }
 
     @Override
     public ResultBean findCustomerByNickName(String nickName) {
         Customer customer = customerRepository.findCustomerByNickName(nickName);
-        return null == customer ? ResultBean.success("存在用户",customer):ResultBean.failure("不存在用户",null);
+        return null == customer ? ResultBean.success("存在用户", customer) : ResultBean.failure("不存在用户", null);
     }
 }
