@@ -39,6 +39,8 @@ public class SmsLoginController {
 
     @RequestMapping(value = "/sendIdentifyingCode", method = RequestMethod.GET)
     public ResultBean sendIdentifyingCode(HttpServletRequest request, String mobile) {
+        Customer customer = customerService.findByLoginName(mobile);
+        if (customer.getStatus() == 0) return ResultBean.failure("账号被禁用");
         String ipAddress = getRemoteHost(request);
         if (smsLogService.countSmsLogByIpAddress(ipAddress) > 13) {
             return ResultBean.failure("操作错误，同一IP每天只能发送15条验证短信");
@@ -93,7 +95,7 @@ public class SmsLoginController {
      */
     @RequestMapping(value = "/validateCode", method = RequestMethod.GET)
     public ResultBean validateCode(String mobile, String code) {
-        if(StringUtils.isEmpty(mobile)||StringUtils.isEmpty(code)) return ResultBean.failure("手机号码或验证码不能为空");
+        if (StringUtils.isEmpty(mobile) || StringUtils.isEmpty(code)) return ResultBean.failure("手机号码或验证码不能为空");
         SmsLog smsLog = smsLogService.findSmsLogByCondition(mobile + "", code + "", 1);
         if (null == smsLog) {
             return ResultBean.failure("验证码错误，请重新验证");

@@ -1,6 +1,5 @@
 package com.wsj.wechat.controller;
 
-import com.google.gson.Gson;
 import com.wsj.manager.customers.entity.Customer;
 import com.wsj.manager.customers.services.CustomerService;
 import com.wsj.sys.bean.ResultBean;
@@ -8,7 +7,6 @@ import com.wsj.sys.enums.SysConstants;
 import com.wsj.tools.CookieUtil;
 import com.wsj.tools.WsjTools;
 import com.wsj.wechat.api.SnsAPI;
-import com.wsj.wechat.api.WechatUserInfoApi;
 import com.wsj.wechat.bean.sns.SnsToken;
 import com.wsj.wechat.bean.user.UserInfo;
 import com.wsj.wechat.entity.AccessToken;
@@ -20,7 +18,6 @@ import com.wsj.wechat.tools.WechatConfigure;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,10 +26,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.Date;
 
 /**
  * Created by Jimmy on 2017/6/28.
@@ -76,6 +70,7 @@ public class WechatBaseController {
 
     /**
      * 微信登陆授权页面
+     *
      * @param request
      * @param response
      * @throws IOException
@@ -142,28 +137,29 @@ public class WechatBaseController {
         cookie.setPath("/");
         response.addCookie(cookie);
         WxCustomer exists = wechatBaseService.findWxCustomerByOpenid(snsToken.getOpenid());
-        if(exists==null){
+        if (exists == null) {
             wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
-            response.sendRedirect(WsjTools.getDomainName(request)+SysConstants.WebLoginPath.getName()+"?isWechat=true");
-        }else{
+            response.sendRedirect(WsjTools.getDomainName(request) + SysConstants.WebLoginPath.getName() + "?isWechat=true");
+        } else {
             WxCustomer wxCustomer = wechatBaseService.insertOrUpdateUserInfo(userInfo, snsToken);
             Customer customer = customerService.findCustomerByWxCustomerId(wxCustomer.getId());
-            customerService.login(customer.getLoginName(),customer.getPassword());
-            response.sendRedirect(WsjTools.getDomainName(request)+SysConstants.WebIndexPath.getName());
+            customerService.login(customer.getLoginName(), customer.getPassword());
+            response.sendRedirect(WsjTools.getDomainName(request) + SysConstants.WebIndexPath.getName());
         }
 
     }
 
     /**
      * 微信第三方登陆接口
+     *
      * @param request
-     * @param response  resultBean json
+     * @param response resultBean json
      * @throws IOException
      */
     @RequestMapping(value = "/thirdPartLogin")
     public void thirdPartLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Cookie[] cookies = request.getCookies();
-        String openId = CookieUtil.getCookieValue(cookies,SysConstants.WsjWxOpenId.getName());
+        String openId = CookieUtil.getCookieValue(cookies, SysConstants.WsjWxOpenId.getName());
         logger.info("thirdPartLogin:" + "openId->" + openId);
         WxCustomer wxCustomer = wechatBaseService.findWxCustomerByOpenid(openId);
         if (wxCustomer == null) {
@@ -183,7 +179,7 @@ public class WechatBaseController {
                 if (customer == null) {
                     logger.info("未注册味食家账号!");
 //                    ResultBean<WxCustomer> resultBean = ResultBean.failure("未注册味食家账号!",wxCustomer);
-                    response.sendRedirect(WsjTools.getDomainName(request)+SysConstants.WebLoginPath.getName()+"?isWechat=true");
+                    response.sendRedirect(WsjTools.getDomainName(request) + SysConstants.WebLoginPath.getName() + "?isWechat=true");
 //                    out.print(new Gson().toJson(resultBean));
 //                    String contentType = "application/json";
 //                    response.setContentType(contentType);
@@ -194,9 +190,11 @@ public class WechatBaseController {
                 } else {
                     logger.info("已绑定味食家账号");
                     ResultBean resultBean = customerService.login(customer.getLoginName(), customer.getPassword());
-                    String contentType = "application/json";
-                    response.setContentType(contentType);
-                    response.sendRedirect(WsjTools.getDomainName(request)+SysConstants.WebIndexPath.getName());
+                    if (!resultBean.isSuccess()) {
+                        response.sendRedirect(WsjTools.getDomainName(request) + SysConstants.WebLoginPath.getName() + "?isSuccess=false&message=" + resultBean.getMessage());
+                    } else {
+                        response.sendRedirect(WsjTools.getDomainName(request) + SysConstants.WebIndexPath.getName());
+                    }
 //                    PrintWriter out = response.getWriter();
 //                    out.print(new Gson().toJson(resultBean));
 //                    out.flush();
